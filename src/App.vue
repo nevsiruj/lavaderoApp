@@ -14,6 +14,7 @@
 import ListUsuarios from './components/usuarios/views/ListUsuarios.vue';
 import ListFrutas from './components/frutas/views/ListFrutas.vue';
 import FormFruta from './components/frutas/views/ListFrutas.vue';
+import CajaHome from './components/caja/views/CajaHome.vue';
 import SideBar from './layout/SideBar.vue';
 
 export default {
@@ -23,6 +24,7 @@ export default {
     // ListUsuarios,
     ListFrutas,
     FormFruta,
+    CajaHome,
     SideBar
   },
 };
