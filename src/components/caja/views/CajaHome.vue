@@ -1,13 +1,14 @@
 <template>
-  <h3>Bienvenido</h3>
-
   <div class="row">
-    <span v-if="!cajaAbierta"> No hay cajas abiertas </span>
+    <h3 class="mt-3">Bienvenido</h3>
   </div>
 
-  <button class="btn btn-outline-dark">Abrir caja</button>
+  <div class="row">
+    <span v-if="!cajaAbierta" class="text-danger"> No hay cajas abiertas </span>
+  </div>
 
-  <!-- <router-link to="/agregar">Agregar Fruta</router-link> -->
+  <!-- <button class="btn btn-outline-dark mt-2" to="/abrircaja">Abrir caja</button> -->
+  <router-link to="/abrircaja">Abrir caja</router-link>
 </template>
 
 <script>
