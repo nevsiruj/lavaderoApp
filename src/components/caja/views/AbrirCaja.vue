@@ -8,8 +8,9 @@
           type="text"
           class="form-control"
           id="responsable"
-          v-model="formData.responsable"
+          v-model.trim="formData.responsable"
           required
+          pattern="^[a-zA-Z]+$"
         />
       </div>
       <div class="mb-3">
@@ -28,12 +29,16 @@
 </template>
 
 <script>
-import { reactive, onMounted, useRouter } from 'vue';
+import { reactive, onMounted } from 'vue';
 import cajaService from '../services/caja.service.js';
+import { useRouter, useRoute } from 'vue-router';
 
 export default {
   name: 'AbrirCaja',
   setup() {
+    const router = useRouter();
+    const route = useRoute();
+
     const formData = reactive({
       responsable: '',
       monto: '',
@@ -41,7 +46,7 @@ export default {
 
     const responsables = reactive([]);
 
-    const abrirCaja = () => {
+    const abrirCaja = async () => {
       // Aquí podrías enviar la información a una API o almacenarla en la base de datos
       console.log(
         'Abriendo caja con responsable',
@@ -50,19 +55,15 @@ export default {
         formData.monto
       );
 
+      await cajaService.abrirCaja(formData).then((e) => console.log(e));
       // Reiniciamos los valores del formulario
       formData.responsable = '';
       formData.monto = null;
-      // router.push('/');
+      router.push('/');
     };
 
     onMounted(() => {
-      // console.log(cajaService.getCajaAbierta());
-      // if (typeof router !== 'undefined') {
-      //   console.log('El objeto router está listo');
-      // } else {
-      //   console.error('El objeto router no está definido');
-      // }
+      console.log(cajaService.getCajaAbierta());
     });
 
     return {

@@ -2,28 +2,27 @@ import { reactive } from 'vue';
 
 const cajaService = (() => {
   const state = reactive({
-    cajaAbierta: {},
-    monto: 0,
+    caja: { responsable: '', monto: 0, isOpen: false },
   });
 
-  const abrirCaja = (montoInicial) => {
-    state.cajaAbierta = true;
-    state.monto = montoInicial;
+  const abrirCaja = async (_data) => {
+    state.caja.responsable = _data.responsable;
+    state.caja.monto = _data.monto;
+    state.caja.isOpen = true;
+
+    return await state.caja;
   };
 
-  const cerrarCaja = () => {
-    state.cajaAbierta = false;
+  const cerrarCaja = async () => {
+    // state.caja = false;
     state.monto = 0;
   };
 
   const getCajaAbierta = () => {
-    state.cajaAbierta.responsable = 'Kevin';
-    state.cajaAbierta.monto = 0;
-
-    return state.cajaAbierta;
+    return state.caja;
   };
 
-  const depositar = (monto) => {
+  const ingresar = (monto) => {
     state.monto += monto;
   };
 
@@ -36,7 +35,7 @@ const cajaService = (() => {
     getCajaAbierta,
     abrirCaja,
     cerrarCaja,
-    depositar,
+    ingresar,
     retirar,
   };
 })();
