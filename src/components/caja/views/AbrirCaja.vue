@@ -1,11 +1,5 @@
 <template>
-  <h3>Bienvenido</h3>
-
-  <div class="row">
-    <span v-if="!cajaAbierta"> No hay cajas abiertas </span>
-  </div>
-
-  <button class="btn btn-outline-dark">Abrir caja</button>
+  <h3>Abrir caja</h3>
 
   <!-- <router-link to="/agregar">Agregar Fruta</router-link> -->
 </template>
@@ -18,7 +12,7 @@ export default {
       cajaAbierta,
     };
   },
-  name: 'CajaHome',
+  name: 'AbrirCaja',
   props: {},
   components: {},
   created() {},
