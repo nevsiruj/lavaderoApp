@@ -1,4 +1,4 @@
-class CajaService {
+export class CajaService {
   static instance = null;
 
   static getInstance() {
@@ -10,6 +10,13 @@ class CajaService {
 
   constructor() {
     this.cajaAbierta = {};
+  }
+
+  getCaja() {
+    this.cajaAbierta.monto = 200;
+    this.cajaAbierta.responsable = 'Kevin';
+
+    return this.cajaAbierta
   }
 
   // login(username, password) {
