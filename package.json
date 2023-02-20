@@ -9,9 +9,8 @@
   },
   "dependencies": {
     "@/router": "*",
-    "router": "^1.3.7",
     "vue": "3.2.45",
-    "vue-router": "4.1.6"
+    "vue-router": "4"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.4.0",

@@ -1,4 +1,4 @@
-import { createWebHashHistory, createRouter } from 'vue-router';
+import { createWebHistory, createRouter } from 'vue-router';
 import ListFrutas from './components/frutas/views/ListFrutas.vue';
 import FrutaForm from './components/frutas/views/FrutaForm.vue';
 import CajaHome from './components/caja/views/CajaHome.vue';
@@ -28,10 +28,9 @@ const routes = [
   // { path: '/editar/:id',  component: FrutaForm, props: true },
 ];
 
-const router = VueRouter.createRouter({
-  // 4. Provide the history implementation to use. We are using the hash history for simplicity here.
-  history: VueRouter.createWebHashHistory(),
-  routes, // short for `routes: routes`
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
 });
 
 export default router;

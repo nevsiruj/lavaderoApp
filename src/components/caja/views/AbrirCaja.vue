@@ -30,7 +30,6 @@
 <script>
 import { reactive, onMounted, useRouter } from 'vue';
 import cajaService from '../services/caja.service.js';
-import { router } from '@router';
 
 export default {
   name: 'AbrirCaja',
@@ -54,16 +53,16 @@ export default {
       // Reiniciamos los valores del formulario
       formData.responsable = '';
       formData.monto = null;
-      this.$router.push('/');
+      // router.push('/');
     };
 
     onMounted(() => {
-      console.log(cajaService.getCajaAbierta());
-      if (typeof router !== 'undefined') {
-        console.log('El objeto router está listo');
-      } else {
-        console.error('El objeto router no está definido');
-      }
+      // console.log(cajaService.getCajaAbierta());
+      // if (typeof router !== 'undefined') {
+      //   console.log('El objeto router está listo');
+      // } else {
+      //   console.error('El objeto router no está definido');
+      // }
     });
 
     return {
