@@ -1,41 +1,44 @@
-class CajaService {
-  static instance = null;
+import { reactive } from 'vue';
 
-  static getInstance() {
-    if (!CajaService.instance) {
-      CajaService.instance = new AuthService();
-    }
-    return CajaService.instance;
-  }
+const cajaService = (() => {
+  const state = reactive({
+    cajaAbierta: {},
+    monto: 0,
+  });
 
-  constructor() {
-    this.cajaAbierta = {};
-  }
+  const abrirCaja = (montoInicial) => {
+    state.cajaAbierta = true;
+    state.monto = montoInicial;
+  };
 
-  // login(username, password) {
-  //     // implementar lógica de inicio de sesión
-  //     // ...
-  //     // actualizar estado de autenticación y token de acceso
-  //     this.isLoggedIn = true;
-  //     this.accessToken = 'abc123';
-  // }
+  const cerrarCaja = () => {
+    state.cajaAbierta = false;
+    state.monto = 0;
+  };
 
-  // logout() {
-  //     // implementar lógica de cierre de sesión
-  //     // ...
-  //     // actualizar estado de autenticación y token de acceso
-  //     this.isLoggedIn = false;
-  //     this.accessToken = null;
-  // }
+  const getCajaAbierta = () => {
+    state.cajaAbierta.responsable = 'Kevin';
+    state.cajaAbierta.monto = 0;
 
-  // async getLoggedInUser() {
-  //     try {
-  //         const response = await fetch('/api/auth/userLoged');
-  //         const data = await response.json();
-  //         this.user = data;
-  //         return data;
-  //     } catch (error) {
-  //         throw new Error(error);
-  //     }
-  // }
-}
+    return state.cajaAbierta;
+  };
+
+  const depositar = (monto) => {
+    state.monto += monto;
+  };
+
+  const retirar = (monto) => {
+    state.monto -= monto;
+  };
+
+  return {
+    state,
+    getCajaAbierta,
+    abrirCaja,
+    cerrarCaja,
+    depositar,
+    retirar,
+  };
+})();
+
+export default cajaService;
