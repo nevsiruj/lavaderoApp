@@ -64,6 +64,7 @@ export default {
 
     onMounted(() => {
       console.log(cajaService.getCajaAbierta());
+      console.log(cajaService.getCajas().then((e) => console.log(e)));
     });
 
     return {

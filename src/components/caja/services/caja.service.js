@@ -22,6 +22,12 @@ const cajaService = (() => {
     return state.caja;
   };
 
+  const getCajas = async () => {
+    const response = await fetch('https://localhost:44331/api/cajas');
+    const data = await response.json();
+    return data;
+  };
+
   const ingresar = (monto) => {
     state.monto += monto;
   };
@@ -37,6 +43,7 @@ const cajaService = (() => {
     cerrarCaja,
     ingresar,
     retirar,
+    getCajas,
   };
 })();
 
