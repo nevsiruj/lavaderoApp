@@ -22,10 +22,11 @@ const cajaService = (() => {
     return state.caja;
   };
 
-  const getCajas = async () => {
-    const response = await fetch('https://localhost:44331/api/cajas');
-    const data = await response.json();
-    return data;
+  const getCajas = () => {
+    console.log(`${process.env.VUE_APP_API_URL}`);
+    fetch(`${process.env.VUE_APP_API_URL}/cajas`)
+      .then((response) => response.json())
+      .then((data) => console.log(data));
   };
 
   const ingresar = (monto) => {

@@ -52,3 +52,5 @@ export default {
   methods: {},
 };
 </script>
+
+<script scoped></script>
