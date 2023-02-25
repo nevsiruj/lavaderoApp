@@ -1,6 +1,4 @@
 import { createWebHistory, createRouter } from 'vue-router';
-import ListFrutas from './components/frutas/views/ListFrutas.vue';
-import FrutaForm from './components/frutas/views/FrutaForm.vue';
 import CajaHome from './components/caja/views/CajaHome.vue';
 import AbrirCaja from './components/caja/views/AbrirCaja.vue';
 import FormLavado from './components/lavado/views/FormLavado.vue';
@@ -11,11 +9,6 @@ const routes = [
     path: '/',
     name: 'CajaHome',
     component: CajaHome,
-  },
-  {
-    path: '/agregar',
-    name: 'FrutaForm',
-    component: FrutaForm,
   },
   // {
   //   path: '/caja',
