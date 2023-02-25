@@ -4,15 +4,23 @@
       <h2>Abrir caja</h2>
       <div class="mb-3">
         <label for="responsable" class="form-label">Responsable:</label>
-        <input
-          type="text"
+        <select
           class="form-control"
           id="responsable"
-          v-model.trim="formData.responsable"
+          v-model="formData.responsable"
           required
-          pattern="^[a-zA-Z]+$"
-        />
+        >
+          <option disabled value="">Seleccione una opción</option>
+          <option
+            v-for="responsable in responsables"
+            :key="responsable.id"
+            :value="responsable.nombre"
+          >
+            {{ responsable.nombre }}
+          </option>
+        </select>
       </div>
+
       <div class="mb-3">
         <label for="monto" class="form-label">Monto de apertura:</label>
         <input
@@ -30,7 +38,8 @@
 
 <script>
 import { reactive, onMounted } from 'vue';
-import cajaService from '../services/caja.service.js';
+// import cajaService from '../services/caja.service.js';
+import cajaService from '../../../composables/api/cajaService.js';
 import { useRouter, useRoute } from 'vue-router';
 
 export default {
@@ -44,7 +53,10 @@ export default {
       monto: '',
     });
 
-    const responsables = reactive([]);
+    const responsables = reactive([
+      { id: 1, nombre: 'Tu mama' },
+      { id: 2, nombre: 'Tu hermanito' },
+    ]);
 
     const abrirCaja = async () => {
       // Aquí podrías enviar la información a una API o almacenarla en la base de datos
@@ -62,10 +74,7 @@ export default {
       router.push('/');
     };
 
-    onMounted(() => {
-      console.log(cajaService.getCajaAbierta());
-      console.log(cajaService.getCajas());
-    });
+    onMounted(() => {});
 
     return {
       formData,
