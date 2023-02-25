@@ -39,7 +39,7 @@
 <script>
 import { reactive, onMounted } from 'vue';
 // import cajaService from '../services/caja.service.js';
-import cajaService from '../../../composables/api/cajaService.js';
+import cajaService from '../../composables/api/cajaService.js';
 import { useRouter, useRoute } from 'vue-router';
 
 export default {

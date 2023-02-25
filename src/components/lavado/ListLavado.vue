@@ -39,7 +39,7 @@ import { ref, onMounted, reactive } from 'vue';
 // import { useLavados } from './composables/api';
 
 // import lavadoService from '../services/lavado.service.js';
-import lavadoService from '../../../composables/api/lavadoService.js';
+import lavadoService from '../../composables/api/lavadoService.js';
 
 // import { useLavado } from '../services/useLavado';
 

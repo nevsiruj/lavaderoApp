@@ -12,15 +12,15 @@
 <script>
 // import HelloWorld from './components/HelloWorld.vue';
 import ListUsuarios from './components/usuarios/views/ListUsuarios.vue';
-import CajaHome from './components/caja/views/CajaHome.vue';
-import AbrirCaja from './components/caja/views/AbrirCaja.vue';
+// import CajaHome from './components/caja/CajaHome.vue';
+// import AbrirCaja from './components/caja/AbrirCaja.vue';
 import SideBar from './layout/SideBar.vue';
 
 export default {
   name: 'App',
   components: {
-    CajaHome,
-    AbrirCaja,
+    // CajaHome,
+    // AbrirCaja,
     SideBar
   },
 };

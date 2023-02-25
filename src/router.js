@@ -1,8 +1,8 @@
 import { createWebHistory, createRouter } from 'vue-router';
-import CajaHome from './components/caja/views/CajaHome.vue';
-import AbrirCaja from './components/caja/views/AbrirCaja.vue';
-import FormLavado from './components/lavado/views/FormLavado.vue';
-import ListLavado from './components/lavado/views/ListLavado.vue';
+import CajaHome from './components/caja/CajaHome.vue';
+import AbrirCaja from './components/caja/AbrirCaja.vue';
+import FormLavado from './components/lavado/FormLavado.vue';
+import ListLavado from './components/lavado/ListLavado.vue';
 
 const routes = [
   {

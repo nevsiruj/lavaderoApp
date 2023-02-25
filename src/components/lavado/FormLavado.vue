@@ -76,7 +76,7 @@
 <script>
 import { ref, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import lavadoService from '../../../composables/api/lavadoService.js';
+import lavadoService from '../../composables/api/lavadoService.js';
 // import { useLavados } from '../services';
 
 export default {

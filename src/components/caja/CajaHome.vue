@@ -47,7 +47,7 @@
 
 <script>
 // import cajaService from '../services/caja.service.js';
-import cajaService from '../../../composables/api/cajaService.js';
+import cajaService from '../../composables/api/cajaService.js';
 import { reactive, onMounted, ref } from 'vue';
 
 export default {
