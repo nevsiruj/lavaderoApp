@@ -27,7 +27,7 @@
           type="number"
           class="form-control"
           id="monto"
-          v-model="formData.monto"
+          v-model="formData.montoInicial"
           required
         />
       </div>
@@ -38,7 +38,7 @@
 
 <script>
 import { reactive, onMounted } from 'vue';
-// import cajaService from '../services/caja.service.js';
+
 import cajaService from '../../composables/api/cajaService.js';
 import { useRouter, useRoute } from 'vue-router';
 
@@ -50,7 +50,7 @@ export default {
 
     const formData = reactive({
       responsable: '',
-      monto: '',
+      montoInicial: '',
     });
 
     const responsables = reactive([
@@ -64,13 +64,13 @@ export default {
         'Abriendo caja con responsable',
         formData.responsable,
         'y monto',
-        formData.monto
+        formData.montoInicial
       );
 
       await cajaService.abrirCaja(formData).then((e) => console.log(e));
       // Reiniciamos los valores del formulario
       formData.responsable = '';
-      formData.monto = null;
+      formData.montoInicial = null;
       router.push('/');
     };
 

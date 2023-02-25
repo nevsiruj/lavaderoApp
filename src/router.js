@@ -1,5 +1,5 @@
 import { createWebHistory, createRouter } from 'vue-router';
-import CajaHome from './components/caja/CajaHome.vue';
+import Caja from './components/caja/Caja.vue';
 import AbrirCaja from './components/caja/AbrirCaja.vue';
 import FormLavado from './components/lavado/FormLavado.vue';
 import ListLavado from './components/lavado/ListLavado.vue';
@@ -7,8 +7,8 @@ import ListLavado from './components/lavado/ListLavado.vue';
 const routes = [
   {
     path: '/',
-    name: 'CajaHome',
-    component: CajaHome,
+    name: 'Caja',
+    component: Caja,
   },
   // {
   //   path: '/caja',
