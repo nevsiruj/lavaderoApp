@@ -20,7 +20,7 @@
         />
       </div>
       <div class="form-group">
-        <label for="tipo-vehiculo">Tipo de vehículo</label>
+        <!-- <label for="tipo-vehiculo">Tipo de vehículo</label>
         <select
           class="form-control form-control-sm"
           id="tipo-vehiculo"
@@ -52,7 +52,7 @@
             {{ tipoLavado.nombre }}
           </option>
         </select>
-      </div>
+      </div> -->
       <div class="form-group">
         <label for="importe">Importe</label>
         <input
@@ -77,6 +77,8 @@
 import { ref, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import lavadoService from '../../composables/api/lavadoService.js';
+import cajaService from '../../composables/api/cajaService.js';
+
 // import { useLavados } from '../services';
 
 export default {
@@ -86,11 +88,13 @@ export default {
     const form = ref({
       cajaId: 0,
       fecha: '',
-      tipoVehiculoId: '',
-      tipoLavadoId: '',
+      // tipoVehiculoId: '',
+      // tipoLavadoId: '',
       descripcion: '',
       importe: '',
     });
+     let cajaAbierta = ref({});
+    cajaAbierta = cajaService.getCajaAbierta();
 
     // const tiposVehiculos = useTiposVehiculos();
     // const tiposLavados = useTiposLavados();
@@ -103,13 +107,13 @@ export default {
     const tiposLavados = ref([{ id: 1, nombre: 'Lavado Común' }]);
 
     const submitForm = () => {
-      form.value.cajaId = 1;
+      form.value.cajaId = cajaAbierta.id;
       form.value.fecha = new Date();
       lavadoService.addLavado(form);
       form.value = {};
       form.fecha = '';
-      form.tipoVehiculoId = '';
-      form.tipoLavadoId = '';
+      // form.tipoVehiculoId = '';
+      // form.tipoLavadoId = '';
       form.descripcion = '';
       form.importe = '';
       router.push('/');
@@ -117,6 +121,7 @@ export default {
 
     return {
       form,
+      cajaAbierta,
       tiposVehiculos,
       tiposLavados,
       submitForm,
