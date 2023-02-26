@@ -50,6 +50,7 @@ export default {
       autosLavados.value = await lavadoService.getLavadosByCaja(
         cajaAbierta.value.id
       );
+      lavadoService.loadLavados();
     });
 
     return {
