@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h2>Lavados por día</h2>
     <canvas ref="chartRef"></canvas>
   </div>
 </template>
@@ -33,7 +34,7 @@ export default {
       new Chart(ctx, {
         type: 'bar',
         data: {
-          labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'],
+          labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Junio'],
           datasets: [
             {
               label: 'Cantidad de lavados',

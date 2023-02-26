@@ -3,7 +3,6 @@
     <!-- <Navbar /> -->
     <div class="row">
       <div class="col-md-6">
-        <h2>Lavados por día</h2>
         <LavadosChart />
       </div>
       <div class="col-md-6">
