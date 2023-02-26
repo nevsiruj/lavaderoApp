@@ -12,9 +12,11 @@
       </div>
       <div class="card-body">
         <div v-if="cajaAbierta.isOpen">
-          <p class="card-text">Responsable: {{ cajaAbierta.responsable }}</p>
+          <p class="card-text">
+            <strong>Responsable:</strong> {{ cajaAbierta.responsable }}
+          </p>
           <label class="card-text"
-            >Dinero en la caja: {{ cajaAbierta.montoInicial }}</label
+            >Dinero en la caja: ${{ cajaAbierta.montoInicial ?? '0.00' }}</label
           >
           <button
             class="btn btn-sm btn-danger ms-2"
@@ -25,7 +27,8 @@
           <br />
           <br />
           <label class="card-text">
-            Cantidad Lavados: {{ cajaAbierta.cantidadLavados }}
+            <strong>Cantidad Lavados:</strong>
+            {{ cajaAbierta.cantidadLavados ?? 0 }}
           </label>
           <router-link class="btn btn-sm btn-success ms-2" to="/formlavado"
             ><i class="fas fa-plus-circle" style="font-size: 1rem"></i>
@@ -39,7 +42,9 @@
           <br />
           <br />
           <label class="card-text">
-            Cantidad Ingresos: {{ cajaAbierta.cantidadIngresos }}
+            <strong>Cantidad Ingresos: </strong>${{
+              cajaAbierta.cantidadIngresos ?? '0.00'
+            }}
           </label>
           <router-link class="btn btn-sm btn-success ms-2" to="/formlavado"
             ><i class="fas fa-plus-circle" style="font-size: 1rem"></i>
@@ -53,7 +58,7 @@
           <br />
           <br />
           <label class="card-text">
-            Cantidad Egresos: {{ cajaAbierta.cantidadEgresos }}
+            Cantidad Egresos: ${{ cajaAbierta.cantidadEgresos ?? '0.00' }}
           </label>
           <router-link class="btn btn-sm btn-success ms-2" to="/formlavado"
             ><i class="fas fa-plus-circle" style="font-size: 1rem"></i>
@@ -64,6 +69,11 @@
           >
             <i class="fas fa-list-ul" style="font-size: 1rem"></i>
           </router-link>
+          <br />
+          <br />
+          <label class="card-text">
+            Efectivo en caja: ${{ cajaAbierta.efectivo ?? '0.00' }}
+          </label>
         </div>
         <div class="row" v-if="!cajaAbierta.isOpen">
           <span class="text-danger"> No hay cajas abiertas </span>
