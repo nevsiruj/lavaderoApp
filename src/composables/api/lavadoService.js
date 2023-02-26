@@ -32,6 +32,7 @@ const lavadoService = (() => {
       `https://localhost:44312/api/Lavado/${_cajaid}/lavados`
     );
     return response.data;
+    //commit
     // return await axios
     //   .get(`https://localhost:44312/api/Lavado/${_cajaid}/lavados`)
     //   .then((response) => {
