@@ -7,14 +7,28 @@
 <script>
 import { ref, onMounted } from 'vue';
 import Chart from 'chart.js/auto';
+import lavadoService from '../../composables/api/lavadoService.js';
 
 export default {
   name: 'LavadosChart',
   setup() {
     const chartRef = ref(null);
+    let importes = ref([]);
+
+    let lavados = ref([]);
+    lavados = lavadoService.getLavados();
+    importes = lavados.value.map((lavado) => lavado.importe);
+    console.log(importes);
 
     onMounted(() => {
       const ctx = chartRef.value.getContext('2d');
+
+      // lavadoService.getLavados().then((r) => {
+      //   lavados = r;
+      //   // console.log(lavados);
+      //   importes = lavados.map((lavado) => lavado.importe);
+      //   console.log(importes);
+      // });
 
       new Chart(ctx, {
         type: 'bar',

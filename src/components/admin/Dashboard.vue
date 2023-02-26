@@ -8,7 +8,7 @@
       </div>
       <div class="col-md-6">
         <h2>Ingresos y egresos</h2>
-        <IngresosEgresosChart />
+        <!-- <IngresosEgresosChart /> -->
       </div>
     </div>
   </div>
