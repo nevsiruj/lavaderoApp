@@ -1,49 +1,51 @@
 import { ref } from 'vue';
+import { axios } from 'axios';
 
 const lavadoService = (() => {
   const lavados = ref([
     {
-      id: 0,
-      descripcion: 'Corolla',
+      descripcion: '',
       fecha: new Date(),
-      importe: 750,
-      cajaId: 1,
-    },
-    {
-      id: 1,
-      descripcion: 'Chevrolet Onix',
-      fecha: new Date(),
-      importe: 900,
-      cajaId: 1,
-    },
-    {
-      id: 2,
-      descripcion: 'Ford Fiesta',
-      fecha: new Date(),
-      importe: 650,
-      cajaId: 2,
+      importe: 0,
+      cajaId: 0,
     },
   ]);
   const error = ref(null);
+  const axios = require('axios');
 
   // const loadLavados = async () => {
   //   try {
-  //     const response = await axios.get('/api/lavados');
+  //     const response = await axios
+  //       .get('https://localhost:44312/api/lavado')
+  //       .then((response) => {
+  //         return response.data;
+  //       });
   //     lavados.value = response.data;
+  //     console.log(response);
   //   } catch (err) {
   //     error.value = err.message;
   //   }
   // };
 
-  const getLavados = () => {
-    lavados.value;
-    return lavados;
-  };
-
-  const getLavadosByCaja = (_cajaid) => {
-    let lavados = getLavados();
-    // return lavados.filter((lavado) => lavado.cajaId === _cajaid);
-    return lavados.value.filter((l) => l.cajaId === _cajaid);
+  const getLavadosByCaja = async (_cajaid) => {
+    const response = await axios.get(
+      `https://localhost:44312/api/Lavado/${_cajaid}/lavados`
+    );
+    return response.data;
+    //commit
+    // return await axios
+    //   .get(`https://localhost:44312/api/Lavado/${_cajaid}/lavados`)
+    //   .then((response) => {
+    //     // console.log(response.data);
+    //     return response.data;
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //     return [];
+    //   });
+    // lavados.value = response.data;
+    // console.log(lavados.value);
+    // return response.data;
   };
 
   const getCantidadLavados = async () => {
@@ -74,7 +76,6 @@ const lavadoService = (() => {
   return {
     lavados,
     error,
-    getLavados,
     addLavado,
     getCantidadLavados,
     getLavadosByCaja,

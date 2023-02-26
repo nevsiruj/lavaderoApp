@@ -31,23 +31,6 @@ const cajaService = (() => {
   };
 
   const cerrarCaja = async (_data) => {
-    // caja.value.responsable = _data.responsable;
-    // caja.value.montoInicial = _data.montoInicial;
-    // caja.value.isOpen = false;
-    // fetch(`https://localhost:44312/api/caja`, _data.id, {
-    //   method: 'PUT',
-    //   body: JSON.stringify(caja.value),
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     console.log('Respuesta:', data);
-    //   })
-    //   .catch((error) => {
-    //     console.error('Error:', error);
-    //   });
     fetch(`https://localhost:44312/api/caja/cerrarCaja?cajaId=${_data}`, {
       method: 'POST',
     })
@@ -69,16 +52,17 @@ const cajaService = (() => {
     fetch(`https://localhost:44312/api/caja/cajaabierta`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         caja.value = data;
+        return data;
       })
       .catch((e) => false);
 
-    var lavadosRelacionados = lavadoService.getLavadosByCaja(caja.value.id);
-    lavadosRelacionados.forEach((e) => {
-      caja.value.monto += e.importe;
-    });
-    caja.value.cantidadLavados = lavadosRelacionados.length;
+    // var lavadosRelacionados = lavadoService.getLavadosByCaja(caja.value.id);
+    // lavadosRelacionados.forEach((e) => {
+    //   caja.value.monto += e.importe;
+    // });
+    // caja.value.cantidadLavados = lavadosRelacionados.length;
 
     return caja;
   };
@@ -89,10 +73,10 @@ const cajaService = (() => {
   };
 
   const getCajas = () => {
-    console.log(`getCaja`);
-    fetch(`https://localhost:44312/api/caja`)
-      .then((response) => response.json())
-      .then((data) => console.log(data));
+    fetch(`https://localhost:44312/api/caja`).then((response) =>
+      response.json()
+    );
+    // .then((data) => console.log(data));
   };
 
   const ingresar = (monto) => {

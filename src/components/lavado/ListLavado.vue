@@ -16,13 +16,9 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="lavado in lavados" :key="lavado.id">
+            <tr v-for="lavado in autosLavados" :key="lavado.id">
               <td>
-                {{
-                  lavado.fecha.toLocaleDateString() +
-                  ' - ' +
-                  lavado.fecha.toLocaleTimeString()
-                }}
+                {{ lavado.fecha }}
               </td>
               <td>{{ lavado.descripcion }}</td>
               <td>{{ Number(lavado.importe) }}</td>
@@ -40,21 +36,34 @@ import { ref, onMounted, reactive } from 'vue';
 
 // import lavadoService from '../services/lavado.service.js';
 import lavadoService from '../../composables/api/lavadoService.js';
+import cajaService from '../../composables/api/cajaService.js';
 
 // import { useLavado } from '../services/useLavado';
 
 export default {
   setup() {
-    let lavados = ref([]);
-    lavados = lavadoService.getLavadosByCaja(1);
+    let cajaAbierta = ref({});
+    let autosLavados = ref([]);
+    cajaAbierta = cajaService.getCajaAbierta();
 
-    onMounted(() => {
-      console.log(lavados);
+    onMounted(async () => {
+      autosLavados.value = await lavadoService.getLavadosByCaja(
+        cajaAbierta.value.id
+      );
     });
 
     return {
-      lavados,
+      autosLavados,
+      cajaAbierta,
     };
   },
+  name: 'LavadoList',
+  props: {},
+  components: {},
+  created() {},
+  data() {
+    return {};
+  },
+  methods: {},
 };
 </script>

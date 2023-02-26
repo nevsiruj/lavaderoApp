@@ -87,7 +87,6 @@ export default {
     let cajaAbierta = ref({});
     const router = useRouter();
     const route = useRoute();
-
     cajaAbierta = cajaService.getCajaAbierta();
 
     const cerrarCaja = (cajaAbierta) => {
