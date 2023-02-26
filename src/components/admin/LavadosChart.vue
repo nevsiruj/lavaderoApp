@@ -16,9 +16,9 @@ export default {
     let importes = ref([]);
 
     let lavados = ref([]);
-    lavados = lavadoService.getLavados();
-    importes = lavados.value.map((lavado) => lavado.importe);
-    console.log(importes);
+    // lavados = lavadoService.getLavados();
+    // importes = lavados.value.map((lavado) => lavado.importe);
+    // console.log(importes);
 
     onMounted(() => {
       const ctx = chartRef.value.getContext('2d');
