@@ -15,14 +15,14 @@
 </template>
 
 <script>
-import Navbar from './Navbar.vue';
+// import Navbar from './Navbar.vue';
 import LavadosChart from './LavadosChart.vue';
 // import IngresosEgresosChart from './IngresosEgresosChart.vue';
 
 export default {
   name: 'Dashboard',
   components: {
-    Navbar,
+    // Navbar,
     LavadosChart,
     // IngresosEgresosChart,
   },
