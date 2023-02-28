@@ -4,6 +4,7 @@ import AbrirCaja from './components/caja/AbrirCaja.vue';
 import FormLavado from './components/lavado/FormLavado.vue';
 import ListLavado from './components/lavado/ListLavado.vue';
 import Dashboard from './components/admin/Dashboard.vue';
+import LavadosTable from './components/admin/LavadosTable.vue';
 
 const routes = [
   {
@@ -35,6 +36,11 @@ const routes = [
     path: '/dashboard',
     name: 'Dashboard',
     component: Dashboard,
+  },
+  {
+    path: '/lavadostable',
+    name: 'LavadosTable',
+    component: LavadosTable,
   },
   // { path: '/editar/:id',  component: FrutaForm, props: true },
 ];
