@@ -109,7 +109,6 @@ export default {
     // ]);
 
     const submitForm = () => {
-      debugger;
       form.value.cajaId = cajaAbierta.value.id;
       form.value.fecha = new Date();
       // form.value.tipoLavado.id = form.value.tipoLavadoId;

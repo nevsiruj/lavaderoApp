@@ -43,22 +43,22 @@
           <br />
           <label class="card-text">
             <strong>Cantidad Ingresos: </strong>${{
-              cajaAbierta.cantidadIngresos ?? '0.00'
+              cajaAbierta.totalImporteIngresos ?? '0.00'
             }}
           </label>
-          <router-link class="btn btn-sm btn-success ms-2" to="/formlavado"
+          <router-link class="btn btn-sm btn-success ms-2" to="/formingreso"
             ><i class="fas fa-plus-circle" style="font-size: 1rem"></i>
           </router-link>
           <router-link
             class="btn btn-sm btn-outline-success ms-2"
-            to="/listlavado"
+            to="/listingreso"
           >
             <i class="fas fa-list-ul" style="font-size: 1rem"></i>
           </router-link>
           <br />
           <br />
           <label class="card-text">
-            Cantidad Egresos: ${{ cajaAbierta.cantidadEgresos ?? '0.00' }}
+            Cantidad Egresos: ${{ cajaAbierta.totalImporteEgresos ?? '0.00' }}
           </label>
           <router-link class="btn btn-sm btn-success ms-2" to="/formegreso"
             ><i class="fas fa-plus-circle" style="font-size: 1rem"></i>
@@ -72,7 +72,7 @@
           <br />
           <br />
           <label class="card-text">
-            Efectivo en caja: ${{ cajaAbierta.efectivo ?? '0.00' }}
+            Efectivo en caja: ${{ cajaAbierta.efectivoEnCaja ?? '0.00' }}
           </label>
         </div>
         <div class="row" v-if="!cajaAbierta.isOpen">

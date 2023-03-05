@@ -5,6 +5,8 @@ import FormLavado from './components/lavado/FormLavado.vue';
 import ListLavado from './components/lavado/ListLavado.vue';
 import FormEgreso from './components/egreso/FormEgreso.vue';
 import ListEgreso from './components/egreso/ListEgreso.vue';
+import FormIngreso from './components/ingreso/FormIngreso.vue';
+import ListIngreso from './components/ingreso/ListIngreso.vue';
 import Dashboard from './components/admin/Dashboard.vue';
 import LavadosTable from './components/admin/LavadosTable.vue';
 
@@ -43,6 +45,16 @@ const routes = [
     path: '/listegreso',
     name: 'ListEgreso',
     component: ListEgreso,
+  },
+  {
+    path: '/formingreso',
+    name: 'FormIngreso',
+    component: FormIngreso,
+  },
+  {
+    path: '/listingreso',
+    name: 'ListIngreso',
+    component: ListIngreso,
   },
   {
     path: '/dashboard',

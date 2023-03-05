@@ -1,6 +1,6 @@
 <template>
   <div class="container mt-3">
-    <h1>Egresos</h1>
+    <h1>Ingresos</h1>
     <form>
       <div class="form-group">
         <label for="descripcion">Descripción</label>
@@ -35,8 +35,7 @@
 <script>
 // import cajaService from '../services/caja.service.js';
 import cajaService from '../../composables/api/cajaService.js';
-import egresoService from '../../composables/api/egresoService.js';
-
+import ingresoService from '../../composables/api/ingresoService.js';
 import { reactive, onMounted, ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 
@@ -54,7 +53,7 @@ export default {
     });
     const submitForm = () => {
       form.value.cajaId = cajaAbierta.value.id;
-      egresoService.addEgreso(form);
+      ingresoService.addIngreso(form);
       form.value = {};
       form.descripcion = '';
       form.importe = '';
@@ -71,7 +70,7 @@ export default {
       submitForm,
     };
   },
-  name: 'EgresoForm',
+  name: 'IngresoForm',
   props: {},
   components: {},
   created() {},
