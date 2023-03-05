@@ -26,26 +26,22 @@ const lavadoService = (() => {
   //     error.value = err.message;
   //   }
   // };
+  const getTipoLavado = async () => {
+    const response = await axios.get(`https://localhost:44312/api/TipoLavado`);
+    return response.data;
+  };
+  const getTipoVehiculo = async () => {
+    const response = await axios.get(
+      `https://localhost:44312/api/TipoVehiculo`
+    );
+    return response.data;
+  };
 
   const getLavadosByCaja = async (_cajaid) => {
     const response = await axios.get(
       `https://localhost:44312/api/Lavado/${_cajaid}/lavados`
     );
     return response.data;
-    //commit
-    // return await axios
-    //   .get(`https://localhost:44312/api/Lavado/${_cajaid}/lavados`)
-    //   .then((response) => {
-    //     // console.log(response.data);
-    //     return response.data;
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //     return [];
-    //   });
-    // lavados.value = response.data;
-    // console.log(lavados.value);
-    // return response.data;
   };
 
   const getCantidadLavados = async () => {
@@ -53,24 +49,26 @@ const lavadoService = (() => {
   };
 
   // const addLavado = async (newLavado) => {
-  //   try {
-  //     const response = await axios.post('/api/lavados', newLavado);
-  //     lavados.value.push(response.data);
-  //   } catch (err) {
-  //     error.value = err.message;
-  //   }
+  //   lavados.value.push(newLavado.value);
+  //   console.log(newLavado.value);
+  //   console.log(lavados.value);
   // };
-
-  const addLavado = async (newLavado) => {
-    lavados.value.push(newLavado.value);
-    console.log(newLavado.value);
-    console.log(lavados.value);
-    // try {
-    //   const response = await axios.post('/api/lavados', newLavado);
-    //   lavados.value.push(response.data);
-    // } catch (err) {
-    //   error.value = err.message;
-    // }
+  const addLavado = async (_data) => {
+    fetch(`https://localhost:44312/api/Lavado`, {
+      method: 'POST',
+      body: JSON.stringify(_data.value),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Respuesta:', data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+    return await _data.value;
   };
 
   return {
@@ -79,6 +77,8 @@ const lavadoService = (() => {
     addLavado,
     getCantidadLavados,
     getLavadosByCaja,
+    getTipoLavado,
+    getTipoVehiculo,
   };
 })();
 

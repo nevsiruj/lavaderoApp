@@ -60,12 +60,12 @@
           <label class="card-text">
             Cantidad Egresos: ${{ cajaAbierta.cantidadEgresos ?? '0.00' }}
           </label>
-          <router-link class="btn btn-sm btn-success ms-2" to="/formlavado"
+          <router-link class="btn btn-sm btn-success ms-2" to="/formegreso"
             ><i class="fas fa-plus-circle" style="font-size: 1rem"></i>
           </router-link>
           <router-link
             class="btn btn-sm btn-outline-success ms-2"
-            to="/listlavado"
+            to="/listegreso"
           >
             <i class="fas fa-list-ul" style="font-size: 1rem"></i>
           </router-link>

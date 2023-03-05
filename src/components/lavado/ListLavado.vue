@@ -42,19 +42,24 @@ import cajaService from '../../composables/api/cajaService.js';
 
 export default {
   setup() {
-    let cajaAbierta = ref({});
     let autosLavados = ref([]);
+    // let tipoLavado = ref([]);
+
+    let cajaAbierta = ref({});
     cajaAbierta = cajaService.getCajaAbierta();
+    // tipoLavado = lavadoService.getTipoLavado();
 
     onMounted(async () => {
       autosLavados.value = await lavadoService.getLavadosByCaja(
         cajaAbierta.value.id
       );
+      // console.log(tipoLavado);
     });
 
     return {
       autosLavados,
       cajaAbierta,
+      // tipoLavado,
     };
   },
   name: 'LavadoList',

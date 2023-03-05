@@ -1,15 +1,6 @@
 <template>
   <div class="container mt-3">
     <form>
-      <!-- <div class="form-group">
-        <label for="fecha">Fecha</label>
-        <input
-          type="date"
-          class="form-control form-control-sm"
-          id="fecha"
-          v-model="form.fecha"
-        />
-      </div> -->
       <div class="form-group">
         <label for="descripcion">Descripción</label>
         <input
@@ -32,7 +23,7 @@
             :key="tipoVehiculo.id"
             :value="tipoVehiculo.id"
           >
-            {{ tipoVehiculo.nombre }}
+            {{ tipoVehiculo.descripcion }}
           </option>
         </select>
       </div>
@@ -49,7 +40,7 @@
             :key="tipoLavado.id"
             :value="tipoLavado.id"
           >
-            {{ tipoLavado.nombre }}
+            {{ tipoLavado.descripcion }}
           </option>
         </select>
       </div>
@@ -74,9 +65,11 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import lavadoService from '../../composables/api/lavadoService.js';
+import cajaService from '../../composables/api/cajaService.js';
+
 // import { useLavados } from '../services';
 
 export default {
@@ -84,27 +77,43 @@ export default {
     const router = useRouter();
     const route = useRoute();
     const form = ref({
+      id: 0,
       cajaId: 0,
       fecha: '',
       tipoVehiculoId: '',
       tipoLavadoId: '',
       descripcion: '',
       importe: '',
+      // tipoVehiculo: {
+      //   id: 0,
+      //   descripcion: '',
+      // },
+      // tipoLavado: {
+      //   id: 0,
+      //   descripcion: '',
+      // },
     });
-
+    let tiposLavados = ref([]);
+    let tiposVehiculos = ref([]);
+    let cajaAbierta = ref({});
+    cajaAbierta = cajaService.getCajaAbierta();
+    console.log(cajaAbierta);
+    // const tiposLavados = ref([{ id: 1, nombre: 'Lavado Común' }]);
     // const tiposVehiculos = useTiposVehiculos();
     // const tiposLavados = useTiposLavados();
     // const lavados = useLavados();
 
-    const tiposVehiculos = ref([
-      { id: 1, nombre: 'Camioneta' },
-      { id: 2, nombre: 'Auto' },
-    ]);
-    const tiposLavados = ref([{ id: 1, nombre: 'Lavado Común' }]);
+    // const tiposVehiculos = ref([
+    //   { id: 1, nombre: 'Camioneta' },
+    //   { id: 2, nombre: 'Auto' },
+    // ]);
 
     const submitForm = () => {
-      form.value.cajaId = 1;
+      debugger;
+      form.value.cajaId = cajaAbierta.value.id;
       form.value.fecha = new Date();
+      // form.value.tipoLavado.id = form.value.tipoLavadoId;
+      // form.value.tipoVehiculo.id = form.value.tipoVehiculoId;
       lavadoService.addLavado(form);
       form.value = {};
       form.fecha = '';
@@ -114,12 +123,19 @@ export default {
       form.importe = '';
       router.push('/');
     };
+    onMounted(async () => {
+      tiposLavados.value = await lavadoService.getTipoLavado();
+      tiposVehiculos.value = await lavadoService.getTipoVehiculo();
+
+      // console.log(tipoLavado);
+    });
 
     return {
       form,
       tiposVehiculos,
       tiposLavados,
       submitForm,
+      cajaAbierta,
     };
   },
 };
