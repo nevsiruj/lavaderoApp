@@ -18,12 +18,15 @@
           <label class="card-text"
             >Dinero en la caja: ${{ cajaAbierta.montoInicial ?? '0.00' }}</label
           >
-          <button
+          <!-- <button
             class="btn btn-sm btn-danger ms-2"
             @click="cerrarCaja(cajaAbierta)"
           >
             <i class="fa fa-times-circle" style="font-size: 1rem"></i>
-          </button>
+          </button> -->
+          <router-link class="btn btn-sm btn-danger ms-2" to="/cerrarcaja">
+            <i class="fa fa-times-circle" style="font-size: 1rem"></i>
+          </router-link>
           <br />
           <br />
           <label class="card-text">
@@ -99,12 +102,6 @@ export default {
     const route = useRoute();
     cajaAbierta = cajaService.getCajaAbierta();
 
-    const cerrarCaja = (cajaAbierta) => {
-      cajaService.cerrarCaja(cajaAbierta.id);
-      console.log('Caja cerrada', cajaAbierta.value);
-      router.push('/abrircaja');
-    };
-
     onMounted(() => {
       cajaAbierta = cajaService.getCajaAbierta();
       cajaService.getCajas();
@@ -112,7 +109,6 @@ export default {
 
     return {
       cajaAbierta,
-      cerrarCaja,
     };
   },
   name: 'Caja',

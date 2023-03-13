@@ -2,6 +2,7 @@ import { ref } from 'vue';
 import lavadoService from './lavadoService.js';
 
 const cajaService = (() => {
+  const axios = require('axios');
   const caja = ref({
     responsable: '',
     montoInicial: 0,
@@ -30,20 +31,31 @@ const cajaService = (() => {
     return await caja.value;
   };
 
-  const cerrarCaja = async (_data) => {
-    fetch(`https://localhost:44312/api/caja/cerrarCaja?cajaId=${_data}`, {
-      method: 'POST',
-    })
+  // const cerrarCaja = async (_data) => {
+  //   fetch(`https://localhost:44312/api/caja/cerrarCaja?cajaId=${_data}`, {
+  //     method: 'POST',
+  //   })
+  //     .then((response) => {
+  //       if (response.ok) {
+  //         // El cierre de la caja fue exitoso
+  //         console.log('La caja fue cerrada exitosamente');
+  //       } else {
+  //         throw new Error('Ocurrió un error al cerrar la caja');
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error:', error);
+  //     });
+  // };
+  const cerrarCaja = async (id, data) => {
+    debugger;
+    await axios
+      .post(`https://localhost:44312/api/caja/cerrarCaja?cajaId=${id}`, data)
       .then((response) => {
-        if (response.ok) {
-          // El cierre de la caja fue exitoso
-          console.log('La caja fue cerrada exitosamente');
-        } else {
-          throw new Error('Ocurrió un error al cerrar la caja');
-        }
+        console.log(response);
       })
       .catch((error) => {
-        console.error('Error:', error);
+        console.log(error);
       });
   };
 

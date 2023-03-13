@@ -1,5 +1,6 @@
 <template>
   <div class="container mt-3">
+    <a href="#" @click="goBack">&lt; Volver atrás</a>
     <form>
       <div class="form-group">
         <label for="descripcion">Descripción</label>

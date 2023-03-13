@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <a href="#" @click="goBack">&lt; Volver atrás</a>
     <h1>Egresos</h1>
     <table class="table">
       <thead>

@@ -12,19 +12,6 @@ const lavadoService = (() => {
   ]);
   const error = ref(null);
   const axios = require('axios');
-
-  // const loadLavados = async () => {
-  //   try {
-  //     const response = await axios
-  //       .get('https://localhost:44312/api/lavado')
-  //       .then((response) => {
-  //         return response.data;
-  //       });
-  //     lavados.value = response.data;
-  //     console.log(response);
-  //   } catch (err) {
-  //     error.value = err.message;
-  //   }
   // };
   const getTipoLavado = async () => {
     const response = await axios.get(`https://localhost:44312/api/TipoLavado`);
