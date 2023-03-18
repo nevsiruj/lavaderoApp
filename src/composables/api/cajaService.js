@@ -1,5 +1,6 @@
 import { ref } from 'vue';
 import lavadoService from './lavadoService.js';
+import { API_URL } from '../../config.js';
 
 const cajaService = (() => {
   const axios = require('axios');
@@ -14,7 +15,7 @@ const cajaService = (() => {
     caja.value.montoInicial = _data.montoInicial;
     caja.value.isOpen = true;
     caja.value.cantidadLavados = 0;
-    fetch(`https://localhost:44312/api/caja`, {
+    fetch(`${API_URL}/caja`, {
       method: 'POST',
       body: JSON.stringify(caja.value),
       headers: {
@@ -75,7 +76,7 @@ const cajaService = (() => {
     // });
     // caja.value.cantidadLavados = lavadosRelacionados.length;
 
-    return caja.value;
+    return caja;
   };
 
   const getLavadosByCaja = () => {

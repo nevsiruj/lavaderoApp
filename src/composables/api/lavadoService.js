@@ -1,5 +1,6 @@
 import { ref } from 'vue';
 import { axios } from 'axios';
+import { API_URL } from '../../config.js';
 
 const lavadoService = (() => {
   const lavados = ref([
