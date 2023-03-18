@@ -60,13 +60,12 @@ const cajaService = (() => {
   };
 
   const getCajaAbierta = () => {
-    console.log(`getCajaAbierta`);
     fetch(`https://localhost:44312/api/caja/cajaabierta`)
       .then((response) => response.json())
       .then((data) => {
         // console.log(data);
         caja.value = data;
-        return data;
+        return data.value;
       })
       .catch((e) => false);
 
@@ -76,7 +75,7 @@ const cajaService = (() => {
     // });
     // caja.value.cantidadLavados = lavadosRelacionados.length;
 
-    return caja;
+    return caja.value;
   };
 
   const getLavadosByCaja = () => {
