@@ -1,6 +1,8 @@
 <template>
   <div>
-    <a href="#" @click="goBack">&lt; Volver atrás</a>
+    <div class="mb-3">
+      <router-link to="/"> &lt;Volver atrás </router-link>
+    </div>
 
     <div class="card m-4">
       <div class="card-header">Lavados</div>
@@ -46,10 +48,11 @@ export default {
     // let tipoLavado = ref([]);
 
     let cajaAbierta = ref({});
-    cajaAbierta = cajaService.getCajaAbierta();
+
     // tipoLavado = lavadoService.getTipoLavado();
 
     onMounted(async () => {
+      cajaAbierta = cajaService.getCajaAbierta();
       autosLavados.value = await lavadoService.getLavadosByCaja(
         cajaAbierta.value.id
       );

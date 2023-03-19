@@ -1,7 +1,11 @@
 <template>
   <nav class="navbar navbar-dark bg-dark fixed-top">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Lavadero APP</a>
+      <!-- <a class="navbar-brand" href="#">Lavadero APP</a> -->
+      <a class="navbar-brand" href="#" @click.prevent="navigateToIndex"
+        >Lavadero APP</a
+      >
+
       <button
         class="navbar-toggler"
         type="button"
@@ -74,10 +78,22 @@
 </template>
 
 <script>
+import { useRouter } from 'vue-router';
 export default {
   name: 'SideBar',
   props: {
     msg: String,
+  },
+  setup() {
+    const router = useRouter();
+
+    const navigateToIndex = () => {
+      router.push('/');
+    };
+
+    return {
+      navigateToIndex,
+    };
   },
   components: {},
   created() {},

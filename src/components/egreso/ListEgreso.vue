@@ -1,6 +1,8 @@
 <template>
   <div class="container">
-    <a href="#" @click="goBack">&lt; Volver atrás</a>
+    <div class="mb-3">
+      <router-link to="/"> &lt;Volver atrás </router-link>
+    </div>
     <h1>Egresos</h1>
     <table class="table">
       <thead>

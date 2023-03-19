@@ -1,67 +1,74 @@
 <template>
   <div class="container mt-3">
-    <a href="#" @click="goBack">&lt; Volver atrás</a>
-    <form>
-      <div class="form-group">
-        <label for="descripcion">Descripción</label>
-        <input
-          type="text"
-          class="form-control form-control-sm"
-          id="descripcion"
-          v-model="form.descripcion"
-        />
-      </div>
-      <div class="form-group">
-        <label for="tipo-vehiculo">Tipo de vehículo</label>
-        <select
-          class="form-control form-control-sm"
-          id="tipo-vehiculo"
-          v-model="form.tipoVehiculoId"
-        >
-          <option value="">Seleccionar tipo de vehículo</option>
-          <option
-            v-for="tipoVehiculo in tiposVehiculos"
-            :key="tipoVehiculo.id"
-            :value="tipoVehiculo.id"
+    <div class="mb-3">
+      <router-link to="/"> &lt;Volver atrás </router-link>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <form>
+          <div class="form-group">
+            <label for="descripcion">Descripción</label>
+            <input
+              type="text"
+              class="form-control form-control-sm"
+              id="descripcion"
+              v-model="form.descripcion"
+            />
+          </div>
+          <div class="form-group">
+            <label for="tipo-vehiculo">Tipo de vehículo</label>
+            <select
+              class="form-control form-control-sm"
+              id="tipo-vehiculo"
+              v-model="form.tipoVehiculoId"
+            >
+              <option value="">Seleccionar tipo de vehículo</option>
+              <option
+                v-for="tipoVehiculo in tiposVehiculos"
+                :key="tipoVehiculo.id"
+                :value="tipoVehiculo.id"
+              >
+                {{ tipoVehiculo.descripcion }}
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="tipo-lavado">Tipo de lavado</label>
+            <select
+              class="form-control form-control-sm"
+              id="tipo-lavado"
+              v-model="form.tipoLavadoId"
+            >
+              <option value="">Seleccionar tipo de lavado</option>
+              <option
+                v-for="tipoLavado in tiposLavados"
+                :key="tipoLavado.id"
+                :value="tipoLavado.id"
+              >
+                {{ tipoLavado.descripcion }}
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="importe">Importe</label>
+            <input
+              type="number"
+              class="form-control form-control-sm"
+              id="importe"
+              v-model="form.importe"
+            />
+          </div>
+          <button
+            type="submit"
+            class="btn btn-primary mt-3"
+            @click.prevent="submitForm"
           >
-            {{ tipoVehiculo.descripcion }}
-          </option>
-        </select>
+            Guardar
+          </button>
+        </form>
       </div>
-      <div class="form-group">
-        <label for="tipo-lavado">Tipo de lavado</label>
-        <select
-          class="form-control form-control-sm"
-          id="tipo-lavado"
-          v-model="form.tipoLavadoId"
-        >
-          <option value="">Seleccionar tipo de lavado</option>
-          <option
-            v-for="tipoLavado in tiposLavados"
-            :key="tipoLavado.id"
-            :value="tipoLavado.id"
-          >
-            {{ tipoLavado.descripcion }}
-          </option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="importe">Importe</label>
-        <input
-          type="number"
-          class="form-control form-control-sm"
-          id="importe"
-          v-model="form.importe"
-        />
-      </div>
-      <button
-        type="submit"
-        class="btn btn-primary mt-3"
-        @click.prevent="submitForm"
-      >
-        Guardar
-      </button>
-    </form>
+    </div>
   </div>
 </template>
 
