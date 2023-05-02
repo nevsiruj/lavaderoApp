@@ -40,84 +40,6 @@
         <p class="text-3xl">{{ totalLavados }}</p>
       </div>
 
-      <!-- Ventana emergente para el detalle del KPI -->
-      <div
-        class="fixed z-10 inset-0 overflow-y-auto"
-        :class="{ hidden: !mostrarVentanaDetalle }"
-      >
-        <div
-          class="
-            flex
-            items-center
-            justify-center
-            min-h-screen
-            pt-4
-            px-4
-            pb-20
-            text-center
-            sm:block sm:p-0
-          "
-        >
-          <div class="fixed inset-0 transition-opacity">
-            <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-          </div>
-          <div
-            class="
-              inline-block
-              align-bottom
-              bg-white
-              rounded-lg
-              text-left
-              overflow-hidden
-              shadow-xl
-              transform
-              transition-all
-              sm:my-8 sm:align-middle sm:max-w-lg sm:w-full
-            "
-          >
-            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-              <h3 class="text-lg leading-6 font-medium text-gray-900">
-                {{ kpiSeleccionado }}
-              </h3>
-              <div class="mt-5">
-                <p class="text-gray-700">{{ detalleKPI }}</p>
-              </div>
-            </div>
-            <div
-              class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse"
-            >
-              <button
-                type="button"
-                class="
-                  mt-3
-                  w-full
-                  inline-flex
-                  justify-center
-                  rounded-md
-                  border border-transparent
-                  shadow-sm
-                  px-4
-                  py-2
-                  bg-blue-600
-                  text-base
-                  font-medium
-                  text-white
-                  hover:bg-blue-700
-                  focus:outline-none
-                  focus:ring-2
-                  focus:ring-offset-2
-                  focus:ring-blue-500
-                  sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm
-                "
-                @click="mostrarVentanaDetalle = false"
-              >
-                Cerrar
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <div class="bg-white rounded-lg p-4 shadow">
         <h2 class="text-xl font-semibold">Ingresos</h2>
         <p class="text-3xl">{{ ingresos }}</p>
@@ -133,6 +55,82 @@
       <div class="bg-white rounded-lg p-4 shadow">
         <h2 class="text-xl font-semibold">Beneficio Neto</h2>
         <p class="text-3xl">{{ beneficioNeto }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ventana emergente para el detalle del KPI -->
+  <div
+    class="fixed z-10 inset-0 overflow-y-auto"
+    :class="{ hidden: !mostrarVentanaDetalle }"
+  >
+    <div
+      class="
+        flex
+        items-center
+        justify-center
+        min-h-screen
+        pt-4
+        px-4
+        pb-20
+        text-center
+        sm:block sm:p-0
+      "
+    >
+      <div class="fixed inset-0 transition-opacity">
+        <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+      </div>
+      <div
+        class="
+          inline-block
+          align-bottom
+          bg-white
+          rounded-lg
+          text-left
+          overflow-hidden
+          shadow-xl
+          transform
+          transition-all
+          sm:my-8 sm:align-middle sm:max-w-lg sm:w-full
+        "
+      >
+        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+          <h3 class="text-lg leading-6 font-medium text-gray-900">
+            {{ kpiSeleccionado }}
+          </h3>
+          <div class="mt-5">
+            <p class="text-gray-700">{{ detalleKPI }}</p>
+          </div>
+        </div>
+        <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+          <button
+            type="button"
+            class="
+              mt-3
+              w-full
+              inline-flex
+              justify-center
+              rounded-md
+              border border-transparent
+              shadow-sm
+              px-4
+              py-2
+              bg-blue-600
+              text-base
+              font-medium
+              text-white
+              hover:bg-blue-700
+              focus:outline-none
+              focus:ring-2
+              focus:ring-offset-2
+              focus:ring-blue-500
+              sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm
+            "
+            @click="mostrarVentanaDetalle = false"
+          >
+            Cerrar
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -165,10 +163,6 @@
 .kpi-box p {
   font-size: 24px;
   font-weight: bold;
-}
-
-.hidden {
-  display: none;
 }
 </style>
 
@@ -225,6 +219,19 @@ export default {
 
       // Actualizamos la propiedad "lavados" con los datos simulados
       this.lavados = lavados;
+    },
+    obtenerDetalleKPI(kpi) {
+      if (kpi === 'cantidadLavados') {
+        return `La cantidad de lavados realizados entre ${this.fechaInicio} y ${this.fechaFin} es de ${this.totalLavados}.`;
+      } else if (kpi === 'ingresos') {
+        return `Los ingresos entre ${this.fechaInicio} y ${this.fechaFin} son de $${this.ingresos}.`;
+      } else if (kpi === 'egresos') {
+        return `Los egresos entre ${this.fechaInicio} y ${this.fechaFin} son de $${this.egresos}.`;
+      } else if (kpi === 'gastos') {
+        return `Los gastos entre ${this.fechaInicio} y ${this.fechaFin} son de $${this.gastos}.`;
+      } else if (kpi === 'beneficioNeto') {
+        return `El beneficio neto entre ${this.fechaInicio} y ${this.fechaFin} es de $${this.beneficioNeto}.`;
+      }
     },
     mostrarDetalle(kpi) {
       this.kpiSeleccionado = kpi;
