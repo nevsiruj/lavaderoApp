@@ -1,55 +1,191 @@
 <template>
-  <div>
-    <h1>Lavados diarios</h1>
+  <div class="container mx-auto">
+    <h1 class="text-3xl font-semibold mb-6">Dashboard de Lavados</h1>
     <form>
-      <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Fecha inicio:</label>
-        <div class="col-sm-4">
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+        <div>
+          <label class="block mb-2">Fecha inicio:</label>
           <input type="date" class="form-control" v-model="fechaInicio" />
         </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Fecha fin:</label>
-        <div class="col-sm-4">
+        <div>
+          <label class="block mb-2">Fecha fin:</label>
           <input type="date" class="form-control" v-model="fechaFin" />
         </div>
-      </div>
-      <div class="form-group">
-        <button type="button" class="btn btn-primary" @click="filtrar">
-          Filtrar
-        </button>
+        <div class="flex items-end">
+          <button
+            type="button"
+            class="
+              bg-blue-500
+              text-white
+              font-semibold
+              px-6
+              py-3
+              w-full
+              sm:w-auto
+            "
+            @click="filtrar"
+          >
+            Filtrar
+          </button>
+        </div>
       </div>
     </form>
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Día</th>
-          <th>Lavados</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(lavado, index) in lavadosFiltrados" :key="index">
-          <td>{{ lavado.fecha }}</td>
-          <td>{{ lavado.lavados }}</td>
-        </tr>
-      </tbody>
-      <tfoot>
-        <tr>
-          <th>Total:</th>
-          <th>{{ totalLavados }}</th>
-        </tr>
-      </tfoot>
-    </table>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div
+        class="bg-white rounded-lg p-4 shadow"
+        @click="mostrarDetalle('cantidadLavados')"
+      >
+        <h2 class="text-xl font-semibold">Cantidad Lavados</h2>
+        <p class="text-3xl">{{ totalLavados }}</p>
+      </div>
+
+      <!-- Ventana emergente para el detalle del KPI -->
+      <div
+        class="fixed z-10 inset-0 overflow-y-auto"
+        :class="{ hidden: !mostrarVentanaDetalle }"
+      >
+        <div
+          class="
+            flex
+            items-center
+            justify-center
+            min-h-screen
+            pt-4
+            px-4
+            pb-20
+            text-center
+            sm:block sm:p-0
+          "
+        >
+          <div class="fixed inset-0 transition-opacity">
+            <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+          </div>
+          <div
+            class="
+              inline-block
+              align-bottom
+              bg-white
+              rounded-lg
+              text-left
+              overflow-hidden
+              shadow-xl
+              transform
+              transition-all
+              sm:my-8 sm:align-middle sm:max-w-lg sm:w-full
+            "
+          >
+            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+              <h3 class="text-lg leading-6 font-medium text-gray-900">
+                {{ kpiSeleccionado }}
+              </h3>
+              <div class="mt-5">
+                <p class="text-gray-700">{{ detalleKPI }}</p>
+              </div>
+            </div>
+            <div
+              class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse"
+            >
+              <button
+                type="button"
+                class="
+                  mt-3
+                  w-full
+                  inline-flex
+                  justify-center
+                  rounded-md
+                  border border-transparent
+                  shadow-sm
+                  px-4
+                  py-2
+                  bg-blue-600
+                  text-base
+                  font-medium
+                  text-white
+                  hover:bg-blue-700
+                  focus:outline-none
+                  focus:ring-2
+                  focus:ring-offset-2
+                  focus:ring-blue-500
+                  sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm
+                "
+                @click="mostrarVentanaDetalle = false"
+              >
+                Cerrar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-lg p-4 shadow">
+        <h2 class="text-xl font-semibold">Ingresos</h2>
+        <p class="text-3xl">{{ ingresos }}</p>
+      </div>
+      <div class="bg-white rounded-lg p-4 shadow">
+        <h2 class="text-xl font-semibold">Egresos</h2>
+        <p class="text-3xl">{{ egresos }}</p>
+      </div>
+      <div class="bg-white rounded-lg p-4 shadow">
+        <h2 class="text-xl font-semibold">Gastos</h2>
+        <p class="text-3xl">{{ gastos }}</p>
+      </div>
+      <div class="bg-white rounded-lg p-4 shadow">
+        <h2 class="text-xl font-semibold">Beneficio Neto</h2>
+        <p class="text-3xl">{{ beneficioNeto }}</p>
+      </div>
+    </div>
   </div>
 </template>
+
+<style>
+.kpi-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.kpi-box {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  padding: 20px;
+  width: 180px;
+  margin: 10px;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.kpi-box h3 {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.kpi-box p {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.hidden {
+  display: none;
+}
+</style>
 
 <script>
 export default {
   data() {
     return {
       lavados: [], // Aquí se almacenarán los datos cargados del archivo JSON
-      fechaInicio: '', // Aquí se almacenará la fecha de inicio seleccionada por el usuario
-      fechaFin: '', // Aquí se almacenará la fecha de fin seleccionada por el usuario
+      fechaInicio: '',
+      fechaFin: '',
+      ingresos: 0,
+      egresos: 0,
+      gastos: 0,
+      beneficioNeto: 0,
+      mostrarVentanaDetalle: false,
+      kpiSeleccionado: null,
+      detalleKPI: '',
     };
   },
   computed: {
@@ -89,6 +225,14 @@ export default {
 
       // Actualizamos la propiedad "lavados" con los datos simulados
       this.lavados = lavados;
+    },
+    mostrarDetalle(kpi) {
+      this.kpiSeleccionado = kpi;
+
+      // Asigna el detalle del KPI seleccionado a la variable detalleKPI
+      this.detalleKPI = obtenerDetalleKPI(kpi); // Función ficticia para obtener el detalle del KPI
+
+      this.mostrarVentanaDetalle = true;
     },
   },
 };
