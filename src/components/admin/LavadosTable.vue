@@ -101,6 +101,12 @@
           <div class="mt-5">
             <p class="text-gray-700">{{ detalleKPI }}</p>
           </div>
+
+          <!-- %%%% -->
+              <div class="bg-white shadow-md rounded-md p-6">
+                <canvas id="chart"></canvas>
+              </div>
+          <!-- %%%% -->
         </div>
         <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
           <button
@@ -167,10 +173,12 @@
 </style>
 
 <script>
+import Chart from 'chart.js/auto';
+
 export default {
   data() {
     return {
-      lavados: [], // Aquí se almacenarán los datos cargados del archivo JSON
+      // lavados: [], // Aquí se almacenarán los datos cargados del archivo JSON
       fechaInicio: '',
       fechaFin: '',
       ingresos: 0,
@@ -180,9 +188,58 @@ export default {
       mostrarVentanaDetalle: false,
       kpiSeleccionado: null,
       detalleKPI: '',
+      lavados: [
+        { fecha: '2022-04-01', cantidad: 20 },
+        { fecha: '2022-04-02', cantidad: 15 },
+        { fecha: '2022-04-03', cantidad: 30 },
+        { fecha: '2022-04-04', cantidad: 25 },
+        { fecha: '2022-04-05', cantidad: 40 },
+        { fecha: '2022-04-06', cantidad: 35 },
+        { fecha: '2022-04-07', cantidad: 50 },
+        { fecha: '2022-04-08', cantidad: 45 },
+        { fecha: '2022-04-09', cantidad: 60 },
+        { fecha: '2022-04-10', cantidad: 55 },
+        { fecha: '2022-04-11', cantidad: 70 },
+        { fecha: '2022-04-12', cantidad: 65 },
+        { fecha: '2022-04-13', cantidad: 80 },
+        { fecha: '2022-04-14', cantidad: 75 },
+        { fecha: '2022-04-15', cantidad: 90 },
+        { fecha: '2022-04-16', cantidad: 85 },
+        { fecha: '2022-04-17', cantidad: 100 },
+        { fecha: '2022-04-18', cantidad: 95 },
+        { fecha: '2022-04-19', cantidad: 110 },
+        { fecha: '2022-04-20', cantidad: 105 },
+        { fecha: '2022-04-21', cantidad: 120 },
+        { fecha: '2022-04-22', cantidad: 115 },
+        { fecha: '2022-04-23', cantidad: 130 },
+        { fecha: '2022-04-24', cantidad: 125 },
+        { fecha: '2022-04-25', cantidad: 140 },
+        { fecha: '2022-04-26', cantidad: 135 },
+        { fecha: '2022-04-27', cantidad: 150 },
+        { fecha: '2022-04-28', cantidad: 145 },
+        { fecha: '2022-04-29', cantidad: 160 },
+        { fecha: '2022-04-30', cantidad: 155 },
+      ],
+      lavadosFiltrados: [],
     };
   },
+  mounted() {},
   computed: {
+    datosGrafico() {
+      return {
+        labels: this.lavadosFiltrados.map((lavado) => lavado.fecha),
+        datasets: [
+          {
+            label: 'Cantidad de lavados',
+            data: this.lavadosFiltrados.map((lavado) => lavado.cantidad),
+            fill: false,
+            borderColor: 'rgb(75, 192, 192)',
+            tension: 0.1,
+          },
+        ],
+      };
+    },
+
     lavadosFiltrados() {
       // Aquí se filtran los datos según las fechas seleccionadas por el usuario
       return this.lavados.filter(
@@ -190,36 +247,46 @@ export default {
           lavado.fecha >= this.fechaInicio && lavado.fecha <= this.fechaFin
       );
     },
+
     totalLavados() {
       // Aquí se calcula el total de lavados de los días filtrados
       return this.lavadosFiltrados.reduce(
-        (total, lavado) => total + lavado.lavados,
+        (total, lavado) => total + lavado.cantidad,
         0
       );
     },
   },
   methods: {
     filtrar() {
-      // Simulamos los datos de lavados para los últimos tres meses
-      const hoy = new Date();
-      const tresMesesAntes = new Date();
-      tresMesesAntes.setMonth(hoy.getMonth() - 3);
-
-      const lavados = [];
-      let fechaActual = new Date(tresMesesAntes);
-
-      while (fechaActual <= hoy) {
-        const lavadosDelDia = Math.floor(Math.random() * 200) + 50;
-        lavados.push({
-          fecha: fechaActual.toISOString().slice(0, 10),
-          lavados: lavadosDelDia,
-        });
-        fechaActual.setDate(fechaActual.getDate() + 1);
-      }
-
-      // Actualizamos la propiedad "lavados" con los datos simulados
-      this.lavados = lavados;
+      this.lavadosFiltrados = this.lavados.filter(
+        (lavado) =>
+          lavado.fecha >= this.fechaInicio && lavado.fecha <= this.fechaFin
+      );
+      this.mostrarGrafico();
     },
+
+    // filtrar() {
+    //   // Simulamos los datos de lavados para los últimos tres meses
+    //   const hoy = new Date();
+    //   const tresMesesAntes = new Date();
+    //   tresMesesAntes.setMonth(hoy.getMonth() - 3);
+
+    //   const lavados = [];
+    //   let fechaActual = new Date(tresMesesAntes);
+
+    //   while (fechaActual <= hoy) {
+    //     const lavadosDelDia = Math.floor(Math.random() * 200) + 50;
+    //     lavados.push({
+    //       fecha: fechaActual.toISOString().slice(0, 10),
+    //       lavados: lavadosDelDia,
+    //     });
+    //     fechaActual.setDate(fechaActual.getDate() + 1);
+    //   }
+
+    //   // Actualizamos la propiedad "lavados" con los datos simulados
+    //   this.lavados = lavados;
+    // },
+
     obtenerDetalleKPI(kpi) {
       if (kpi === 'cantidadLavados') {
         return `La cantidad de lavados realizados entre ${this.fechaInicio} y ${this.fechaFin} es de ${this.totalLavados}.`;
@@ -237,9 +304,29 @@ export default {
       this.kpiSeleccionado = kpi;
 
       // Asigna el detalle del KPI seleccionado a la variable detalleKPI
-      this.detalleKPI = obtenerDetalleKPI(kpi); // Función ficticia para obtener el detalle del KPI
+      this.detalleKPI = this.obtenerDetalleKPI(kpi); // Función ficticia para obtener el detalle del KPI
 
       this.mostrarVentanaDetalle = true;
+    },
+    mostrarGrafico() {
+      const ctx = document.getElementById('chart').getContext('2d');
+      const existingChart = Chart.getChart('chart');
+
+      if (existingChart) {
+        existingChart.destroy();
+      }
+
+      new Chart(ctx, {
+        type: 'line',
+        data: this.datosGrafico,
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
     },
   },
 };
