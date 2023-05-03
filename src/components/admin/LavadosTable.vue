@@ -279,6 +279,7 @@ export default {
       if (this.totalLavados > 0) {
       const boxSelect = document.querySelector('#boxSelect');
       boxSelect.classList.add('boxs');
+      
       }
 
     },
