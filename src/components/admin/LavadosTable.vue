@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto">
-    <h1 class="text-3xl font-semibold mb-6">Dashboard de Lavadoss</h1>
+    <h1 class="text-3xl font-semibold mb-6">Dashboard de Lavados</h1>
     <form>
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
         <div>
