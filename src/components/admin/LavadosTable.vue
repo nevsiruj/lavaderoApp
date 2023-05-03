@@ -42,7 +42,7 @@
 
       <div class="bg-white rounded-lg p-4 shadow">
         <h2 class="text-xl font-semibold">Ingresos</h2>
-        <p class="text-3xl">{{ ingresos }}</p>
+        <p class="text-3xl">{{ totalIngresos }}</p>
       </div>
       <div class="bg-white rounded-lg p-4 shadow">
         <h2 class="text-xl font-semibold">Egresos</h2>
@@ -103,9 +103,9 @@
           </div>
 
           <!-- %%%% -->
-              <div class="bg-white shadow-md rounded-md p-6">
-                <canvas id="chart"></canvas>
-              </div>
+          <div class="bg-white shadow-md rounded-md p-6">
+            <canvas id="chart"></canvas>
+          </div>
           <!-- %%%% -->
         </div>
         <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
@@ -220,7 +220,12 @@ export default {
         { fecha: '2022-04-29', cantidad: 160 },
         { fecha: '2022-04-30', cantidad: 155 },
       ],
+      ingresos: [
+        { fecha: '2022-04-01', importe: 100 },
+        { fecha: '2022-04-02', importe: 150 },
+      ],
       lavadosFiltrados: [],
+      ingresosFiltrados: [],
     };
   },
   mounted() {},
@@ -240,18 +245,26 @@ export default {
       };
     },
 
-    lavadosFiltrados() {
-      // Aquí se filtran los datos según las fechas seleccionadas por el usuario
-      return this.lavados.filter(
-        (lavado) =>
-          lavado.fecha >= this.fechaInicio && lavado.fecha <= this.fechaFin
-      );
-    },
+    // lavadosFiltrados() {
+    //   // Aquí se filtran los datos según las fechas seleccionadas por el usuario
+    //   return this.lavados.filter(
+    //     (lavado) =>
+    //       lavado.fecha >= this.fechaInicio && lavado.fecha <= this.fechaFin
+    //   );
+    // },
 
     totalLavados() {
       // Aquí se calcula el total de lavados de los días filtrados
       return this.lavadosFiltrados.reduce(
         (total, lavado) => total + lavado.cantidad,
+        0
+      );
+    },
+
+    totalIngresos() {
+      // Aquí se calcula el total de ingresos de los dias filtrados
+      return this.ingresosFiltrados.reduce(
+        (total, ingreso) => total + ingreso.importe,
         0
       );
     },
@@ -264,28 +277,6 @@ export default {
       );
       this.mostrarGrafico();
     },
-
-    // filtrar() {
-    //   // Simulamos los datos de lavados para los últimos tres meses
-    //   const hoy = new Date();
-    //   const tresMesesAntes = new Date();
-    //   tresMesesAntes.setMonth(hoy.getMonth() - 3);
-
-    //   const lavados = [];
-    //   let fechaActual = new Date(tresMesesAntes);
-
-    //   while (fechaActual <= hoy) {
-    //     const lavadosDelDia = Math.floor(Math.random() * 200) + 50;
-    //     lavados.push({
-    //       fecha: fechaActual.toISOString().slice(0, 10),
-    //       lavados: lavadosDelDia,
-    //     });
-    //     fechaActual.setDate(fechaActual.getDate() + 1);
-    //   }
-
-    //   // Actualizamos la propiedad "lavados" con los datos simulados
-    //   this.lavados = lavados;
-    // },
 
     obtenerDetalleKPI(kpi) {
       if (kpi === 'cantidadLavados') {
