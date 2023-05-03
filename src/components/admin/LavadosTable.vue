@@ -34,6 +34,7 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       <div
         class="bg-white rounded-lg p-4 shadow"
+        id="boxSelect"
         @click="mostrarDetalle('cantidadLavados')"
       >
         <h2 class="text-xl font-semibold">Cantidad Lavados</h2>
@@ -143,6 +144,11 @@
 </template>
 
 <style>
+.boxs {
+  box-shadow: 0px 0px 5px 5px rgba(64, 132, 244, 0.5) !important;
+  -webkit-box-shadow: 0px 0px 5px 5px rgba(64, 132, 244, 0.5) !important;
+  -moz-box-shadow: 0px 0px 5px 5px rgba(64, 132, 244, 0.5) !important;
+}
 .kpi-container {
   display: flex;
   flex-wrap: wrap;
@@ -245,14 +251,6 @@ export default {
       };
     },
 
-    // lavadosFiltrados() {
-    //   // Aquí se filtran los datos según las fechas seleccionadas por el usuario
-    //   return this.lavados.filter(
-    //     (lavado) =>
-    //       lavado.fecha >= this.fechaInicio && lavado.fecha <= this.fechaFin
-    //   );
-    // },
-
     totalLavados() {
       // Aquí se calcula el total de lavados de los días filtrados
       return this.lavadosFiltrados.reduce(
@@ -271,11 +269,18 @@ export default {
   },
   methods: {
     filtrar() {
+      
       this.lavadosFiltrados = this.lavados.filter(
         (lavado) =>
           lavado.fecha >= this.fechaInicio && lavado.fecha <= this.fechaFin
       );
       this.mostrarGrafico();
+
+      if (this.totalLavados > 0) {
+      const boxSelect = document.querySelector('#boxSelect');
+      boxSelect.classList.add('boxs');
+      }
+
     },
 
     obtenerDetalleKPI(kpi) {
@@ -297,7 +302,10 @@ export default {
       // Asigna el detalle del KPI seleccionado a la variable detalleKPI
       this.detalleKPI = this.obtenerDetalleKPI(kpi); // Función ficticia para obtener el detalle del KPI
 
-      this.mostrarVentanaDetalle = true;
+      if (this.totalLavados > 0) {
+        this.mostrarVentanaDetalle = true;
+        return;
+      }
     },
     mostrarGrafico() {
       const ctx = document.getElementById('chart').getContext('2d');
