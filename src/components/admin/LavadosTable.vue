@@ -47,12 +47,12 @@
       </div>
       <div class="bg-white rounded-lg p-4 shadow">
         <h2 class="text-xl font-semibold">Egresos</h2>
-        <p class="text-3xl">{{ egresos }}</p>
+        <p class="text-3xl">{{ totalEgresos }}</p>
       </div>
-      <div class="bg-white rounded-lg p-4 shadow">
+      <!-- <div class="bg-white rounded-lg p-4 shadow">
         <h2 class="text-xl font-semibold">Gastos</h2>
         <p class="text-3xl">{{ gastos }}</p>
-      </div>
+      </div> -->
       <div class="bg-white rounded-lg p-4 shadow">
         <h2 class="text-xl font-semibold">Beneficio Neto</h2>
         <p class="text-3xl">{{ beneficioNeto }}</p>
@@ -180,134 +180,83 @@
 
 <script>
 import Chart from 'chart.js/auto';
+import { reactive, onMounted, ref } from 'vue';
+import adminService from '../../composables/api/adminService.js';
+
 
 export default {
-  data() {
-    return {
-      // lavados: [], // Aquí se almacenarán los datos cargados del archivo JSON
-      fechaInicio: '',
-      fechaFin: '',
-      ingresos: 0,
-      egresos: 0,
-      gastos: 0,
-      beneficioNeto: 0,
-      mostrarVentanaDetalle: false,
-      kpiSeleccionado: null,
-      detalleKPI: '',
-      lavados: [
-        { fecha: '2022-04-01', cantidad: 20 },
-        { fecha: '2022-04-02', cantidad: 15 },
-        { fecha: '2022-04-03', cantidad: 30 },
-        { fecha: '2022-04-04', cantidad: 25 },
-        { fecha: '2022-04-05', cantidad: 40 },
-        { fecha: '2022-04-06', cantidad: 35 },
-        { fecha: '2022-04-07', cantidad: 50 },
-        { fecha: '2022-04-08', cantidad: 45 },
-        { fecha: '2022-04-09', cantidad: 60 },
-        { fecha: '2022-04-10', cantidad: 55 },
-        { fecha: '2022-04-11', cantidad: 70 },
-        { fecha: '2022-04-12', cantidad: 65 },
-        { fecha: '2022-04-13', cantidad: 80 },
-        { fecha: '2022-04-14', cantidad: 75 },
-        { fecha: '2022-04-15', cantidad: 90 },
-        { fecha: '2022-04-16', cantidad: 85 },
-        { fecha: '2022-04-17', cantidad: 100 },
-        { fecha: '2022-04-18', cantidad: 95 },
-        { fecha: '2022-04-19', cantidad: 110 },
-        { fecha: '2022-04-20', cantidad: 105 },
-        { fecha: '2022-04-21', cantidad: 120 },
-        { fecha: '2022-04-22', cantidad: 115 },
-        { fecha: '2022-04-23', cantidad: 130 },
-        { fecha: '2022-04-24', cantidad: 125 },
-        { fecha: '2022-04-25', cantidad: 140 },
-        { fecha: '2022-04-26', cantidad: 135 },
-        { fecha: '2022-04-27', cantidad: 150 },
-        { fecha: '2022-04-28', cantidad: 145 },
-        { fecha: '2022-04-29', cantidad: 160 },
-        { fecha: '2022-04-30', cantidad: 155 },
-      ],
-      ingresos: [
-        { fecha: '2022-04-01', importe: 100 },
-        { fecha: '2022-04-02', importe: 150 },
-      ],
-      lavadosFiltrados: [],
-      ingresosFiltrados: [],
-    };
-  },
-  mounted() {},
-  computed: {
-    datosGrafico() {
-      return {
-        labels: this.lavadosFiltrados.map((lavado) => lavado.fecha),
-        datasets: [
-          {
-            label: 'Cantidad de lavados',
-            data: this.lavadosFiltrados.map((lavado) => lavado.cantidad),
-            fill: false,
-            borderColor: 'rgb(75, 192, 192)',
-            tension: 0.1,
-          },
-        ],
-      };
-    },
+  setup() {
+    let mostrarVentanaDetalle = ref(false)
+    let kpiSeleccionado= ref(null)
+    let detalleKPI=ref('')
+    let lavados=ref([])
+    let ingresos= ref([])
+    let egresos= ref([])
+    let beneficioNeto=ref(0)
+    let totalLavados=ref(0)
+    let totalIngresos=ref(0)
+    let totalEgresos=ref(0)
+    let fechaInicio = ref("")
+    let fechaFin = ref("")
 
-    totalLavados() {
-      // Aquí se calcula el total de lavados de los días filtrados
-      return this.lavadosFiltrados.reduce(
-        (total, lavado) => total + lavado.cantidad,
-        0
-      );
-    },
+    const filtrar = async () => {
+      let datos= await adminService.getDatosPorFecha(fechaInicio.value,fechaFin.value)
+      beneficioNeto.value= datos.beneficioNeto
+      totalLavados.value = datos.cantidadLavados
+      totalIngresos.value= datos.totalFacturado
+      totalEgresos.value = datos.totalEgresos
+      lavados.value=datos.lavados
+      ingresos.value=datos.ingresos
+      egresos.value=datos.egresos
+      console.log(datos)
 
-    totalIngresos() {
-      // Aquí se calcula el total de ingresos de los dias filtrados
-      return this.ingresosFiltrados.reduce(
-        (total, ingreso) => total + ingreso.importe,
-        0
-      );
-    },
-  },
-  methods: {
-    filtrar() {
-      
-      this.lavadosFiltrados = this.lavados.filter(
-        (lavado) =>
-          lavado.fecha >= this.fechaInicio && lavado.fecha <= this.fechaFin
-      );
-      this.mostrarGrafico();
+      mostrarGrafico();
 
-      if (this.totalLavados > 0) {
-      const boxSelect = document.querySelector('#boxSelect');
-      boxSelect.classList.add('boxs');
+      if (totalLavados.value > 0) {
+        const boxSelect = document.querySelector('#boxSelect');
+        boxSelect.classList.add('boxs');
       }
-
     },
 
-    obtenerDetalleKPI(kpi) {
+    const obtenerDetalleKPI = (kpi) => {
       if (kpi === 'cantidadLavados') {
-        return `La cantidad de lavados realizados entre ${this.fechaInicio} y ${this.fechaFin} es de ${this.totalLavados}.`;
+        return `La cantidad de lavados realizados entre ${fechaInicio} y ${fechaFin} es de ${totalLavados}.`;
       } else if (kpi === 'ingresos') {
-        return `Los ingresos entre ${this.fechaInicio} y ${this.fechaFin} son de $${this.ingresos}.`;
+        return `Los ingresos entre ${fechaInicio} y ${fechaFin} son de $${totalIngresos}.`;
       } else if (kpi === 'egresos') {
-        return `Los egresos entre ${this.fechaInicio} y ${this.fechaFin} son de $${this.egresos}.`;
-      } else if (kpi === 'gastos') {
-        return `Los gastos entre ${this.fechaInicio} y ${this.fechaFin} son de $${this.gastos}.`;
+        return `Los egresos entre ${fechaInicio} y ${tfechaFin} son de $${totalEgresos}.`;
+      // } else if (kpi === 'gastos') {
+      //   return `Los gastos entre ${this.fechaInicio} y ${this.fechaFin} son de $${this.gastos}.`;
       } else if (kpi === 'beneficioNeto') {
-        return `El beneficio neto entre ${this.fechaInicio} y ${this.fechaFin} es de $${this.beneficioNeto}.`;
+        return `El beneficio neto entre ${fechaInicio} y ${fechaFin} es de $${beneficioNeto}.`;
       }
     },
-    mostrarDetalle(kpi) {
-      this.kpiSeleccionado = kpi;
+    const mostrarDetalle =(kpi) => {
+      kpiSeleccionado = kpi;
 
       // Asigna el detalle del KPI seleccionado a la variable detalleKPI
-      this.detalleKPI = this.obtenerDetalleKPI(kpi); // Función ficticia para obtener el detalle del KPI
+     detalleKPI = obtenerDetalleKPI(kpi); // Función ficticia para obtener el detalle del KPI
 
-      if (this.totalLavados > 0) {
-        this.mostrarVentanaDetalle = true;
+      if (totalLavados > 0) {
+        mostrarVentanaDetalle = true;
         return;
       }
     },
-    mostrarGrafico() {
+    const datosGrafico=()=> {
+        return {
+          labels: lavados.value.map((lavado) => lavado.fecha),
+          datasets: [
+            {
+              label: 'Cantidad de lavados',
+              data: lavados.value.map((lavado) => lavado.cantidad),
+              fill: false,
+              borderColor: 'rgb(75, 192, 192)',
+              tension: 0.1,
+            },
+          ],
+        };
+    },
+    const mostrarGrafico= () => {
       const ctx = document.getElementById('chart').getContext('2d');
       const existingChart = Chart.getChart('chart');
 
@@ -317,7 +266,7 @@ export default {
 
       new Chart(ctx, {
         type: 'line',
-        data: this.datosGrafico,
+        data: datosGrafico(),
         options: {
           scales: {
             y: {
@@ -326,7 +275,163 @@ export default {
           },
         },
       });
-    },
+    }
+    onMounted(() => {
+
+    });
+
+    return {
+      fechaInicio,
+      fechaFin,
+      mostrarVentanaDetalle,
+      kpiSeleccionado,
+      detalleKPI,
+      lavados,
+      ingresos,
+      egresos,
+      beneficioNeto,
+      totalLavados,
+      totalIngresos,
+      totalEgresos,
+      datosGrafico,
+      mostrarGrafico,
+      mostrarDetalle,
+      obtenerDetalleKPI,
+      filtrar,
+
+    };
   },
+  name: 'IngresoForm',
+  props: {},
+  components: {},
+  created() {},
+  data() {
+    return {};
+  },
+  methods: {},
 };
+
+
+
+
+
+
+
+
+
+// export default {
+//   data() {
+//     return {
+//       // lavados: [], // Aquí se almacenarán los datos cargados del archivo JSON
+//       fechaInicio: '',
+//       fechaFin: '',
+//       ingresos: 0,
+//       egresos: 0,
+//       gastos: 0,
+//       beneficioNeto: 0,
+//       mostrarVentanaDetalle: false,
+//       kpiSeleccionado: null,
+//       detalleKPI: '',
+//       lavados: [],
+//       ingresos: [
+//         { fecha: '2023-04-01', importe: 100 },
+//         { fecha: '2023-04-02', importe: 150 },
+//       ],
+//       lavadosFiltrados: [],
+//       ingresosFiltrados: [],
+//     };
+//   },
+//   mounted() {},
+//   computed: {
+//     datosGrafico() {
+//       return {
+//         labels: this.lavadosFiltrados.map((lavado) => lavado.fecha),
+//         datasets: [
+//           {
+//             label: 'Cantidad de lavados',
+//             data: this.lavadosFiltrados.map((lavado) => lavado.cantidad),
+//             fill: false,
+//             borderColor: 'rgb(75, 192, 192)',
+//             tension: 0.1,
+//           },
+//         ],
+//       };
+//     },
+
+//     totalLavados() {
+//       // Aquí se calcula el total de lavados de los días filtrados
+//       return this.lavadosFiltrados.reduce(
+//         (total, lavado) => total + lavado.cantidad,
+//         0
+//       );
+//     },
+
+//     totalIngresos() {
+//       // Aquí se calcula el total de ingresos de los dias filtrados
+//       return this.ingresosFiltrados.reduce(
+//         (total, ingreso) => total + ingreso.importe,
+//         0
+//       );
+//     },
+//   },
+//   methods: {
+//     filtrar() {
+//       this.lavadosFiltrados = this.lavados.filter(
+//         (lavado) =>
+//           lavado.fecha >= this.fechaInicio && lavado.fecha <= this.fechaFin
+//       );
+//       this.mostrarGrafico();
+
+//       if (this.totalLavados > 0) {
+//         const boxSelect = document.querySelector('#boxSelect');
+//         boxSelect.classList.add('boxs');
+//       }
+//     },
+
+//     obtenerDetalleKPI(kpi) {
+//       if (kpi === 'cantidadLavados') {
+//         return `La cantidad de lavados realizados entre ${this.fechaInicio} y ${this.fechaFin} es de ${this.totalLavados}.`;
+//       } else if (kpi === 'ingresos') {
+//         return `Los ingresos entre ${this.fechaInicio} y ${this.fechaFin} son de $${this.ingresos}.`;
+//       } else if (kpi === 'egresos') {
+//         return `Los egresos entre ${this.fechaInicio} y ${this.fechaFin} son de $${this.egresos}.`;
+//       } else if (kpi === 'gastos') {
+//         return `Los gastos entre ${this.fechaInicio} y ${this.fechaFin} son de $${this.gastos}.`;
+//       } else if (kpi === 'beneficioNeto') {
+//         return `El beneficio neto entre ${this.fechaInicio} y ${this.fechaFin} es de $${this.beneficioNeto}.`;
+//       }
+//     },
+//     mostrarDetalle(kpi) {
+//       this.kpiSeleccionado = kpi;
+
+//       // Asigna el detalle del KPI seleccionado a la variable detalleKPI
+//       this.detalleKPI = this.obtenerDetalleKPI(kpi); // Función ficticia para obtener el detalle del KPI
+
+//       if (this.totalLavados > 0) {
+//         this.mostrarVentanaDetalle = true;
+//         return;
+//       }
+//     },
+//     mostrarGrafico() {
+//       const ctx = document.getElementById('chart').getContext('2d');
+//       const existingChart = Chart.getChart('chart');
+
+//       if (existingChart) {
+//         existingChart.destroy();
+//       }
+
+//       new Chart(ctx, {
+//         type: 'line',
+//         data: this.datosGrafico,
+//         options: {
+//           scales: {
+//             y: {
+//               beginAtZero: true,
+//             },
+//           },
+//         },
+//       });
+//     },
+//   },
+// };
 </script>

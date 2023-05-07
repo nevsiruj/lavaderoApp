@@ -54,13 +54,18 @@ export default {
       descripcion: '',
       importe: 0,
       cajaId: 0,
+      fechaIngreso: '',
     });
     const submitForm = () => {
       form.value.cajaId = cajaAbierta.value.id;
+      form.value.fechaIngreso = new Date();
+
       egresoService.addEgreso(form);
       form.value = {};
       form.descripcion = '';
       form.importe = '';
+      form.fechaIngreso = '';
+
       router.push('/');
     };
 

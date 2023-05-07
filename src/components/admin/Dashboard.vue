@@ -7,7 +7,7 @@
       </div>
       <div class="col-md-6">
         <h2>Ingresos y egresos</h2>
-        <!-- <IngresosEgresosChart /> -->
+        <IngresosEgresosChart />
       </div>
     </div>
   </div>
@@ -16,14 +16,14 @@
 <script>
 // import Navbar from './Navbar.vue';
 import LavadosChart from './LavadosChart.vue';
-// import IngresosEgresosChart from './IngresosEgresosChart.vue';
+import IngresosEgresosChart from './IngresosEgresosChart.vue';
 
 export default {
   name: 'Dashboard',
   components: {
     // Navbar,
     LavadosChart,
-    // IngresosEgresosChart,
+    IngresosEgresosChart,
   },
 };
 </script>
