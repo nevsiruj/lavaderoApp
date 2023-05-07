@@ -35,7 +35,7 @@
       <div
         class="bg-white rounded-lg p-4 shadow"
         id="boxSelect"
-        @click="mostrarDetalle('cantidadLavados')"
+        @click="mostrarDetalle('totalLavados')"
       >
         <h2 class="text-xl font-semibold">Cantidad Lavados</h2>
         <p class="text-3xl">{{ totalLavados }}</p>
@@ -219,36 +219,47 @@ export default {
     },
 
     const obtenerDetalleKPI = (kpi) => {
-      if (kpi === 'cantidadLavados') {
-        return `La cantidad de lavados realizados entre ${fechaInicio} y ${fechaFin} es de ${totalLavados}.`;
+      if (kpi === 'totalLavados') {
+        return `La cantidad de lavados realizados entre ${fechaInicio.value.split("T")[0]} y ${fechaFin.value.split("T")[0]} es de ${totalLavados.value}.`;
       } else if (kpi === 'ingresos') {
-        return `Los ingresos entre ${fechaInicio} y ${fechaFin} son de $${totalIngresos}.`;
+        return `Los ingresos entre ${fechaInicio.value} y ${fechaFin.value} son de $${totalIngresos.value}.`;
       } else if (kpi === 'egresos') {
-        return `Los egresos entre ${fechaInicio} y ${tfechaFin} son de $${totalEgresos}.`;
+        return `Los egresos entre ${fechaInicio.value} y ${tfechaFin.value} son de $${totalEgresos.value}.`;
       // } else if (kpi === 'gastos') {
       //   return `Los gastos entre ${this.fechaInicio} y ${this.fechaFin} son de $${this.gastos}.`;
       } else if (kpi === 'beneficioNeto') {
-        return `El beneficio neto entre ${fechaInicio} y ${fechaFin} es de $${beneficioNeto}.`;
+        return `El beneficio neto entre ${fechaInicio.value} y ${fechaFin.value} es de $${beneficioNeto.value}.`;
       }
     },
     const mostrarDetalle =(kpi) => {
-      kpiSeleccionado = kpi;
+      kpiSeleccionado.value = kpi;
 
       // Asigna el detalle del KPI seleccionado a la variable detalleKPI
-     detalleKPI = obtenerDetalleKPI(kpi); // Función ficticia para obtener el detalle del KPI
-
-      if (totalLavados > 0) {
-        mostrarVentanaDetalle = true;
+     detalleKPI.value = obtenerDetalleKPI(kpi); // Función ficticia para obtener el detalle del KPI
+      if (totalLavados.value > 0) {
+        mostrarVentanaDetalle.value = true;
         return;
       }
     },
-    const datosGrafico=()=> {
+    const datosGrafico = () => {
+              const lavadosAgrupados = lavados.value.reduce((acumulador, lavado) => {
+          const fecha = lavado.fecha.split('T')[0];
+
+          if (acumulador[fecha]) {
+            acumulador[fecha] += 1;
+          } else {
+            acumulador[fecha] = 1;
+          }
+
+          return acumulador;
+        }, {});
+      let cantLavados= lavados.value.length
         return {
-          labels: lavados.value.map((lavado) => lavado.fecha),
+          labels: Object.keys(lavadosAgrupados),
           datasets: [
             {
               label: 'Cantidad de lavados',
-              data: lavados.value.map((lavado) => lavado.cantidad),
+              data: Object.values(lavadosAgrupados),
               fill: false,
               borderColor: 'rgb(75, 192, 192)',
               tension: 0.1,
@@ -263,7 +274,7 @@ export default {
       if (existingChart) {
         existingChart.destroy();
       }
-
+      console.log(datosGrafico())
       new Chart(ctx, {
         type: 'line',
         data: datosGrafico(),
