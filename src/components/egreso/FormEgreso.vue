@@ -25,6 +25,17 @@
           required
         />
       </div>
+      <div class="form-check">
+        <label class="form-check-label" for="flexCheckDefault">
+          Es un Gasto
+        </label>
+        <input
+          class="form-check-input"
+          type="checkbox"
+          value=""
+          id="flexCheckDefault"
+        />
+      </div>
       <button
         type="submit"
         class="btn btn-primary mt-3"
