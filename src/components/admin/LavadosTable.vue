@@ -26,36 +26,75 @@
             @click="filtrar"
           >
             Filtrar
-          </button>
+          </button>          
         </div>
       </div>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Home</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">E/R</button>
+  </li>
     </form>
+    
 
+    <!-- <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"> -->
+      <div class="tab-content">
+        <div
+          class="tab-pane fade show active"
+          id="home"
+          role="tabpanel"
+          aria-labelledby="home-tab"
+          tabindex="0"
+        >
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      <div
-        class="bg-white rounded-lg p-4 shadow"
-        id="boxSelect"
-        @click="mostrarDetalle('totalLavados')"
-      >
-        <h2 class="text-xl font-semibold">Cantidad Lavados</h2>
-        <p class="text-3xl">{{ totalLavados }}</p>
-      </div>
 
-      <div class="bg-white rounded-lg p-4 shadow">
-        <h2 class="text-xl font-semibold">Ingresos</h2>
-        <p class="text-3xl">{{ totalIngresos }}</p>
-      </div>
-      <div class="bg-white rounded-lg p-4 shadow">
-        <h2 class="text-xl font-semibold">Egresos</h2>
-        <p class="text-3xl">{{ totalEgresos }}</p>
-      </div>
-      <!-- <div class="bg-white rounded-lg p-4 shadow">
-        <h2 class="text-xl font-semibold">Gastos</h2>
-        <p class="text-3xl">{{ gastos }}</p>
-      </div> -->
-      <div class="bg-white rounded-lg p-4 shadow">
-        <h2 class="text-xl font-semibold">Beneficio Neto</h2>
-        <p class="text-3xl">{{ beneficioNeto }}</p>
+          <div
+            class="bg-white rounded-lg p-4 shadow"
+            id="boxSelect"
+            @click="mostrarDetalle('totalLavados')"
+          >
+            <h2 class="text-xl font-semibold">Cantidad Lavados</h2>
+            <p class="text-3xl">{{ totalLavados }}</p>
+          </div>
+          <div class="bg-white rounded-lg p-4 shadow">
+            <h2 class="text-xl font-semibold">Total Facturado</h2>
+            <p class="text-3xl">{{ totalFacturado }}</p>
+          </div>
+          <div class="bg-white rounded-lg p-4 shadow">
+            <h2 class="text-xl font-semibold">Ingresos</h2>
+            <p class="text-3xl">{{ totalIngresos }}</p>
+          </div>
+          <div class="bg-white rounded-lg p-4 shadow">
+            <h2 class="text-xl font-semibold">Egresos</h2>
+            <p class="text-3xl">{{ totalEgresos }}</p>
+          </div>
+        </div>
+        </div>
+        <div
+          class="tab-pane fade"
+          id="profile"
+          role="tabpanel"
+          aria-labelledby="profile-tab"
+          tabindex="0"
+        >
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+
+        <div class="bg-white rounded-lg p-4  shadow">
+            <h2 class="text-xl font-semibold">Total Facturado</h2>
+            <p class="text-3xl">{{ totalFacturado }}</p>
+          </div>
+          <div class="bg-white rounded-lg p-4  shadow">
+            <h2 class="text-xl font-semibold">Gastos</h2>
+            <p class="text-3xl">{{ totalGastos }}</p>
+          </div>
+          <div class="bg-white rounded-lg p-4 shadow">
+            <h2 class="text-xl font-semibold">Beneficio Neto</h2>
+            <p class="text-3xl">{{ beneficioNeto }}</p>
+          </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -198,16 +237,22 @@ export default {
     let totalEgresos=ref(0)
     let fechaInicio = ref("")
     let fechaFin = ref("")
+    let totalGastos= ref(0)
+    let gastos= ref([])
+    let totalFacturado= ref(0)
 
     const filtrar = async () => {
       let datos= await adminService.getDatosPorFecha(fechaInicio.value,fechaFin.value)
       beneficioNeto.value= datos.beneficioNeto
       totalLavados.value = datos.cantidadLavados
-      totalIngresos.value= datos.totalFacturado
+      totalIngresos.value= datos.totalIngresos
       totalEgresos.value = datos.totalEgresos
       lavados.value=datos.lavados
       ingresos.value=datos.ingresos
       egresos.value=datos.egresos
+      totalGastos.value= datos.totalGastos
+      gastos.value=datos.gastos
+      totalFacturado.value= datos.totalFacturado
       console.log(datos)
 
       mostrarGrafico();
@@ -309,10 +354,13 @@ export default {
       mostrarDetalle,
       obtenerDetalleKPI,
       filtrar,
+      totalGastos,
+      gastos,
+      totalFacturado
 
     };
   },
-  name: 'IngresoForm',
+  name: 'LavadosTable',
   props: {},
   components: {},
   created() {},
