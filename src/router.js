@@ -1,5 +1,6 @@
 import { createWebHistory, createRouter } from 'vue-router';
 import Caja from './components/caja/Caja.vue';
+import Cajas from './components/admin/Cajas.vue';
 import AbrirCaja from './components/caja/AbrirCaja.vue';
 import CerrarCaja from './components/caja/CerrarCaja.vue';
 import FormLavado from './components/lavado/FormLavado.vue';
@@ -17,11 +18,11 @@ const routes = [
     name: 'Caja',
     component: Caja,
   },
-  // {
-  //   path: '/caja',
-  //   name: 'CajaHome',
-  //   component: CajaHome,
-  // },
+  {
+    path: '/Cajas',
+    name: 'Cajas',
+    component: Cajas,
+  },
   {
     path: '/abrircaja',
     name: 'AbrirCaja',
