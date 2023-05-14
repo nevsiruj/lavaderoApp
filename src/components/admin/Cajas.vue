@@ -32,6 +32,8 @@
         </div>
       </li>
     </ul>
+    
+    <!--Modal-->
     <div
       v-if="cajaSeleccionada"
       class="fixed z-10 inset-0 overflow-y-auto"
