@@ -50,7 +50,7 @@ const cajaService = (() => {
   // };
   const cerrarCaja = async (id, data) => {
     await axios
-      .post(`https://localhost:44312/api/caja/cerrarCaja?cajaId=${id}`, data)
+      .post(`${API_URL}/caja/cerrarCaja?cajaId=${id}`, data)
       .then((response) => {
         console.log(response);
       })
@@ -60,7 +60,7 @@ const cajaService = (() => {
   };
 
   const getCajaAbierta = () => {
-    fetch(`https://localhost:44312/api/caja/cajaabierta`)
+    fetch(`${API_URL}/caja/cajaabierta`)
       .then((response) => response.json())
       .then((data) => {
         // console.log(data);
@@ -84,7 +84,7 @@ const cajaService = (() => {
   };
 
   const getCajas = () => {
-    fetch(`https://localhost:44312/api/caja`).then((response) =>
+    fetch(`${API_URL}/caja`).then((response) =>
       response.json()
     );
     // .then((data) => console.log(data));
