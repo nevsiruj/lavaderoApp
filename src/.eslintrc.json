@@ -1,0 +1,25 @@
+// {
+//     "env": {
+//       "browser": true,
+//       "es6": true,
+//       "node": true
+//     },
+//     "extends": ["eslint:recommended"],
+//     "parserOptions": {
+//       "ecmaVersion": 2020,
+//       "sourceType": "module"
+//     },
+//     "rules": {
+//       // Agrega tus reglas personalizadas aquí
+//     }
+//   }
+  
+  {
+    "extends": [
+        "eslint:recommended",
+        "plugin:vue/recommended"
+    ],
+    "rules": {
+        "array-bracket-spacing": ["error", "never"]
+      }
+}

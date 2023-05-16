@@ -49,7 +49,6 @@ const cajaService = (() => {
   //     });
   // };
   const cerrarCaja = async (id, data) => {
-    debugger;
     await axios
       .post(`https://localhost:44312/api/caja/cerrarCaja?cajaId=${id}`, data)
       .then((response) => {
@@ -68,7 +67,7 @@ const cajaService = (() => {
         caja.value = data;
         return data.value;
       })
-      .catch((e) => false);
+      .catch(() => false);
 
     // var lavadosRelacionados = lavadoService.getLavadosByCaja(caja.value.id);
     // lavadosRelacionados.forEach((e) => {

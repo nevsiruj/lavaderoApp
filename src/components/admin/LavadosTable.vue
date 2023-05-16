@@ -30,6 +30,8 @@
         </div>
       </div>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
+          </ul>
+          
   <li class="nav-item" role="presentation">
     <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Home</button>
   </li>
@@ -97,7 +99,6 @@
         </div>
       </div>
     </div>
-  </div>
 
   <!-- Ventana emergente para el detalle del KPI -->
   <div
@@ -261,7 +262,7 @@ export default {
         const boxSelect = document.querySelector('#boxSelect');
         boxSelect.classList.add('boxs');
       }
-    },
+    }
 
     const obtenerDetalleKPI = (kpi) => {
       if (kpi === 'totalLavados') {
@@ -275,7 +276,7 @@ export default {
       } else if (kpi === 'beneficioNeto') {
         return `El beneficio neto entre ${fechaInicio.value} y ${fechaFin.value} es de $${beneficioNeto.value}.`;
       }
-    },
+    }
     const mostrarDetalle =(kpi) => {
       kpiSeleccionado.value = kpi;
 
@@ -285,7 +286,7 @@ export default {
         mostrarVentanaDetalle.value = true;
         return;
       }
-    },
+    }
     const datosGrafico = () => {
               const lavadosAgrupados = lavados.value.reduce((acumulador, lavado) => {
           const fecha = lavado.fecha.split('T')[0];
@@ -311,7 +312,8 @@ export default {
             },
           ],
         };
-    },
+    }
+    
     const mostrarGrafico= () => {
       const ctx = document.getElementById('chart').getContext('2d');
       const existingChart = Chart.getChart('chart');
