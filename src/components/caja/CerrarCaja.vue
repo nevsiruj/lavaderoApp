@@ -38,7 +38,6 @@ export default {
     });
 
     const CerrarCaja = async () => {
-      debugger;
       await cajaService
         .cerrarCaja(cajaAbierta.value.id, formData)
         .then((e) => console.log(e));
