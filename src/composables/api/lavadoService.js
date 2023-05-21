@@ -2,7 +2,7 @@ import { ref } from 'vue';
 // import { axios } from 'axios';
 import { API_URL } from '../../config.js';
 
-console.log(API_URL)
+console.log(API_URL);
 
 const lavadoService = (() => {
   const lavados = ref([
@@ -20,18 +20,14 @@ const lavadoService = (() => {
     const response = await axios.get(`${API_URL}/TipoLavado`);
     return response.data;
   };
-  
+
   const getTipoVehiculo = async () => {
-    const response = await axios.get(
-      `${API_URL}/TipoVehiculo`
-    );
+    const response = await axios.get(`${API_URL}/TipoVehiculo`);
     return response.data;
   };
 
   const getLavadosByCaja = async (_cajaid) => {
-    const response = await axios.get(
-      `${API_URL}/Lavado/${_cajaid}/lavados`
-    );
+    const response = await axios.get(`${API_URL}/Lavado/${_cajaid}/lavados`);
     return response.data;
   };
 
@@ -45,7 +41,7 @@ const lavadoService = (() => {
   //   console.log(lavados.value);
   // };
   const addLavado = async (_data) => {
-    fetch(`${API_URL}/api/Lavado`, {
+    fetch(`${API_URL}/Lavado`, {
       method: 'POST',
       body: JSON.stringify(_data.value),
       headers: {

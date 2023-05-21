@@ -8,15 +8,12 @@ const adminService = (() => {
     //     fechaFin: fechaFin,
     //   },
     // };
-    const response = await axios.get(
-      `https://localhost:44312/DatosEntreFechas`,
-      {
-        params: {
-          fechaInicio: fechaInicio,
-          fechaFin: fechaFin,
-        },
-      }
-    );
+    const response = await axios.get(`https://localhost:44312/GetDetalles`, {
+      params: {
+        fechaInicio: fechaInicio,
+        fechaFin: fechaFin,
+      },
+    });
     return response.data;
   };
   return {
