@@ -1,25 +1,25 @@
 <template>
   <div class="container mt-3">
     <div class="mb-3">
-      <router-link to="/"> &lt;Volver atrás </router-link>
+      <router-link to="/" class="text-blue-500">&lt; Volver atrás</router-link>
     </div>
 
-    <div class="card">
+    <div class="card shadow-lg">
       <div class="card-body">
         <form>
           <div class="form-group">
-            <label for="descripcion">Descripción</label>
+            <label for="descripcion" class="text-black">Descripción</label>
             <input
               type="text"
-              class="form-control form-control-sm"
+              class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
               id="descripcion"
               v-model="form.descripcion"
             />
           </div>
           <div class="form-group">
-            <label for="tipo-vehiculo">Tipo de vehículo</label>
+            <label for="tipo-vehiculo" class="text-black">Tipo de vehículo</label>
             <select
-              class="form-control form-control-sm"
+              class="form-select mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
               id="tipo-vehiculo"
               v-model="form.tipoVehiculoId"
             >
@@ -34,9 +34,9 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="tipo-lavado">Tipo de lavado</label>
+            <label for="tipo-lavado" class="text-black">Tipo de lavado</label>
             <select
-              class="form-control form-control-sm"
+              class="form-select mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
               id="tipo-lavado"
               v-model="form.tipoLavadoId"
             >
@@ -51,17 +51,17 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="importe">Importe</label>
+            <label for="importe" class="text-black">Importe</label>
             <input
               type="number"
-              class="form-control form-control-sm"
+              class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
               id="importe"
               v-model="form.importe"
             />
           </div>
           <button
             type="submit"
-            class="btn btn-primary mt-3"
+            class="btn btn-primary mt-3 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
             @click.prevent="submitForm"
           >
             Guardar
@@ -71,6 +71,7 @@
     </div>
   </div>
 </template>
+
 
 <script>
 import { ref, computed, onMounted } from 'vue';

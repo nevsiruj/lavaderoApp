@@ -1,3 +1,5 @@
+import { API_URL } from '../../config.js';
+
 const adminService = (() => {
   const axios = require('axios');
 
@@ -8,7 +10,7 @@ const adminService = (() => {
     //     fechaFin: fechaFin,
     //   },
     // };
-    const response = await axios.get(`https://localhost:44312/GetDetalles`, {
+    const response = await axios.get(`${API_URL}/GetDetalles`, {
       params: {
         fechaInicio: fechaInicio,
         fechaFin: fechaFin,
