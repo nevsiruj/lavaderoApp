@@ -16,60 +16,72 @@
             <strong>Responsable:</strong> {{ cajaAbierta.responsable }}
           </p>
           <label class="card-text">
-            Dinero en la caja: ${{ cajaAbierta.montoInicial ?? '0.00' }}
+            <strong>Inicial: </strong>: ${{
+              cajaAbierta.montoInicial ?? '0.00'
+            }}
           </label>
+          <br />
           <router-link class="btn btn-sm btn-danger mt-2" to="/cerrarcaja">
             <i class="fa fa-times-circle mr-1"></i> Cerrar caja
           </router-link>
           <br />
-          <br />
           <label class="card-text">
             <strong>Cantidad Lavados:</strong>
             {{ cajaAbierta.cantidadLavados ?? 0 }}
+            <br />
+            <strong>Importe Lavados:</strong>
+            $ {{ cajaAbierta.totalImporteLavados ?? 0 }}
           </label>
-          <router-link class="btn btn-sm btn-success mt-2" to="/formlavado">
+          <br />
+
+          <router-link class="btn btn-sm btn-success mt-2 m-2" to="/formlavado">
             <i class="fas fa-plus-circle mr-1"></i> Agregar lavado
           </router-link>
           <router-link
-            class="btn btn-sm btn-outline-success mt-2"
+            class="btn btn-sm btn-outline-success mt-2 m-2"
             to="/ListLavadosCaja"
           >
             <i class="fas fa-list-ul mr-1"></i> Listado de lavados
           </router-link>
           <br />
-          <br />
           <label class="card-text">
-            <strong>Cantidad Ingresos:</strong> ${{
+            <strong>Ingresos:</strong> ${{
               cajaAbierta.totalImporteIngresos ?? '0.00'
             }}
           </label>
-          <router-link class="btn btn-sm btn-success mt-2" to="/formingreso">
+          <br />
+          <router-link
+            class="btn btn-sm btn-success mt-2 m-2"
+            to="/formingreso"
+          >
             <i class="fas fa-plus-circle mr-1"></i> Agregar ingreso
           </router-link>
           <router-link
-            class="btn btn-sm btn-outline-success mt-2"
+            class="btn btn-sm btn-outline-success mt-2 m-2"
             to="/listingreso"
           >
             <i class="fas fa-list-ul mr-1"></i> Listado de ingresos
           </router-link>
           <br />
-          <br />
           <label class="card-text">
-            Cantidad Egresos: ${{ cajaAbierta.totalImporteEgresos ?? '0.00' }}
+            <strong>Egresos: </strong> ${{
+              cajaAbierta.totalImporteEgresos ?? '0.00'
+            }}
           </label>
-          <router-link class="btn btn-sm btn-success mt-2" to="/formegreso">
+          <br />
+          <router-link class="btn btn-sm btn-success mt-2 m-2" to="/formegreso">
             <i class="fas fa-plus-circle mr-1"></i> Agregar egreso
           </router-link>
           <router-link
-            class="btn btn-sm btn-outline-success mt-2"
+            class="btn btn-sm btn-outline-success mt-2 m-2"
             to="/listegreso"
           >
             <i class="fas fa-list-ul mr-1"></i> Listado de egresos
           </router-link>
           <br />
-          <br />
           <label class="card-text">
-            Efectivo en caja: ${{ cajaAbierta.efectivoEnCaja ?? '0.00' }}
+            Efectivo en caja:
+            <strong>${{ cajaAbierta.efectivoEnCaja ?? '0.00' }}</strong>
           </label>
         </div>
         <div class="flex flex-col items-center mt-4" v-if="!cajaAbierta.isOpen">

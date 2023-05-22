@@ -31,7 +31,20 @@
           required
         />
       </div>
-      <button type="submit" class="btn btn-primary">Abrir caja</button>
+      <button
+        type="submit"
+        class="
+          bg-blue-500
+          hover:bg-blue-600
+          text-white
+          font-semibold
+          py-2
+          px-4
+          rounded
+        "
+      >
+        Abrir caja
+      </button>
     </form>
   </div>
 </template>
