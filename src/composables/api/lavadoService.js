@@ -16,6 +16,11 @@ const lavadoService = (() => {
   const error = ref(null);
   const axios = require('axios');
   // };
+
+  const getLavados = async () => {
+    const response = await axios.get(`${API_URL}/Lavado`);
+    return response.data;
+  };
   const getTipoLavado = async () => {
     const response = await axios.get(`${API_URL}/TipoLavado`);
     return response.data;
@@ -66,6 +71,7 @@ const lavadoService = (() => {
     getLavadosByCaja,
     getTipoLavado,
     getTipoVehiculo,
+    getLavados,
   };
 })();
 

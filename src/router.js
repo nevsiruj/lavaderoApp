@@ -4,7 +4,8 @@ import Cajas from './components/admin/Cajas.vue';
 import AbrirCaja from './components/caja/AbrirCaja.vue';
 import CerrarCaja from './components/caja/CerrarCaja.vue';
 import FormLavado from './components/lavado/FormLavado.vue';
-import ListLavado from './components/lavado/ListLavado.vue';
+import ListLavadosCaja from './components/lavado/ListLavadosCaja.vue';
+import Lavados from './components/admin/Lavados.vue';
 import FormEgreso from './components/egreso/FormEgreso.vue';
 import ListEgreso from './components/egreso/ListEgreso.vue';
 import FormIngreso from './components/ingreso/FormIngreso.vue';
@@ -34,9 +35,9 @@ const routes = [
     component: FormLavado,
   },
   {
-    path: '/listlavado',
-    name: 'ListLavado',
-    component: ListLavado,
+    path: '/ListLavadosCaja',
+    name: 'ListLavadosCaja',
+    component: ListLavadosCaja,
   },
   {
     path: '/formegreso',
@@ -67,6 +68,15 @@ const routes = [
     path: '/lavadostable',
     name: 'LavadosTable',
     component: LavadosTable,
+  },
+  {
+    path: '/lavados',
+    name: 'Lavados',
+    component: Lavados,
+  },
+  {
+    path: '/lavados/editar/:id',
+    component: FormLavado,
   },
   {
     path: '/cerrarcaja',
