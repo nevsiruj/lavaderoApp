@@ -10,7 +10,7 @@ const adminService = (() => {
     //     fechaFin: fechaFin,
     //   },
     // };
-    const response = await axios.get(`${API_URL}/GetDetalles`, {
+    const response = await axios.get(`${API_URL}/lavado/GetDetalles`, {
       params: {
         fechaInicio: fechaInicio,
         fechaFin: fechaFin,
