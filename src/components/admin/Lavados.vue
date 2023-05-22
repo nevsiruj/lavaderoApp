@@ -1,5 +1,9 @@
 <template>
   <div>
+    <router-link class="btn btn-sm btn-success mt-2" to="/formlavado">
+      <i class="fas fa-plus-circle mr-1"></i> Agregar Lavado
+    </router-link>
+
     <ul>
       <li v-for="lavado in lavados" :key="lavado.id">
         {{ lavado.fecha }} - {{ lavado.descripcion }}
@@ -20,9 +24,8 @@ export default {
 
     const fetchLavados = async () => {
       try {
-        const response = await lavadoService.
-        lavados.value = await reponse
-        console.log(lavados.value)
+        const response = await lavadoService.getLavados();
+        lavados.value = await response;
       } catch (error) {
         console.error(error);
       }
