@@ -11,15 +11,35 @@
             <label for="descripcion" class="text-black">Descripción</label>
             <input
               type="text"
-              class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
+              class="
+                form-input
+                mt-1
+                block
+                w-full
+                rounded-md
+                border-gray-300
+                shadow-sm
+                focus:border-blue-500 focus:ring focus:ring-blue-200
+              "
               id="descripcion"
               v-model="form.descripcion"
             />
           </div>
           <div class="form-group">
-            <label for="tipo-vehiculo" class="text-black">Tipo de vehículo</label>
+            <label for="tipo-vehiculo" class="text-black"
+              >Tipo de vehículo</label
+            >
             <select
-              class="form-select mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
+              class="
+                form-select
+                mt-1
+                block
+                w-full
+                rounded-md
+                border-gray-300
+                shadow-sm
+                focus:border-blue-500 focus:ring focus:ring-blue-200
+              "
               id="tipo-vehiculo"
               v-model="form.tipoVehiculoId"
             >
@@ -36,7 +56,16 @@
           <div class="form-group">
             <label for="tipo-lavado" class="text-black">Tipo de lavado</label>
             <select
-              class="form-select mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
+              class="
+                form-select
+                mt-1
+                block
+                w-full
+                rounded-md
+                border-gray-300
+                shadow-sm
+                focus:border-blue-500 focus:ring focus:ring-blue-200
+              "
               id="tipo-lavado"
               v-model="form.tipoLavadoId"
             >
@@ -54,14 +83,33 @@
             <label for="importe" class="text-black">Importe</label>
             <input
               type="number"
-              class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
+              class="
+                form-input
+                mt-1
+                block
+                w-full
+                rounded-md
+                border-gray-300
+                shadow-sm
+                focus:border-blue-500 focus:ring focus:ring-blue-200
+              "
               id="importe"
               v-model="form.importe"
             />
           </div>
           <button
             type="submit"
-            class="btn btn-primary mt-3 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+            class="
+              btn btn-primary
+              mt-3
+              bg-blue-500
+              hover:bg-blue-600
+              text-white
+              font-bold
+              py-2
+              px-4
+              rounded
+            "
             @click.prevent="submitForm"
           >
             Guardar
@@ -72,7 +120,6 @@
   </div>
 </template>
 
-
 <script>
 import { ref, computed, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
@@ -82,9 +129,11 @@ import cajaService from '../../composables/api/cajaService.js';
 // import { useLavados } from '../services';
 
 export default {
-  setup() {
+  setup(props) {
     const router = useRouter();
     const route = useRoute();
+    const idCaja = route.query.idCaja;
+    // alert(idCaja);
     const form = ref({
       id: 0,
       cajaId: 0,
@@ -122,6 +171,7 @@ export default {
       form.value.fecha = new Date();
       // form.value.tipoLavado.id = form.value.tipoLavadoId;
       // form.value.tipoVehiculo.id = form.value.tipoVehiculoId;
+      alert(form.value);
       lavadoService.addLavado(form);
       form.value = {};
       form.fecha = '';
@@ -144,6 +194,7 @@ export default {
       tiposLavados,
       submitForm,
       cajaAbierta,
+      idCaja,
     };
   },
 };
