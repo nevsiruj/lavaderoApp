@@ -20,19 +20,21 @@
     </div>
     <ul class="divide-y divide-gray-200">
       <li
-        v-for="(caja, index) in cajasFiltradas"
+        v-for="(caja, index) in cajas"
         :key="index"
         @click="mostrarInfo(caja)"
         class="py-4 cursor-pointer"
       >
         <div class="text-sm">
           <p class="font-medium text-gray-900">
-            {{ caja.fechaCierre }}
+            {{ caja.fechaApertura.substring(0, 10) }}
           </p>
+          Ver Detalles
+          <i class="fas fa-plus-circle mr-1"></i>
         </div>
       </li>
     </ul>
-    
+
     <!--Modal-->
     <div
       v-if="cajaSeleccionada"
@@ -87,26 +89,37 @@
                   class="text-lg leading-6 font-medium text-gray-900"
                   id="modal-title"
                 >
-                  Caja del {{ cajaSeleccionada.fechaCierre }}
+                  Caja del {{ cajaSeleccionada.fechaApertura.substring(0, 10) }}
                 </h3>
                 <div class="mt-5">
                   <ul>
-                    <li>Fecha Cierre: {{ cajaSeleccionada.fechaCierre }}</li>
+                    <li>
+                      Fecha Apertura:
+                      {{ cajaSeleccionada.fechaApertura.substring(0, 10) }}
+                    </li>
                     <li>Responsable: {{ cajaSeleccionada.responsable }}</li>
-                    <li>Saldo Inicial: {{ cajaSeleccionada.saldoInicial }}</li>
-                    <li>Ingresos: {{ cajaSeleccionada.ingresos }}</li>
-                    <li>Egresos: {{ cajaSeleccionada.egresos }}</li>
-                    <li>Lavados: {{ cajaSeleccionada.lavados }}</li>
+                    <li>Saldo Inicial: {{ cajaSeleccionada.montoInicial }}</li>
+                    <li>
+                      Ingresos: {{ cajaSeleccionada.totalImporteIngresos }}
+                    </li>
+                    <li>Egresos: {{ cajaSeleccionada.totalImporteEgresos }}</li>
+                    <!-- <li>Lavados: {{ cajaSeleccionada.lavados }}</li> -->
                     <li>
                       Cantidad de Lavados:
                       {{ cajaSeleccionada.cantidadLavados }}
                     </li>
                     <li>
                       Efectivo en Terminal:
-                      {{ cajaSeleccionada.efectivoTerminal }}
+                      {{ cajaSeleccionada.efectivoEnCaja }}
                     </li>
-                    <li>Declarado: {{ cajaSeleccionada.declarado }}</li>
-                    <li>Descuadre: {{ cajaSeleccionada.descuadre }}</li>
+                    <li>Declarado: {{ cajaSeleccionada.efectivoDeclarado }}</li>
+                    <li>
+                      Descuadre:
+                      {{
+                        cajaSeleccionada.efectivoDeclarado -
+                        cajaSeleccionada.efectivoEnCaja
+                      }}
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -147,56 +160,23 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
+import adminService from '../../composables/api/adminService.js';
 
 export default {
   setup() {
-    const cajas = ref([
-      {
-        fechaCierre: '2023-05-01',
-        responsable: 'Martina',
-        saldoInicial: 1000,
-        ingresos: 500,
-        egresos: 300,
-        lavados: 20,
-        cantidadLavados: 10,
-        efectivoTerminal: 1200,
-        declarado: 1100,
-      },
-      {
-        fechaCierre: '2023-05-02',
-        responsable: 'Nahuel',
-        saldoInicial: 1100,
-        ingresos: 600,
-        egresos: 200,
-        lavados: 25,
-        cantidadLavados: 12,
-        efectivoTerminal: 1500,
-        declarado: 1400,
-      },
-    ]);
+    const cajas = ref([]);
 
     const fechaDesde = ref('');
     const fechaHasta = ref('');
     const cajaSeleccionada = ref(null);
 
-    const cajasFiltradas = computed(() => {
-      return cajas.value.filter((caja) => {
-        const fechaCaja = new Date(caja.fecha);
-        const desde = fechaDesde.value ? new Date(fechaDesde.value) : null;
-        const hasta = fechaHasta.value ? new Date(fechaHasta.value) : null;
-
-        if (desde && hasta) {
-          return fechaCaja >= desde && fechaCaja <= hasta;
-        } else if (desde) {
-          return fechaCaja >= desde;
-        } else if (hasta) {
-          return fechaCaja <= hasta;
-        } else {
-          return true;
-        }
-      });
-    });
+    const filtrarCajas = async () => {
+      cajas.value = await adminService.getCajasPorFecha(
+        fechaDesde.value,
+        fechaHasta.value
+      );
+    };
 
     function mostrarInfo(caja) {
       cajaSeleccionada.value = {
@@ -204,15 +184,21 @@ export default {
         descuadre: caja.declarado - caja.efectivoTerminal,
       };
     }
+    watch(fechaHasta, () => {
+      filtrarCajas();
+    });
 
     return {
       cajas,
       fechaDesde,
       fechaHasta,
       cajaSeleccionada,
-      cajasFiltradas,
       mostrarInfo,
+      filtrarCajas,
     };
   },
+  name: 'CajasAdmin',
+  props: {},
+  components: {},
 };
 </script>

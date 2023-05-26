@@ -18,8 +18,18 @@ const adminService = (() => {
     });
     return response.data;
   };
+  const getCajasPorFecha = async (fechaInicio, fechaFin) => {
+    const response = await axios.get(`${API_URL}/caja/GetCajaByFechas`, {
+      params: {
+        fechaInicio: fechaInicio,
+        fechaFin: fechaFin,
+      },
+    });
+    return response.data;
+  };
   return {
     getDatosPorFecha,
+    getCajasPorFecha,
   };
 })();
 

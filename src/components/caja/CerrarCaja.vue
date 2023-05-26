@@ -43,6 +43,9 @@ export default {
         .then((e) => console.log(e));
       // Reiniciamos los valores del formulario
       formData.efectivoDeclarado = '';
+      setTimeout(function () {
+        location.reload();
+      }, 1000);
       router.push('/abrircaja');
     };
 
