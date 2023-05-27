@@ -14,9 +14,7 @@ const ingresoService = (() => {
       });
   };
   const getIngresosByCaja = async (_cajaId) => {
-    const response = await axios.get(
-      `https://localhost:44312/api/Ingreso/${_cajaId}/ingresos`
-    );
+    const response = await axios.get(`${API_URL}/ingreso/${_cajaId}/ingresos`);
     return response.data;
   };
   return {
