@@ -1,9 +1,11 @@
+import { API_URL } from '../../config.js';
+
 const ingresoService = (() => {
   const axios = require('axios');
 
   const addIngreso = async (data) => {
     await axios
-      .post('https://localhost:44312/api/Ingreso', data.value)
+      .post(`${API_URL}/Ingreso`, data.value)
       .then((response) => {
         console.log(response);
       })
