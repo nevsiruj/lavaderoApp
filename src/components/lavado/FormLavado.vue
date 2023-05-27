@@ -171,7 +171,7 @@ export default {
       form.value.fecha = new Date();
       // form.value.tipoLavado.id = form.value.tipoLavadoId;
       // form.value.tipoVehiculo.id = form.value.tipoVehiculoId;
-      alert(form.value);
+      // alert(form.value);
       lavadoService.addLavado(form);
       form.value = {};
       form.fecha = '';
