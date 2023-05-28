@@ -40,27 +40,39 @@ const lavadoService = (() => {
     return lavados.value.length;
   };
 
+  const deleteLavado = async (lavadoId) => {
+    try {
+      const response = await axios.delete(`${API_URL}/Lavado/${lavadoId}`);
+      // Realiza alguna lógica adicional si es necesario
+      return response.data;
+    } catch (error) {
+      console.error('Error:', error);
+      throw new Error('No se pudo eliminar el lavado.');
+    }
+  };
+
   // const addLavado = async (newLavado) => {
   //   lavados.value.push(newLavado.value);
   //   console.log(newLavado.value);
   //   console.log(lavados.value);
   // };
   const addLavado = async (_data) => {
-    fetch(`${API_URL}/Lavado`, {
-      method: 'POST',
-      body: JSON.stringify(_data.value),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('Respuesta:', data);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
+    try {
+      const response = await fetch(`${API_URL}/Lavado`, {
+        method: 'POST',
+        body: JSON.stringify(_data.value),
+        headers: {
+          'Content-Type': 'application/json',
+        },
       });
-    return await _data.value;
+
+      const data = await response.json();
+      console.log('Respuesta:', data);
+
+      return _data.value;
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   return {
@@ -72,6 +84,7 @@ const lavadoService = (() => {
     getTipoLavado,
     getTipoVehiculo,
     getLavados,
+    deleteLavado,
   };
 })();
 

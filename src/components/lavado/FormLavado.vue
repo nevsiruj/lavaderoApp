@@ -1,7 +1,9 @@
 <template>
   <div class="container mt-3">
     <div class="mb-3">
-      <router-link to="/" class="text-blue-500">&lt; Volver atrás</router-link>
+      <router-link :to="isAdmin ? '/lavados' : '/'" class="text-blue-500"
+        >&lt; Volver atrás</router-link
+      >
     </div>
 
     <div class="card shadow-lg">
@@ -133,6 +135,8 @@ export default {
     const router = useRouter();
     const route = useRoute();
     const idCaja = route.query.idCaja;
+    const isAdmin = ref(false);
+
     // alert(idCaja);
     const form = ref({
       id: 0,
@@ -166,24 +170,35 @@ export default {
     //   { id: 2, nombre: 'Auto' },
     // ]);
 
-    const submitForm = () => {
+    const submitForm = async () => {
       form.value.cajaId = cajaAbierta.value.id;
       form.value.fecha = new Date();
       // form.value.tipoLavado.id = form.value.tipoLavadoId;
       // form.value.tipoVehiculo.id = form.value.tipoVehiculoId;
       // alert(form.value);
-      lavadoService.addLavado(form);
+      await lavadoService.addLavado(form);
       form.value = {};
       form.fecha = '';
       form.tipoVehiculoId = '';
       form.tipoLavadoId = '';
       form.descripcion = '';
       form.importe = '';
+      if (isAdmin.value) {
+        router.push('/lavados');
+        return;
+      }
       router.push('/');
     };
     onMounted(async () => {
       tiposLavados.value = await lavadoService.getTipoLavado();
       tiposVehiculos.value = await lavadoService.getTipoVehiculo();
+
+      const query = router.currentRoute.value.query;
+      if (query.isAdmin === 'true') {
+        isAdmin.value = true;
+      }
+
+      // alert(isAdmin.value);
 
       // console.log(tipoLavado);
     });
@@ -195,6 +210,7 @@ export default {
       submitForm,
       cajaAbierta,
       idCaja,
+      isAdmin,
     };
   },
 };

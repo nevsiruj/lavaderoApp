@@ -1,71 +1,108 @@
 <template>
   <div>
     <router-link
-      class="btn btn-sm btn-success mt-2"
-      :to="{ path: '/formlavado' }"
+      class="btn btn-sm btn-success mt-2 mr-1"
+      :to="{ path: '/formlavado', query: { isAdmin: true } }"
     >
       <i class="fas fa-plus-circle mr-1"></i> Agregar Lavado
     </router-link>
+    <button class="btn btn-sm btn-primary mt-2" @click="fetchLavados">
+      <i class="fas fa-sync-alt"></i> Actualizar
+    </button>
+    <div
+      v-if="showMessage"
+      class="bg-green-100 text-green-800 px-4 py-2 rounded-md mt-2"
+    >
+      <i class="fas fa-check-circle mr-1"></i> Actualizados
+    </div>
 
-    <div class="mt-4 flex flex-col items-center sm:flex-row sm:justify-center">
-      <label class="mb-1 text-gray-600">Filtrar por fecha:</label>
+    <div class="bg-white rounded-lg p-4 shadow-md mx-auto max-w-sm mb-0">
+      <div class="flex items-center mb-2">
+        <i class="fas fa-filter text-gray-600 mr-2"></i>
+        <label class="text-gray-600">Filtrar por fecha:</label>
+      </div>
       <div class="flex space-x-2">
         <input
-          type="datetime-local"
-          class="border-gray-300 rounded-md p-1"
+          type="date"
+          class="border-gray-300 rounded-md p-1 flex-grow"
           v-model="startDate"
           @change="filterLavados"
         />
         <span class="text-gray-600">-</span>
         <input
-          type="datetime-local"
-          class="border-gray-300 rounded-md p-1"
+          type="date"
+          class="border-gray-300 rounded-md p-1 flex-grow"
           v-model="endDate"
           @change="filterLavados"
         />
       </div>
+      <!-- Visor de cantidad de lavados mostrados -->
+      <div class="mt-4 flex justify-between items-center">
+        <div class="flex items-center text-gray-600">
+          <i class="fas fa-clipboard-list mr-1"></i>
+          <span>Lavados: {{ filteredLavados.length }}</span>
+        </div>
+        <div class="flex items-center text-gray-600">
+          <i class="fas fa-dollar-sign mr-1"></i>
+          <span>Facturado: ${{ calculateTotalImporte() }}</span>
+        </div>
+      </div>
     </div>
 
-    <table class="min-w-full divide-y divide-gray-200 mt-4">
-      <!-- Table headers -->
-      <thead class="bg-gray-50">
-        <tr>
-          <th class="px-2 py-1 text-xs text-gray-500 uppercase tracking-wider">
-            Fecha
-          </th>
-          <th class="px-2 py-1 text-xs text-gray-500 uppercase tracking-wider">
-            Descripción
-          </th>
-          <th
-            class="px-2 py-1 text-xs text-gray-500 uppercase tracking-wider"
-          ></th>
-        </tr>
-      </thead>
-      <tbody class="bg-white divide-y divide-gray-200">
-        <tr v-for="lavado in filteredLavados" :key="lavado.id">
-          <td class="px-2 py-1 whitespace-nowrap">
-            {{ formatDate(lavado.fecha) }}
-          </td>
-          <td class="px-2 py-1 whitespace-nowrap">{{ lavado.descripcion }}</td>
-          <td class="px-2 py-1 whitespace-nowrap">
-            <div class="flex space-x-2">
-              <button
-                class="text-blue-600 hover:text-blue-800 focus:outline-none"
-                @click="editLavado(lavado.id)"
-              >
-                <i class="fas fa-edit"></i>
-              </button>
-              <button
-                class="text-red-600 hover:text-red-800 focus:outline-none"
-                @click="deleteLavado(lavado.id)"
-              >
-                <i class="fas fa-trash-alt"></i>
-              </button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="bg-white rounded-lg p-4 shadow-md mx-auto mt-1">
+      <table class="min-w-full divide-y divide-gray-200 mt-4">
+        <!-- Table headers -->
+        <thead class="bg-gray-50">
+          <tr>
+            <th
+              class="px-2 py-1 text-xs text-gray-500 uppercase tracking-wider"
+            >
+              Fecha
+            </th>
+            <th
+              class="px-2 py-1 text-xs text-gray-500 uppercase tracking-wider"
+            >
+              Descripción
+            </th>
+            <th
+              class="px-2 py-1 text-xs text-gray-500 uppercase tracking-wider"
+            >
+              Importe
+            </th>
+            <th
+              class="px-2 py-1 text-xs text-gray-500 uppercase tracking-wider"
+            ></th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <tr v-for="lavado in filteredLavados" :key="lavado.id">
+            <td class="px-2 py-1 whitespace-nowrap">
+              {{ formatDate(lavado.fecha) }}
+            </td>
+            <td class="px-2 py-1 whitespace-nowrap">
+              {{ lavado.descripcion }}
+            </td>
+            <td class="px-2 py-1 whitespace-nowrap">${{ lavado.importe }}</td>
+            <td class="px-2 py-1 whitespace-nowrap">
+              <div class="flex space-x-2">
+                <button
+                  class="text-blue-600 hover:text-blue-800 focus:outline-none"
+                  @click="editLavado(lavado.id)"
+                >
+                  <i class="fas fa-edit"></i>
+                </button>
+                <button
+                  class="text-red-600 hover:text-red-800 focus:outline-none"
+                  @click="deleteLavado(lavado.id)"
+                >
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
@@ -78,6 +115,7 @@ export default {
     const lavados = ref([]);
     const startDate = ref('');
     const endDate = ref('');
+    const showMessage = ref(false);
 
     const fetchLavados = async () => {
       try {
@@ -85,6 +123,12 @@ export default {
         lavados.value = await response.sort((a, b) => {
           const fechaA = new Date(a.fecha);
           const fechaB = new Date(b.fecha);
+
+          showMessage.value = true;
+          setTimeout(() => {
+            showMessage.value = false;
+          }, 2000);
+
           return fechaB - fechaA;
         });
       } catch (error) {
@@ -125,7 +169,26 @@ export default {
       }
     });
 
-    onMounted(fetchLavados);
+    // Calcula el total de importe de los lavados mostrados
+    const calculateTotalImporte = () => {
+      return filteredLavados.value.reduce((total, lavado) => {
+        return total + lavado.importe;
+      }, 0);
+    };
+
+    const deleteLavado = async (lavadoId) => {
+      try {
+        await lavadoService.deleteLavado(lavadoId);
+        // Realiza alguna lógica adicional si es necesario
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    onMounted(async () => {
+      await fetchLavados();
+      await filterLavados();
+    });
 
     return {
       lavados,
@@ -134,6 +197,10 @@ export default {
       formatDate,
       filterLavados,
       filteredLavados,
+      calculateTotalImporte,
+      showMessage,
+      fetchLavados,
+      deleteLavado
     };
   },
 };
