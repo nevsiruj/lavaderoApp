@@ -153,7 +153,6 @@ export default {
         const end = endDate.value ? new Date(endDate.value) : null;
         return (!start || lavadoDate >= start) && (!end || lavadoDate <= end);
       });
-      filteredLavados.value = filtered;
     };
 
     const filteredLavados = computed(() => {
@@ -162,6 +161,9 @@ export default {
           const lavadoDate = new Date(lavado.fecha);
           const start = startDate.value ? new Date(startDate.value) : null;
           const end = endDate.value ? new Date(endDate.value) : null;
+          if (end) {
+            end.setDate(end.getDate() + 1);
+          }
           return (!start || lavadoDate >= start) && (!end || lavadoDate <= end);
         });
       } else {
@@ -200,7 +202,7 @@ export default {
       calculateTotalImporte,
       showMessage,
       fetchLavados,
-      deleteLavado
+      deleteLavado,
     };
   },
 };
