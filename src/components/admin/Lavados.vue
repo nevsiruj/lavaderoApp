@@ -87,7 +87,7 @@
               <div class="flex space-x-2">
                 <button
                   class="text-blue-600 hover:text-blue-800 focus:outline-none"
-                  @click="editLavado(lavado.id)"
+                  @click="editLavado(lavado)"
                 >
                   <i class="fas fa-edit"></i>
                 </button>
@@ -109,6 +109,7 @@
 <script>
 import lavadoService from '../../composables/api/lavadoService.js';
 import { ref, onMounted, computed } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
 export default {
   setup() {
@@ -116,6 +117,7 @@ export default {
     const startDate = ref('');
     const endDate = ref('');
     const showMessage = ref(false);
+    const router = useRouter();
 
     const fetchLavados = async () => {
       try {
@@ -177,10 +179,17 @@ export default {
         return total + lavado.importe;
       }, 0);
     };
+    const editLavado = (lavado) => {
+      router.push({
+        path: '/formlavado',
+        query: { isAdmin: true, id: lavado.id },
+      });
+    };
 
     const deleteLavado = async (lavadoId) => {
       try {
         await lavadoService.deleteLavado(lavadoId);
+        fetchLavados();
         // Realiza alguna lógica adicional si es necesario
       } catch (error) {
         console.error(error);
@@ -203,6 +212,8 @@ export default {
       showMessage,
       fetchLavados,
       deleteLavado,
+      editLavado,
+      router,
     };
   },
 };

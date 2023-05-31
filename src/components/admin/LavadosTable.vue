@@ -285,18 +285,25 @@ export default {
     };
 
     const obtenerDetalleKPI = (kpi) => {
+      const fechaInicioFormateada = `${
+        fechaInicio.value.split('T')[0].split('-')[2]
+      }/${fechaInicio.value.split('T')[0].split('-')[1]}/${
+        fechaInicio.value.split('T')[0].split('-')[0]
+      }`;
+      const fechaFinFormateada = `${
+        fechaFin.value.split('T')[0].split('-')[2]
+      }/${fechaFin.value.split('T')[0].split('-')[1]}/${
+        fechaFin.value.split('T')[0].split('-')[0]
+      }`;
+
       if (kpi === 'totalLavados') {
-        return `La cantidad de lavados realizados entre ${
-          fechaInicio.value.split('T')[0]
-        } y ${fechaFin.value.split('T')[0]} es de ${totalLavados.value}.`;
+        return `La cantidad de lavados realizados entre ${fechaInicioFormateada} y ${fechaFinFormateada} es de ${totalLavados.value}.`;
       } else if (kpi === 'ingresos') {
-        return `Los ingresos entre ${fechaInicio.value} y ${fechaFin.value} son de $${totalIngresos.value}.`;
+        return `Los ingresos entre ${fechaInicioFormateada} y ${fechaFinFormateada} son de $${totalIngresos.value}.`;
       } else if (kpi === 'egresos') {
-        return `Los egresos entre ${fechaInicio.value} y ${tfechaFin.value} son de $${totalEgresos.value}.`;
-        // } else if (kpi === 'gastos') {
-        //   return `Los gastos entre ${this.fechaInicio} y ${this.fechaFin} son de $${this.gastos}.`;
+        return `Los egresos entre ${fechaInicioFormateada} y ${fechaFinFormateada} son de $${totalEgresos.value}.`;
       } else if (kpi === 'beneficioNeto') {
-        return `El beneficio neto entre ${fechaInicio.value} y ${fechaFin.value} es de $${beneficioNeto.value}.`;
+        return `El beneficio neto entre ${fechaInicioFormateada} y ${fechaFinFormateada} es de $${beneficioNeto.value}.`;
       }
     };
     const mostrarDetalle = (kpi) => {
@@ -312,11 +319,14 @@ export default {
     const datosGrafico = () => {
       const lavadosAgrupados = lavados.value.reduce((acumulador, lavado) => {
         const fecha = lavado.fecha.split('T')[0];
+        const fechaFormateada = `${fecha.split('-')[2]}/${
+          fecha.split('-')[1]
+        }/${fecha.split('-')[0]}`;
 
-        if (acumulador[fecha]) {
-          acumulador[fecha] += 1;
+        if (acumulador[fechaFormateada]) {
+          acumulador[fechaFormateada] += 1;
         } else {
-          acumulador[fecha] = 1;
+          acumulador[fechaFormateada] = 1;
         }
 
         return acumulador;

@@ -197,6 +197,10 @@ export default {
       if (query.isAdmin === 'true') {
         isAdmin.value = true;
       }
+      if (query.id != null) {
+        console.log(query);
+        form.value.id = query.id;
+      }
 
       // alert(isAdmin.value);
 
