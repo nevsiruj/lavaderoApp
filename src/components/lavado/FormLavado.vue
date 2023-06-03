@@ -176,7 +176,11 @@ export default {
       // form.value.tipoLavado.id = form.value.tipoLavadoId;
       // form.value.tipoVehiculo.id = form.value.tipoVehiculoId;
       // alert(form.value);
-      await lavadoService.addLavado(form);
+      if (form.value.id == 0) {
+        await lavadoService.addLavado(form);
+      } else {
+        await lavadoService.editLavado(form.value);
+      }
       form.value = {};
       form.fecha = '';
       form.tipoVehiculoId = '';
@@ -200,6 +204,7 @@ export default {
       if (query.id != null) {
         console.log(query);
         form.value.id = query.id;
+        form.value = await lavadoService.getLavadoById(query.id);
       }
 
       // alert(isAdmin.value);

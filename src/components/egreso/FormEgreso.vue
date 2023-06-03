@@ -1,7 +1,9 @@
 <template>
   <div class="container mt-3">
     <div class="mb-3">
-      <router-link to="/"> &lt;Volver atrás </router-link>
+      <router-link :to="isAdmin ? '/egresos' : '/'" class="text-blue-500"
+        >&lt; Volver atrás</router-link
+      >
     </div>
     <h1>Egresos</h1>
     <form>
@@ -32,7 +34,7 @@
         <input
           class="form-check-input"
           type="checkbox"
-          value=""
+          v-model="form.isGasto"
           id="flexCheckDefault"
         />
       </div>
@@ -66,28 +68,46 @@ export default {
       importe: 0,
       cajaId: 0,
       fechaIngreso: '',
+      isGasto: false,
     });
-    const submitForm = () => {
+    let isAdmin = ref(false);
+    const submitForm = async () => {
       form.value.cajaId = cajaAbierta.value.id;
       form.value.fechaIngreso = new Date();
-
-      egresoService.addEgreso(form);
+      if (form.value.id == 0) {
+        egresoService.addEgreso(form);
+      } else {
+        await egresoService.editEgreso(form.value);
+      }
       form.value = {};
       form.descripcion = '';
       form.importe = '';
       form.fechaIngreso = '';
-
+      if (isAdmin.value) {
+        router.push('/egresos');
+        return;
+      }
       router.push('/');
     };
 
-    onMounted(() => {
+    onMounted(async () => {
       cajaAbierta = cajaService.getCajaAbierta();
+      const query = router.currentRoute.value.query;
+      if (query.isAdmin === 'true') {
+        isAdmin.value = true;
+      }
+      if (query.id != null) {
+        console.log(query);
+        form.value.id = query.id;
+        form.value = await egresoService.getEgresoById(query.id);
+      }
     });
 
     return {
       cajaAbierta,
       form,
       submitForm,
+      isAdmin,
     };
   },
   name: 'EgresoForm',

@@ -39,6 +39,15 @@ const lavadoService = (() => {
   const getCantidadLavados = async () => {
     return lavados.value.length;
   };
+  const getLavadoById = async (id) => {
+    const response = await axios.get(`${API_URL}/Lavado/${id}`);
+    return response.data;
+  };
+  const editLavado = async (lavado) => {
+    const lavadoId = lavado.id;
+    const response = await axios.put(`${API_URL}/Lavado/${lavadoId}`, lavado);
+    return response;
+  };
 
   const deleteLavado = async (lavadoId) => {
     try {
@@ -85,6 +94,8 @@ const lavadoService = (() => {
     getTipoVehiculo,
     getLavados,
     deleteLavado,
+    getLavadoById,
+    editLavado,
   };
 })();
 

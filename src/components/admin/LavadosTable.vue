@@ -79,7 +79,10 @@
             <h2 class="text-xl font-semibold">Cantidad Lavados</h2>
             <p class="text-3xl">{{ totalLavados }}</p>
           </div>
-          <div class="bg-white rounded-lg p-4 shadow">
+          <div
+            class="bg-white rounded-lg p-4 shadow"
+            @click="mostrarTotalFacturado()"
+          >
             <h2 class="text-xl font-semibold">Total Facturado</h2>
             <p class="text-3xl">{{ totalFacturado }}</p>
           </div>
@@ -117,8 +120,7 @@
       </div>
     </div>
   </div>
-
-  <!-- Ventana emergente para el detalle del KPI -->
+<!-- -->
   <div
     class="fixed z-10 inset-0 overflow-y-auto"
     :class="{ hidden: !mostrarVentanaDetalle }"
@@ -199,6 +201,113 @@
       </div>
     </div>
   </div>
+  <!-- Ventana emergente para el detalle del KPI -->
+  <div
+    class="fixed z-10 inset-0 overflow-y-auto"
+    :class="{ hidden: !mostrarImportesTotales }"
+  >
+    <div
+      class="
+        flex
+        items-center
+        justify-center
+        min-h-screen
+        pt-4
+        px-4
+        pb-20
+        text-center
+        sm:block sm:p-0
+      "
+    >
+      <div class="fixed inset-0 transition-opacity">
+        <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+      </div>
+      <div
+        class="
+          inline-block
+          align-bottom
+          bg-white
+          rounded-lg
+          text-left
+          overflow-hidden
+          shadow-xl
+          transform
+          transition-all
+          sm:my-8 sm:align-middle sm:max-w-lg sm:w-full
+        "
+      >
+        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+            <table
+          class="table table-responsive table-hover table-striped table-sm"
+        >
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <!-- <th>Responsable</th> -->
+              <th>Descripción</th>
+              <th>Importe</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="lavado in lavados" :key="lavado.id">
+              <td>
+                {{ lavado.fecha }}
+              </td>
+              <!-- <td>{{lavado.responsable}} </td> -->
+              <td>{{ lavado.descripcion }}</td>
+              <td>{{ Number(lavado.importe) }}</td>
+              <!-- <td class="px-2 py-1 whitespace-nowrap">
+                <div class="flex space-x-2">
+                  <button
+                    class="text-blue-600 hover:text-blue-800 focus:outline-none"
+                    @click="editLavado(lavado)"
+                  >
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button
+                    class="text-red-600 hover:text-red-800 focus:outline-none"
+                    @click="deleteLavado(lavado.id)"
+                  >
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                </div>
+              </td> -->
+            </tr>
+          </tbody>
+        </table>
+        <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+          <button
+            type="button"
+            class="
+              mt-3
+              w-full
+              inline-flex
+              justify-center
+              rounded-md
+              border border-transparent
+              shadow-sm
+              px-4
+              py-2
+              bg-blue-600
+              text-base
+              font-medium
+              text-white
+              hover:bg-blue-700
+              focus:outline-none
+              focus:ring-2
+              focus:ring-offset-2
+              focus:ring-blue-500
+              sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm
+            "
+            @click="mostrarImportesTotales = false"
+          >
+            Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
 </template>
 
 <style>
@@ -258,6 +367,7 @@ export default {
     let totalGastos = ref(0);
     let gastos = ref([]);
     let totalFacturado = ref(0);
+    let mostrarImportesTotales = ref(false);
 
     const filtrar = async () => {
       let datos = await adminService.getDatosPorFecha(
@@ -276,6 +386,8 @@ export default {
       totalFacturado.value = datos.totalFacturado;
       console.log(datos);
 
+      formatearLavados();
+
       mostrarGrafico();
 
       if (totalLavados.value > 0) {
@@ -283,18 +395,24 @@ export default {
         boxSelect.classList.add('boxs');
       }
     };
+    const formatearLavados = () =>{
+      lavados.value = lavados.value.map(lavado => {
+        return {
+          ...lavado,
+          fecha: formatearFecha(lavado.fecha)
+        };
+    })};
+    const formatearFecha=(fecha) =>{
+      return `${
+        fecha.split('T')[0].split('-')[2]
+      }/${fecha.split('T')[0].split('-')[1]}/${
+        fecha.split('T')[0].split('-')[0]
+      }`;
+    };
 
     const obtenerDetalleKPI = (kpi) => {
-      const fechaInicioFormateada = `${
-        fechaInicio.value.split('T')[0].split('-')[2]
-      }/${fechaInicio.value.split('T')[0].split('-')[1]}/${
-        fechaInicio.value.split('T')[0].split('-')[0]
-      }`;
-      const fechaFinFormateada = `${
-        fechaFin.value.split('T')[0].split('-')[2]
-      }/${fechaFin.value.split('T')[0].split('-')[1]}/${
-        fechaFin.value.split('T')[0].split('-')[0]
-      }`;
+      const fechaInicioFormateada= formatearFecha(fechaInicio.value)
+      const fechaFinFormateada= formatearFecha(fechaFin.value)
 
       if (kpi === 'totalLavados') {
         return `La cantidad de lavados realizados entre ${fechaInicioFormateada} y ${fechaFinFormateada} es de ${totalLavados.value}.`;
@@ -304,6 +422,12 @@ export default {
         return `Los egresos entre ${fechaInicioFormateada} y ${fechaFinFormateada} son de $${totalEgresos.value}.`;
       } else if (kpi === 'beneficioNeto') {
         return `El beneficio neto entre ${fechaInicioFormateada} y ${fechaFinFormateada} es de $${beneficioNeto.value}.`;
+      }
+    };
+    const mostrarTotalFacturado = () => {
+      if(lavados.value != 0){
+
+        mostrarImportesTotales.value = true;
       }
     };
     const mostrarDetalle = (kpi) => {
@@ -318,15 +442,12 @@ export default {
     };
     const datosGrafico = () => {
       const lavadosAgrupados = lavados.value.reduce((acumulador, lavado) => {
-        const fecha = lavado.fecha.split('T')[0];
-        const fechaFormateada = `${fecha.split('-')[2]}/${
-          fecha.split('-')[1]
-        }/${fecha.split('-')[0]}`;
+        const fecha = lavado.fecha
 
-        if (acumulador[fechaFormateada]) {
-          acumulador[fechaFormateada] += 1;
+        if (acumulador[fecha]) {
+          acumulador[fecha] += 1;
         } else {
-          acumulador[fechaFormateada] = 1;
+          acumulador[fecha] = 1;
         }
 
         return acumulador;
@@ -389,6 +510,9 @@ export default {
       totalGastos,
       gastos,
       totalFacturado,
+      mostrarImportesTotales,
+      mostrarTotalFacturado,
+      formatearLavados
     };
   },
   name: 'LavadosTable',
@@ -400,120 +524,4 @@ export default {
   },
   methods: {},
 };
-
-// export default {
-//   data() {
-//     return {
-//       // lavados: [], // Aquí se almacenarán los datos cargados del archivo JSON
-//       fechaInicio: '',
-//       fechaFin: '',
-//       ingresos: 0,
-//       egresos: 0,
-//       gastos: 0,
-//       beneficioNeto: 0,
-//       mostrarVentanaDetalle: false,
-//       kpiSeleccionado: null,
-//       detalleKPI: '',
-//       lavados: [],
-//       ingresos: [
-//         { fecha: '2023-04-01', importe: 100 },
-//         { fecha: '2023-04-02', importe: 150 },
-//       ],
-//       lavadosFiltrados: [],
-//       ingresosFiltrados: [],
-//     };
-//   },
-//   mounted() {},
-//   computed: {
-//     datosGrafico() {
-//       return {
-//         labels: this.lavadosFiltrados.map((lavado) => lavado.fecha),
-//         datasets: [
-//           {
-//             label: 'Cantidad de lavados',
-//             data: this.lavadosFiltrados.map((lavado) => lavado.cantidad),
-//             fill: false,
-//             borderColor: 'rgb(75, 192, 192)',
-//             tension: 0.1,
-//           },
-//         ],
-//       };
-//     },
-
-//     totalLavados() {
-//       // Aquí se calcula el total de lavados de los días filtrados
-//       return this.lavadosFiltrados.reduce(
-//         (total, lavado) => total + lavado.cantidad,
-//         0
-//       );
-//     },
-
-//     totalIngresos() {
-//       // Aquí se calcula el total de ingresos de los dias filtrados
-//       return this.ingresosFiltrados.reduce(
-//         (total, ingreso) => total + ingreso.importe,
-//         0
-//       );
-//     },
-//   },
-//   methods: {
-//     filtrar() {
-//       this.lavadosFiltrados = this.lavados.filter(
-//         (lavado) =>
-//           lavado.fecha >= this.fechaInicio && lavado.fecha <= this.fechaFin
-//       );
-//       this.mostrarGrafico();
-
-//       if (this.totalLavados > 0) {
-//         const boxSelect = document.querySelector('#boxSelect');
-//         boxSelect.classList.add('boxs');
-//       }
-//     },
-
-//     obtenerDetalleKPI(kpi) {
-//       if (kpi === 'cantidadLavados') {
-//         return `La cantidad de lavados realizados entre ${this.fechaInicio} y ${this.fechaFin} es de ${this.totalLavados}.`;
-//       } else if (kpi === 'ingresos') {
-//         return `Los ingresos entre ${this.fechaInicio} y ${this.fechaFin} son de $${this.ingresos}.`;
-//       } else if (kpi === 'egresos') {
-//         return `Los egresos entre ${this.fechaInicio} y ${this.fechaFin} son de $${this.egresos}.`;
-//       } else if (kpi === 'gastos') {
-//         return `Los gastos entre ${this.fechaInicio} y ${this.fechaFin} son de $${this.gastos}.`;
-//       } else if (kpi === 'beneficioNeto') {
-//         return `El beneficio neto entre ${this.fechaInicio} y ${this.fechaFin} es de $${this.beneficioNeto}.`;
-//       }
-//     },
-//     mostrarDetalle(kpi) {
-//       this.kpiSeleccionado = kpi;
-
-//       // Asigna el detalle del KPI seleccionado a la variable detalleKPI
-//       this.detalleKPI = this.obtenerDetalleKPI(kpi); // Función ficticia para obtener el detalle del KPI
-
-//       if (this.totalLavados > 0) {
-//         this.mostrarVentanaDetalle = true;
-//         return;
-//       }
-//     },
-//     mostrarGrafico() {
-//       const ctx = document.getElementById('chart').getContext('2d');
-//       const existingChart = Chart.getChart('chart');
-
-//       if (existingChart) {
-//         existingChart.destroy();
-//       }
-
-//       new Chart(ctx, {
-//         type: 'line',
-//         data: this.datosGrafico,
-//         options: {
-//           scales: {
-//             y: {
-//               beginAtZero: true,
-//             },
-//           },
-//         },
-//       });
-//     },
-//   },
-// };
 </script>

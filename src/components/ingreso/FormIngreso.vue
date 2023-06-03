@@ -1,7 +1,11 @@
 <template>
+ <div class="container mt-3">
+   
   <div class="container mt-3">
-    <div class="mb-3">
-      <router-link to="/"> &lt;Volver atrás </router-link>
+     <div class="mb-3">
+      <router-link :to="isAdmin ? '/ingresos' : '/'" class="text-blue-500"
+        >&lt; Volver atrás</router-link
+      >
     </div>
     <h1>Ingresos</h1>
     <form>
@@ -48,6 +52,8 @@ export default {
     const router = useRouter();
     const route = useRoute();
     cajaAbierta = cajaService.getCajaAbierta();
+    const isAdmin = ref(false);
+
     let form = ref({
       id: 0,
       descripcion: '',
@@ -55,26 +61,45 @@ export default {
       cajaId: 0,
       fechaIngreso: '',
     });
-    const submitForm = () => {
+    const submitForm =async  () => {
       form.value.cajaId = cajaAbierta.value.id;
       form.value.fechaIngreso = new Date();
 
-      ingresoService.addIngreso(form);
+       if (form.value.id == 0) {
+        await ingresoService.addIngreso(form);
+
+      } else {
+        await ingresoService.editIngreso(form.value);
+      }
       form.value = {};
       form.descripcion = '';
       form.importe = '';
       form.fechaIngreso = '';
+      if (isAdmin.value) {
+        router.push('/ingresos');
+        return;
+      }
       router.push('/');
     };
 
-    onMounted(() => {
+    onMounted(async () => {
       cajaAbierta = cajaService.getCajaAbierta();
+      const query = router.currentRoute.value.query;
+      if (query.isAdmin === 'true') {
+        isAdmin.value = true;
+      }
+      if (query.id != null) {
+        console.log(query);
+        form.value.id = query.id;
+        form.value = await ingresoService.getIngresoById(query.id);
+      }
     });
 
     return {
       cajaAbierta,
       form,
       submitForm,
+      isAdmin,
     };
   },
   name: 'IngresoForm',

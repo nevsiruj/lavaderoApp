@@ -6,6 +6,8 @@ import CerrarCaja from './components/caja/CerrarCaja.vue';
 import FormLavado from './components/lavado/FormLavado.vue';
 import ListLavadosCaja from './components/lavado/ListLavadosCaja.vue';
 import Lavados from './components/admin/Lavados.vue';
+import Ingresos from './components/admin/Ingresos.vue';
+import Egresos from './components/admin/Egresos.vue';
 import FormEgreso from './components/egreso/FormEgreso.vue';
 import ListEgreso from './components/egreso/ListEgreso.vue';
 import FormIngreso from './components/ingreso/FormIngreso.vue';
@@ -74,9 +76,19 @@ const routes = [
     name: 'Lavados',
     component: Lavados,
   },
+  // {
+  //   path: '/lavados/editar/:id',
+  //   component: FormLavado,
+  // },
   {
-    path: '/lavados/editar/:id',
-    component: FormLavado,
+    path: '/ingresos',
+    name: 'Ingresos',
+    component: Ingresos,
+  },
+  {
+    path: '/egresos',
+    name: 'Egresos',
+    component: Egresos,
   },
   {
     path: '/cerrarcaja',
