@@ -243,7 +243,7 @@
           <thead>
             <tr>
               <th>Fecha</th>
-              <!-- <th>Responsable</th> -->
+              <th>Responsable</th>
               <th>Descripción</th>
               <th>Importe</th>
             </tr>
@@ -253,7 +253,7 @@
               <td>
                 {{ lavado.fecha }}
               </td>
-              <!-- <td>{{lavado.responsable}} </td> -->
+              <td>{{lavado.responsable}} </td>
               <td>{{ lavado.descripcion }}</td>
               <td>{{ Number(lavado.importe) }}</td>
               <!-- <td class="px-2 py-1 whitespace-nowrap">
