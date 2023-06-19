@@ -27,6 +27,16 @@
           required
         />
       </div>
+      <div class="form-group" v-if="isAdmin">
+        <label for="importe">Fecha</label>
+        <input
+          type="date"
+          class="form-control"
+          id="importe"
+          v-model="form.fechaIngreso"
+          required
+        />
+      </div>
       <div class="form-check">
         <label class="form-check-label" for="flexCheckDefault">
           Es un Gasto
@@ -73,7 +83,12 @@ export default {
     let isAdmin = ref(false);
     const submitForm = async () => {
       form.value.cajaId = cajaAbierta.value.id;
-      form.value.fechaIngreso = new Date();
+      debugger;
+      if (form.value.fechaIngreso === '') {
+        const fecha = new Date();
+        const fechita = fecha.toLocaleString('en-US', { timeZone: 'UTC' });
+        form.value.fechaIngreso = fechita;
+      }
       if (form.value.id == 0) {
         egresoService.addEgreso(form);
       } else {

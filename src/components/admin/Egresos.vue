@@ -1,4 +1,6 @@
 <template>
+  <Toast message="Egreso Eliminado" ref="toastComponent" />
+
   <div>
     <router-link
       class="btn btn-sm btn-success mt-2 mr-1"
@@ -80,6 +82,11 @@
             </th>
             <th
               class="px-2 py-1 text-xs text-gray-500 uppercase tracking-wider"
+            >
+              Gasto
+            </th>
+            <th
+              class="px-2 py-1 text-xs text-gray-500 uppercase tracking-wider"
             ></th>
           </tr>
         </thead>
@@ -92,6 +99,9 @@
               {{ egreso.descripcion }}
             </td>
             <td class="px-2 py-1 whitespace-nowrap">${{ egreso.importe }}</td>
+            <td class="px-2 py-1 whitespace-nowrap">
+              <input type="checkbox" :checked="egreso.isGasto" disabled />
+            </td>
             <td class="px-2 py-1 whitespace-nowrap">
               <div class="flex space-x-2">
                 <button
@@ -119,8 +129,11 @@
 import egresoService from '../../composables/api/egresoService.js';
 import { ref, onMounted, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-
+import Toast from '../Toast/Toast.vue';
 export default {
+  components: {
+    Toast,
+  },
   name: 'egresos',
   setup() {
     const egresos = ref([]);
@@ -129,6 +142,7 @@ export default {
     const endDate = ref('');
     const showMessage = ref(false);
     const router = useRouter();
+    const toastComponent = ref(null);
 
     // const fetchEgresos = async () => {
     //   try {
@@ -264,6 +278,8 @@ export default {
     const deleteEgreso = async (egresoId) => {
       try {
         await egresoService.deleteEgreso(egresoId);
+        let toast = toastComponent.value.getToast();
+        toast[0].show();
         fetchEgresos();
         // Realiza alguna lógica adicional si es necesario
       } catch (error) {
@@ -290,6 +306,7 @@ export default {
       editEgreso,
       router,
       esUnGasto,
+      toastComponent,
     };
   },
 };
