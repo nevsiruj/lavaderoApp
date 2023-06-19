@@ -1,4 +1,5 @@
 <template>
+  <Toast message="Lavado Eliminado" ref="toastComponent" />
   <div>
     <router-link
       class="btn btn-sm btn-success mt-2 mr-1"
@@ -110,14 +111,18 @@
 import lavadoService from '../../composables/api/lavadoService.js';
 import { ref, onMounted, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-
+import Toast from '../Toast/Toast.vue';
 export default {
+  components: {
+    Toast,
+  },
   setup() {
     const lavados = ref([]);
     const startDate = ref('');
     const endDate = ref('');
     const showMessage = ref(false);
     const router = useRouter();
+    const toastComponent = ref(null);
 
     const fetchLavados = async () => {
       try {
@@ -189,7 +194,8 @@ export default {
     const deleteLavado = async (lavadoId) => {
       try {
         await lavadoService.deleteLavado(lavadoId);
-        fetchLavados();
+        let toast = toastComponent.value.getToast();
+        toast[0].show();
         // Realiza alguna lógica adicional si es necesario
       } catch (error) {
         console.error(error);
@@ -214,6 +220,7 @@ export default {
       deleteLavado,
       editLavado,
       router,
+      toastComponent,
     };
   },
 };

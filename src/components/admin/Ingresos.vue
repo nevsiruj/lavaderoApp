@@ -124,8 +124,8 @@ export default {
       try {
         const response = await ingresoService.getIngresos();
         ingresos.value = await response.sort((a, b) => {
-          const fechaA = new Date(a.fecha);
-          const fechaB = new Date(b.fecha);
+          const fechaA = new Date(a.fechaRegistro);
+          const fechaB = new Date(b.fechaRegistro);
 
           showMessage.value = true;
           setTimeout(() => {
@@ -139,6 +139,21 @@ export default {
       }
     };
 
+    const filteredIngresos = computed(() => {
+      const start = startDate.value ? new Date(startDate.value) : null;
+      const end = endDate.value ? new Date(endDate.value) : null;
+
+      const filtered = ingresos.value.filter((ingreso) => {
+        const ingresoDate = new Date(ingreso.fechaRegistro);
+        return (!start || ingresoDate >= start) && (!end || ingresoDate <= end);
+      });
+
+      return filtered.sort((a, b) => {
+        const fechaA = new Date(a.fecha);
+        const fechaB = new Date(b.fecha);
+        return fechaB - fechaA;
+      });
+    });
     const formatDate = (date) => {
       const formattedDate = new Date(date).toLocaleString('es', {
         day: '2-digit',
@@ -157,25 +172,6 @@ export default {
         return (!start || ingresoDate >= start) && (!end || ingresoDate <= end);
       });
     };
-
-    const filteredIngresos = computed(() => {
-      if (startDate.value || endDate.value) {
-        return ingresos.value.filter((ingreso) => {
-          const ingresoDate = new Date(ingreso.fechaRegistro);
-          const start = startDate.value ? new Date(startDate.value) : null;
-          const end = endDate.value ? new Date(endDate.value) : null;
-          if (end) {
-            end.setDate(end.getDate() + 1);
-          }
-          return (
-            (!start || ingresoDate >= start) && (!end || ingresoDate <= end)
-          );
-        });
-      } else {
-        return ingresos.value;
-      }
-    });
-
     // Calcula el total de importe de los ingresos mostrados
     const calculateTotalImporte = () => {
       return filteredIngresos.value.reduce((total, ingreso) => {

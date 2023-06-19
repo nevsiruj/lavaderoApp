@@ -44,8 +44,17 @@
         </div>
         <div class="flex items-center text-gray-600">
           <i class="fas fa-dollar-sign mr-1"></i>
-          <span>Gastado: ${{ calculateTotalImporte() }}</span>
+          <span>Total: ${{ calculateTotalImporte() }}</span>
         </div>
+      </div>
+      <div class="flex items-center text-gray-600">
+        <input
+          type="checkbox"
+          class="mr-1"
+          v-model="esUnGasto"
+          @change="filterEgresos"
+        />
+        <span>Es un Gasto</span>
       </div>
     </div>
 
@@ -115,17 +124,36 @@ export default {
   name: 'egresos',
   setup() {
     const egresos = ref([]);
+    const esUnGasto = ref(false);
     const startDate = ref('');
     const endDate = ref('');
     const showMessage = ref(false);
     const router = useRouter();
 
+    // const fetchEgresos = async () => {
+    //   try {
+    //     const response = await egresoService.getEgresos();
+    //     egresos.value = await response.sort((a, b) => {
+    //       const fechaA = new Date(a.fecha);
+    //       const fechaB = new Date(b.fecha);
+
+    //       showMessage.value = true;
+    //       setTimeout(() => {
+    //         showMessage.value = false;
+    //       }, 2000);
+
+    //       return fechaB - fechaA;
+    //     });
+    //   } catch (error) {
+    //     console.error(error);
+    //   }
+    // };
     const fetchEgresos = async () => {
       try {
         const response = await egresoService.getEgresos();
-        egresos.value = await response.sort((a, b) => {
-          const fechaA = new Date(a.fecha);
-          const fechaB = new Date(b.fecha);
+        egresos.value = response.sort((a, b) => {
+          const fechaA = new Date(a.fechaRegistro);
+          const fechaB = new Date(b.fechaRegistro);
 
           showMessage.value = true;
           setTimeout(() => {
@@ -149,29 +177,74 @@ export default {
       return formattedDate;
     };
 
-    const filterEgresos = async () => {
-      const filtered = egresos.value.filter((egreso) => {
-        const egresoDate = new Date(egreso.fechaRegistro);
-        const start = startDate.value ? new Date(startDate.value) : null;
-        const end = endDate.value ? new Date(endDate.value) : null;
-        return (!start || egresoDate >= start) && (!end || egresoDate <= end);
-      });
-    };
+    const filterEgresos = () => {
+      let filtered = egresos.value.slice();
 
-    const filteredEgresos = computed(() => {
       if (startDate.value || endDate.value) {
-        return egresos.value.filter((egreso) => {
+        filtered = filtered.filter((egreso) => {
           const egresoDate = new Date(egreso.fechaRegistro);
           const start = startDate.value ? new Date(startDate.value) : null;
           const end = endDate.value ? new Date(endDate.value) : null;
+          const isGasto = egreso.isGasto === true;
+
           if (end) {
             end.setDate(end.getDate() + 1);
           }
-          return (!start || egresoDate >= start) && (!end || egresoDate <= end);
+
+          return (
+            (!start || egresoDate >= start) &&
+            (!end || egresoDate <= end) &&
+            (!esUnGasto.value || isGasto)
+          );
         });
       } else {
-        return egresos.value;
+        if (esUnGasto.value) {
+          filtered = filtered.filter((egreso) => {
+            const isGasto = egreso.isGasto === true;
+            return isGasto;
+          });
+        }
       }
+
+      filteredEgresos.value = filtered.sort(
+        (a, b) => new Date(a.fechaRegistro) - new Date(b.fechaRegistro)
+      );
+    };
+
+    const filteredEgresos = computed(() => {
+      let filtered = egresos.value.slice();
+
+      if (startDate.value || endDate.value) {
+        filtered = filtered.filter((egreso) => {
+          const egresoDate = new Date(egreso.fechaRegistro);
+          const start = startDate.value ? new Date(startDate.value) : null;
+          const end = endDate.value ? new Date(endDate.value) : null;
+          const isGasto = egreso.isGasto === true;
+
+          if (end) {
+            end.setDate(end.getDate() + 1);
+          }
+
+          return (
+            (!start || egresoDate >= start) &&
+            (!end || egresoDate <= end) &&
+            (!esUnGasto.value || isGasto)
+          );
+        });
+      } else {
+        if (esUnGasto.value) {
+          filtered = filtered.filter((egreso) => {
+            const isGasto = egreso.isGasto === true;
+            return isGasto;
+          });
+        }
+      }
+
+      return filtered.sort((a, b) => {
+        const fechaA = new Date(a.fechaRegistro);
+        const fechaB = new Date(b.fechaRegistro);
+        return fechaB - fechaA;
+      });
     });
 
     // Calcula el total de importe de los egresos mostrados
@@ -216,6 +289,7 @@ export default {
       deleteEgreso,
       editEgreso,
       router,
+      esUnGasto,
     };
   },
 };

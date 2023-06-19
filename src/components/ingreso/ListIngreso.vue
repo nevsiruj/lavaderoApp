@@ -15,6 +15,22 @@
         <tr v-for="ingreso in ingresos" :key="ingreso.id">
           <td>{{ ingreso.descripcion }}</td>
           <td>{{ ingreso.importe }}</td>
+          <td class="px-2 py-1 whitespace-nowrap">
+            <div class="flex space-x-2">
+              <button
+                class="text-blue-600 hover:text-blue-800 focus:outline-none"
+                @click="editIngreso(ingreso)"
+              >
+                <i class="fas fa-edit"></i>
+              </button>
+              <button
+                class="text-red-600 hover:text-red-800 focus:outline-none"
+                @click="deleteIngreso(ingreso.id)"
+              >
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </div>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -37,16 +53,41 @@ export default {
     let ingresos = ref([]);
 
     onMounted(async () => {
-      cajaAbierta = cajaService.getCajaAbierta();
-      ingresos.value = await ingresoService.getIngresosByCaja(
-        cajaAbierta.value.id
-      );
-      console.log(ingresos);
+      fetchIngresos();
     });
+    const editIngreso = (ingreso) => {
+      router.push({
+        path: '/formingreso',
+        query: { isAdmin: false, id: ingreso.id },
+      });
+    };
+    const fetchIngresos = async () => {
+      try {
+        cajaAbierta = cajaService.getCajaAbierta();
+        ingresos.value = await ingresoService.getIngresosByCaja(
+          cajaAbierta.value.id
+        );
+        console.log(ingresos);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    const deleteIngreso = async (ingresoId) => {
+      try {
+        await ingresoService.deleteIngreso(ingresoId);
+        fetchIngresos();
+        // Realiza alguna lógica adicional si es necesario
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
     return {
       cajaAbierta,
       ingresos,
+      editIngreso,
+      deleteIngreso,
     };
   },
   name: 'Ingreso',

@@ -190,8 +190,9 @@ export default {
       if (isAdmin.value) {
         router.push('/lavados');
         return;
+      } else {
+        router.push('/');
       }
-      router.push('/');
     };
     onMounted(async () => {
       tiposLavados.value = await lavadoService.getTipoLavado();
