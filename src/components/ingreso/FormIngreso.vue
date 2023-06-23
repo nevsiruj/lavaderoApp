@@ -38,6 +38,7 @@
       </button>
     </form>
   </div>
+ </div>
 </template>
 <script>
 // import cajaService from '../services/caja.service.js';

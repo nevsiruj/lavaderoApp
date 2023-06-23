@@ -7,7 +7,7 @@
 
 <script>
 // import HelloWorld from './components/HelloWorld.vue';
-import ListUsuarios from './components/usuarios/views/ListUsuarios.vue';
+// import ListUsuarios from './components/usuarios/views/ListUsuarios.vue';
 // import CajaHome from './components/caja/CajaHome.vue';
 // import AbrirCaja from './components/caja/AbrirCaja.vue';
 import SideBar from './layout/SideBar.vue';

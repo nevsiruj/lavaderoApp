@@ -1,5 +1,7 @@
 <template>
   <Toast message="Lavado Eliminado" ref="toastComponent" />
+  <Modal message="lavado" @confirm="deleteLavado" ref="modalComponent" />
+
   <div>
     <router-link
       class="btn btn-sm btn-success mt-2 mr-1"
@@ -94,7 +96,7 @@
                 </button>
                 <button
                   class="text-red-600 hover:text-red-800 focus:outline-none"
-                  @click="deleteLavado(lavado.id)"
+                  @click="openModal(lavado.id)"
                 >
                   <i class="fas fa-trash-alt"></i>
                 </button>
@@ -112,9 +114,11 @@ import lavadoService from '../../composables/api/lavadoService.js';
 import { ref, onMounted, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import Toast from '../Toast/Toast.vue';
+import Modal from '../modalConfirmar/ModalConfirmar.vue';
 export default {
   components: {
     Toast,
+    Modal,
   },
   setup() {
     const lavados = ref([]);
@@ -123,6 +127,8 @@ export default {
     const showMessage = ref(false);
     const router = useRouter();
     const toastComponent = ref(null);
+    const modalComponent = ref(null);
+    const modal= ref()
 
     const fetchLavados = async () => {
       try {
@@ -194,13 +200,19 @@ export default {
     const deleteLavado = async (lavadoId) => {
       try {
         await lavadoService.deleteLavado(lavadoId);
+        modal.value.hide()
         let toast = toastComponent.value.getToast();
         toast[0].show();
+        fetchLavados()
         // Realiza alguna lógica adicional si es necesario
       } catch (error) {
         console.error(error);
       }
     };
+    const openModal= async (lavadoId) =>{
+      modal.value = await modalComponent.value.getModal(lavadoId);
+      modal.value.show()
+    }
 
     onMounted(async () => {
       await fetchLavados();
@@ -221,6 +233,9 @@ export default {
       editLavado,
       router,
       toastComponent,
+      openModal,
+      modalComponent,
+      modal
     };
   },
 };

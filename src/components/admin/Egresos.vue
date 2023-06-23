@@ -1,5 +1,6 @@
 <template>
   <Toast message="Egreso Eliminado" ref="toastComponent" />
+  <Modal message="egreso" @confirm="deleteEgreso" ref="modalComponent" />
 
   <div>
     <router-link
@@ -112,7 +113,7 @@
                 </button>
                 <button
                   class="text-red-600 hover:text-red-800 focus:outline-none"
-                  @click="deleteEgreso(egreso.id)"
+                  @click="deleteModal(egreso.id)"
                 >
                   <i class="fas fa-trash-alt"></i>
                 </button>
@@ -130,9 +131,11 @@ import egresoService from '../../composables/api/egresoService.js';
 import { ref, onMounted, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import Toast from '../Toast/Toast.vue';
+import Modal from '../modalConfirmar/ModalConfirmar.vue';
 export default {
   components: {
     Toast,
+    Modal,
   },
   name: 'egresos',
   setup() {
@@ -143,25 +146,9 @@ export default {
     const showMessage = ref(false);
     const router = useRouter();
     const toastComponent = ref(null);
+    const modalComponent = ref(null);
+    const modal= ref()
 
-    // const fetchEgresos = async () => {
-    //   try {
-    //     const response = await egresoService.getEgresos();
-    //     egresos.value = await response.sort((a, b) => {
-    //       const fechaA = new Date(a.fecha);
-    //       const fechaB = new Date(b.fecha);
-
-    //       showMessage.value = true;
-    //       setTimeout(() => {
-    //         showMessage.value = false;
-    //       }, 2000);
-
-    //       return fechaB - fechaA;
-    //     });
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
-    // };
     const fetchEgresos = async () => {
       try {
         const response = await egresoService.getEgresos();
@@ -278,14 +265,21 @@ export default {
     const deleteEgreso = async (egresoId) => {
       try {
         await egresoService.deleteEgreso(egresoId);
+        modal.value.hide()
         let toast = toastComponent.value.getToast();
         toast[0].show();
         fetchEgresos();
+        
         // Realiza alguna lógica adicional si es necesario
       } catch (error) {
         console.error(error);
       }
     };
+    const deleteModal = async (egresoId) =>{
+      modal.value = await modalComponent.value.getModal(egresoId);
+      modal.value.show()
+    }
+   
 
     onMounted(async () => {
       await fetchEgresos();
@@ -307,6 +301,9 @@ export default {
       router,
       esUnGasto,
       toastComponent,
+      modalComponent,
+      deleteModal,
+      modal
     };
   },
 };

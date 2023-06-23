@@ -17,13 +17,12 @@
          </div>
        </div>
      </div>
-     <div>
         
    </template>
    
    <script>
    import { ref, onMounted} from 'vue';
-   import { toast } from 'bootstrap';
+   import { Toast } from 'bootstrap';
    
    export default {
      props: {

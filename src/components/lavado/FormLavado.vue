@@ -1,7 +1,7 @@
 <template>
   <div class="container mt-3">
     <div class="mb-3">
-      <router-link :to="isAdmin ? '/lavados' : '/'" class="text-blue-500"
+      <router-link :to="isAdmin ? '/lavados' : '/ListLavadosCaja'" class="text-blue-500"
         >&lt; Volver atrás</router-link
       >
     </div>
@@ -191,7 +191,7 @@ export default {
         router.push('/lavados');
         return;
       } else {
-        router.push('/');
+        router.push('/ListLavadosCaja');
       }
     };
     onMounted(async () => {

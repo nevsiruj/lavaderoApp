@@ -1,4 +1,6 @@
 <template>
+  <Modal message="ingreso" @confirm="deleteIngreso" ref="modalComponent" />
+
   <div>
     <router-link
       class="btn btn-sm btn-success mt-2 mr-1"
@@ -93,7 +95,7 @@
                 </button>
                 <button
                   class="text-red-600 hover:text-red-800 focus:outline-none"
-                  @click="deleteIngreso(ingreso.id)"
+                  @click="openModal(ingreso.id)"
                 >
                   <i class="fas fa-trash-alt"></i>
                 </button>
@@ -110,15 +112,21 @@
 import ingresoService from '../../composables/api/ingresoService.js';
 import { ref, onMounted, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import Modal from '../modalConfirmar/ModalConfirmar.vue';
 
 export default {
   name: 'ingresos',
+  components: {
+    Modal
+  },
   setup() {
     const ingresos = ref([]);
     const startDate = ref('');
     const endDate = ref('');
     const showMessage = ref(false);
     const router = useRouter();
+    const modalComponent= ref(null)
+    const modal= ref()
 
     const fetchIngresos = async () => {
       try {
@@ -189,12 +197,17 @@ export default {
     const deleteIngreso = async (ingresoId) => {
       try {
         await ingresoService.deleteIngreso(ingresoId);
+        modal.value.hide()
         fetchIngresos();
         // Realiza alguna lógica adicional si es necesario
       } catch (error) {
         console.error(error);
       }
     };
+    const openModal = async (ingresoId)=>{
+      modal.value = await modalComponent.value.getModal(ingresoId);
+      modal.value.show()
+    }
 
     onMounted(async () => {
       await fetchIngresos();
@@ -214,6 +227,9 @@ export default {
       deleteIngreso,
       editIngreso,
       router,
+      modalComponent,
+      modal,
+      openModal
     };
   },
 };

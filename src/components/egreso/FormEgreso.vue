@@ -83,7 +83,6 @@ export default {
     let isAdmin = ref(false);
     const submitForm = async () => {
       form.value.cajaId = cajaAbierta.value.id;
-      debugger;
       if (form.value.fechaIngreso === '') {
         const fecha = new Date();
         const fechita = fecha.toLocaleString('en-US', { timeZone: 'UTC' });
