@@ -1,5 +1,7 @@
 <template>
   <div>
+  <Modal message="lavado" @confirm="deleteLavado" ref="modalComponent" />
+
     <div class="mb-3">
       <router-link to="/"> &lt;Volver atrás </router-link>
     </div>
@@ -34,7 +36,7 @@
                   </button>
                   <button
                     class="text-red-600 hover:text-red-800 focus:outline-none"
-                    @click="deleteLavado(lavado.id)"
+                    @click="openModal(lavado.id)"
                   >
                     <i class="fas fa-trash-alt"></i>
                   </button>
@@ -56,15 +58,22 @@ import { ref, onMounted, reactive } from 'vue';
 import lavadoService from '../../composables/api/lavadoService.js';
 import cajaService from '../../composables/api/cajaService.js';
 import { useRoute, useRouter } from 'vue-router';
+import Modal from '../modalConfirmar/ModalConfirmar.vue';
+
 
 // import { useLavado } from '../services/useLavado';
 
 export default {
+  components: {
+    Modal,
+  },
   setup() {
     let autosLavados = ref([]);
     // let tipoLavado = ref([]);
     const router = useRouter();
     let cajaAbierta = ref({});
+    const modalComponent = ref(null);
+    const modal= ref()
 
     // tipoLavado = lavadoService.getTipoLavado();
 
@@ -88,11 +97,17 @@ export default {
         autosLavados.value = await lavadoService.getLavadosByCaja(
           cajaAbierta.value.id
         );
+        modal.value.hide()
+
         // Realiza alguna lógica adicional si es necesario
       } catch (error) {
         console.error(error);
       }
     };
+    const openModal= async (lavadoId) =>{
+      modal.value = await modalComponent.value.getModal(lavadoId);
+      modal.value.show()
+    }
 
     return {
       autosLavados,
@@ -100,11 +115,13 @@ export default {
       editLavado,
       deleteLavado,
       router,
+      modalComponent,
+      modal,
+      openModal
     };
   },
   name: 'LavadoList',
   props: {},
-  components: {},
   created() {},
   data() {
     return {};

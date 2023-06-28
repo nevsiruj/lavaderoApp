@@ -1,4 +1,6 @@
 <template>
+  <Modal message="egreso" @confirm="deleteEgreso" ref="modalComponent" />
+
   <div class="container">
     <div class="mb-3">
       <router-link to="/"> &lt;Volver atrás </router-link>
@@ -6,7 +8,7 @@
     <h1>Egresos</h1>
     <table class="table">
       <thead>
-        <tr>
+        <tr> 
           <th>Descripción</th>
           <th>Importe</th>
         </tr>
@@ -25,7 +27,7 @@
               </button>
               <button
                 class="text-red-600 hover:text-red-800 focus:outline-none"
-                @click="deleteEgreso(egreso.id)"
+                @click="deleteModal(egreso.id)"
               >
                 <i class="fas fa-trash-alt"></i>
               </button>
@@ -44,14 +46,19 @@ import egresoService from '../../composables/api/egresoService.js';
 
 import { reactive, onMounted, ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-
+import Modal from '../modalConfirmar/ModalConfirmar.vue';
 export default {
+  components: {
+    Modal,
+  },
   setup() {
     let cajaAbierta = ref({});
     const router = useRouter();
     const route = useRoute();
     cajaAbierta = cajaService.getCajaAbierta();
     let egresos = ref([]);
+    const modalComponent = ref(null);
+    const modal= ref()
 
     onMounted(async () => {
       // cajaAbierta = cajaService.getCajaAbierta();
@@ -82,12 +89,18 @@ export default {
     const deleteEgreso = async (egresoId) => {
       try {
         await egresoService.deleteEgreso(egresoId);
+        modal.value.hide()
+
         fetchEgresos();
         // Realiza alguna lógica adicional si es necesario
       } catch (error) {
         console.error(error);
       }
     };
+    const deleteModal = async (egresoId) =>{
+      modal.value = await modalComponent.value.getModal(egresoId);
+      modal.value.show()
+    }
 
     return {
       cajaAbierta,
@@ -95,11 +108,13 @@ export default {
       editEgreso,
       deleteEgreso,
       fetchEgresos,
+      modalComponent,
+      deleteModal,
+      modal
     };
   },
   name: 'Egreso',
   props: {},
-  components: {},
   created() {},
   data() {
     return {};

@@ -279,7 +279,7 @@ export default {
       modal.value = await modalComponent.value.getModal(egresoId);
       modal.value.show()
     }
-   
+    
 
     onMounted(async () => {
       await fetchEgresos();

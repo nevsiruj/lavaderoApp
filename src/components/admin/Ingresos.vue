@@ -208,7 +208,7 @@ export default {
       modal.value = await modalComponent.value.getModal(ingresoId);
       modal.value.show()
     }
-
+ 
     onMounted(async () => {
       await fetchIngresos();
       await filterIngresos();

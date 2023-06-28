@@ -1,4 +1,6 @@
 <template>
+  <Modal message="ingreso" @confirm="deleteIngreso" ref="modalComponent" />
+
   <div class="container">
     <div class="mb-3">
       <router-link to="/"> &lt;Volver atrás </router-link>
@@ -7,7 +9,7 @@
     <table class="table">
       <thead>
         <tr>
-          <th>Descripción</th>
+          <th>Descripción</th> 
           <th>Importe</th>
         </tr>
       </thead>
@@ -25,7 +27,7 @@
               </button>
               <button
                 class="text-red-600 hover:text-red-800 focus:outline-none"
-                @click="deleteIngreso(ingreso.id)"
+                @click="openModal(ingreso.id)"
               >
                 <i class="fas fa-trash-alt"></i>
               </button>
@@ -43,14 +45,21 @@ import ingresoService from '../../composables/api/ingresoService.js';
 
 import { reactive, onMounted, ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
+import Modal from '../modalConfirmar/ModalConfirmar.vue';
+
 
 export default {
+  components: {
+    Modal
+  },
   setup() {
     let cajaAbierta = ref({});
     const router = useRouter();
     const route = useRoute();
     cajaAbierta = cajaService.getCajaAbierta();
     let ingresos = ref([]);
+    const modalComponent= ref(null)
+    const modal= ref()
 
     onMounted(async () => {
       fetchIngresos();
@@ -76,23 +85,32 @@ export default {
     const deleteIngreso = async (ingresoId) => {
       try {
         await ingresoService.deleteIngreso(ingresoId);
+        modal.value.hide()
+
         fetchIngresos();
         // Realiza alguna lógica adicional si es necesario
       } catch (error) {
         console.error(error);
       }
     };
+    const openModal = async (ingresoId)=>{
+      modal.value = await modalComponent.value.getModal(ingresoId);
+      modal.value.show()
+    }
 
     return {
       cajaAbierta,
       ingresos,
       editIngreso,
       deleteIngreso,
+      modalComponent,
+      modal,
+      openModal
+      
     };
   },
   name: 'Ingreso',
   props: {},
-  components: {},
   created() {},
   data() {
     return {};

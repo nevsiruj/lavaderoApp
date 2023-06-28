@@ -2,7 +2,7 @@
   <Toast message="Lavado Eliminado" ref="toastComponent" />
   <Modal message="lavado" @confirm="deleteLavado" ref="modalComponent" />
 
-  <div>
+  <div> 
     <router-link
       class="btn btn-sm btn-success mt-2 mr-1"
       :to="{ path: '/formlavado', query: { isAdmin: true } }"
