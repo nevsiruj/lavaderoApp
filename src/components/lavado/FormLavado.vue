@@ -146,6 +146,7 @@ export default {
       tipoLavadoId: '',
       descripcion: '',
       importe: '',
+      responsable: ''
       // tipoVehiculo: {
       //   id: 0,
       //   descripcion: '',
@@ -171,7 +172,9 @@ export default {
     // ]);
 
     const submitForm = async () => {
+      debugger
       form.value.cajaId = cajaAbierta.value.id;
+      form.value.responsable = cajaAbierta.value.responsable;
       form.value.fecha = new Date();
       // form.value.tipoLavado.id = form.value.tipoLavadoId;
       // form.value.tipoVehiculo.id = form.value.tipoVehiculoId;
@@ -187,6 +190,7 @@ export default {
       form.tipoLavadoId = '';
       form.descripcion = '';
       form.importe = '';
+      form.responsable = '';
       if (isAdmin.value) {
         router.push('/lavados');
         return;
