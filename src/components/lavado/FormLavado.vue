@@ -183,13 +183,15 @@ export default {
     // ]);
 
     const submitForm = async () => {
-      debugger
+      // debugger
       form.value.cajaId = cajaAbierta.value.id;
       form.value.responsable = cajaAbierta.value.responsable;
       if (form.value.fecha != '') {
         const fecha= new Date(form.value.fecha)
         const fechaFormateada= fecha.toISOString();
         form.value.fecha = fechaFormateada
+      }else{
+        form.value.fecha = new Date().toISOString()
       }
       if (form.value.id == 0) {
         await lavadoService.addLavado(form);

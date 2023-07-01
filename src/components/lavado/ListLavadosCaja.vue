@@ -22,7 +22,7 @@
           <tbody>
             <tr v-for="lavado in autosLavados" :key="lavado.id">
               <td>
-                {{ lavado.fecha }}
+                {{ formatDate(lavado.fecha) }}
               </td>
               <td>{{ lavado.descripcion }}</td>
               <td>{{ Number(lavado.importe) }}</td>
@@ -108,6 +108,16 @@ export default {
       modal.value = await modalComponent.value.getModal(lavadoId);
       modal.value.show()
     }
+    const formatDate = (date) => {
+      const formattedDate = new Date(date).toLocaleString('es', {
+        day: '2-digit',
+        month: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+      });
+      return formattedDate;
+    };
+
 
     return {
       autosLavados,
@@ -117,7 +127,9 @@ export default {
       router,
       modalComponent,
       modal,
-      openModal
+      openModal,
+      formatDate
+      
     };
   },
   name: 'LavadoList',
