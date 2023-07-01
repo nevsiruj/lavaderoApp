@@ -33,7 +33,7 @@
           type="date"
           class="form-control"
           id="importe"
-          v-model="form.fechaIngreso"
+          v-model="form.fechaRegistro"
           required
         />
       </div>
@@ -77,16 +77,16 @@ export default {
       descripcion: '',
       importe: 0,
       cajaId: 0,
-      fechaIngreso: '',
+      fechaRegistro: '',
       isGasto: false,
     });
     let isAdmin = ref(false);
     const submitForm = async () => {
       form.value.cajaId = cajaAbierta.value.id;
-      if (form.value.fechaIngreso === '') {
-        const fecha = new Date();
-        const fechita = fecha.toLocaleString('en-US', { timeZone: 'UTC' });
-        form.value.fechaIngreso = fechita;
+      if (form.value.fechaRegistro != '') {
+        const fecha= new Date(form.value.fechaRegistro)
+        const fechaFormateada= fecha.toISOString();
+        form.value.fechaRegistro = fechaFormateada
       }
       if (form.value.id == 0) {
         egresoService.addEgreso(form);
@@ -96,7 +96,7 @@ export default {
       form.value = {};
       form.descripcion = '';
       form.importe = '';
-      form.fechaIngreso = '';
+      form.fechaRegistro = '';
       if (isAdmin.value) {
         router.push('/egresos');
         return;

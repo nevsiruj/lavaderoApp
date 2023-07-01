@@ -99,6 +99,16 @@
               v-model="form.importe"
             />
           </div>
+          <div class="form-group" v-if="isAdmin">
+        <label for="importe">Fecha</label>
+        <input
+          type="date"
+          class="form-control"
+          id="importe"
+          v-model="form.fecha"
+          required
+        />
+      </div>
           <button
             type="submit"
             class="
@@ -146,7 +156,8 @@ export default {
       tipoLavadoId: '',
       descripcion: '',
       importe: '',
-      responsable: ''
+      responsable: '',
+      fecha:''
       // tipoVehiculo: {
       //   id: 0,
       //   descripcion: '',
@@ -175,10 +186,11 @@ export default {
       debugger
       form.value.cajaId = cajaAbierta.value.id;
       form.value.responsable = cajaAbierta.value.responsable;
-      form.value.fecha = new Date();
-      // form.value.tipoLavado.id = form.value.tipoLavadoId;
-      // form.value.tipoVehiculo.id = form.value.tipoVehiculoId;
-      // alert(form.value);
+      if (form.value.fecha != '') {
+        const fecha= new Date(form.value.fecha)
+        const fechaFormateada= fecha.toISOString();
+        form.value.fecha = fechaFormateada
+      }
       if (form.value.id == 0) {
         await lavadoService.addLavado(form);
       } else {
@@ -191,6 +203,7 @@ export default {
       form.descripcion = '';
       form.importe = '';
       form.responsable = '';
+      form.fecha = '';
       if (isAdmin.value) {
         router.push('/lavados');
         return;

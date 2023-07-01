@@ -29,6 +29,16 @@
           required
         />
       </div>
+      <div class="form-group" v-if="isAdmin">
+        <label for="importe">Fecha</label>
+        <input
+          type="date"
+          class="form-control"
+          id="importe"
+          v-model="form.fechaRegistro"
+          required
+        />
+      </div>
       <button
         type="submit"
         class="btn btn-primary mt-3"
@@ -60,12 +70,15 @@ export default {
       descripcion: '',
       importe: 0,
       cajaId: 0,
-      fechaIngreso: '',
+      fechaRegistro: '',
     });
     const submitForm =async  () => {
       form.value.cajaId = cajaAbierta.value.id;
-      form.value.fechaIngreso = new Date();
-
+      if (form.value.fechaRegistro != '') {
+        const fecha= new Date(form.value.fechaRegistro)
+        const fechaFormateada= fecha.toISOString();
+        form.value.fechaRegistro = fechaFormateada
+      }
        if (form.value.id == 0) {
         await ingresoService.addIngreso(form);
 
@@ -75,7 +88,7 @@ export default {
       form.value = {};
       form.descripcion = '';
       form.importe = '';
-      form.fechaIngreso = '';
+      form.fechaRegistro = '';
       if (isAdmin.value) {
         router.push('/ingresos');
         return;
