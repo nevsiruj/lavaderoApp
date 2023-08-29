@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col items-center">
-    <h3 class="mt-3 text-2xl font-bold">Bienvenido</h3>
+    <h3 class="mt-3 text-2xl font-bold">Bienvenidos</h3>
   </div>
 
   <div class="container mx-auto">
