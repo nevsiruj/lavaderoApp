@@ -3,19 +3,13 @@
   <Modal message="egreso" @confirm="deleteEgreso" ref="modalComponent" />
 
   <div>
-    <router-link
-      class="btn btn-sm btn-success mt-2 mr-1"
-      :to="{ path: '/formegreso', query: { isAdmin: true } }"
-    >
+    <router-link class="btn btn-sm btn-success mt-2 mr-1" :to="{ path: '/formegreso', query: { isAdmin: true } }">
       <i class="fas fa-plus-circle mr-1"></i> Agregar Egreso
     </router-link>
     <button class="btn btn-sm btn-primary mt-2" @click="fetchEgresos">
       <i class="fas fa-sync-alt"></i> Actualizar
     </button>
-    <div
-      v-if="showMessage"
-      class="bg-green-100 text-green-800 px-4 py-2 rounded-md mt-2"
-    >
+    <div v-if="showMessage" class="bg-green-100 text-green-800 px-4 py-2 rounded-md mt-2">
       <i class="fas fa-check-circle mr-1"></i> Actualizados
     </div>
 
@@ -25,19 +19,9 @@
         <label class="text-gray-600">Filtrar por fecha:</label>
       </div>
       <div class="flex space-x-2">
-        <input
-          type="date"
-          class="border-gray-300 rounded-md p-1 flex-grow"
-          v-model="startDate"
-          @change="filterEgresos"
-        />
+        <input type="date" class="border-gray-300 rounded-md p-1 flex-grow" v-model="startDate" @change="filterEgresos" />
         <span class="text-gray-600">-</span>
-        <input
-          type="date"
-          class="border-gray-300 rounded-md p-1 flex-grow"
-          v-model="endDate"
-          @change="filterEgresos"
-        />
+        <input type="date" class="border-gray-300 rounded-md p-1 flex-grow" v-model="endDate" @change="filterEgresos" />
       </div>
       <!-- Visor de cantidad de egresos mostrados -->
       <div class="mt-4 flex justify-between items-center">
@@ -51,48 +35,39 @@
         </div>
       </div>
       <div class="flex items-center text-gray-600">
-        <input
-          type="checkbox"
-          class="mr-1"
-          v-model="esUnGasto"
-          @change="filterEgresos"
-        />
+        <input type="checkbox" class="mr-1" v-model="esUnGasto" @change="filterEgresos" />
         <span>Es un Gasto</span>
       </div>
     </div>
+
+    <select class="rounded-md mt-2" v-model="results" name="results" id="results">
+      <option value="20">20 Resultados</option>
+      <option value="30">30 Resultados</option>
+      <option value="50">50 Resultados</option>
+    </select>
 
     <div class="bg-white rounded-lg p-4 shadow-md mx-auto mt-1">
       <table class="min-w-full divide-y divide-gray-200 mt-4">
         <!-- Table headers -->
         <thead class="bg-gray-50">
           <tr>
-            <th
-              class="px-2 py-1 text-xs text-gray-500 uppercase tracking-wider"
-            >
+            <th class="px-2 py-1 text-xs text-gray-500 uppercase tracking-wider">
               Fecha
             </th>
-            <th
-              class="px-2 py-1 text-xs text-gray-500 uppercase tracking-wider"
-            >
+            <th class="px-2 py-1 text-xs text-gray-500 uppercase tracking-wider">
               Descripción
             </th>
-            <th
-              class="px-2 py-1 text-xs text-gray-500 uppercase tracking-wider"
-            >
+            <th class="px-2 py-1 text-xs text-gray-500 uppercase tracking-wider">
               Importe
             </th>
-            <th
-              class="px-2 py-1 text-xs text-gray-500 uppercase tracking-wider"
-            >
+            <th class="px-2 py-1 text-xs text-gray-500 uppercase tracking-wider">
               Gasto
             </th>
-            <th
-              class="px-2 py-1 text-xs text-gray-500 uppercase tracking-wider"
-            ></th>
+            <th class="px-2 py-1 text-xs text-gray-500 uppercase tracking-wider"></th>
           </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
-          <tr v-for="egreso in filteredEgresos" :key="egreso.id">
+          <tr v-for="(egreso, index) in egresos" v-show="(pag - 1) * results <= index && pag * results > index">
             <td class="px-2 py-1 whitespace-nowrap">
               {{ formatDate(egreso.fechaRegistro) }}
             </td>
@@ -105,16 +80,10 @@
             </td>
             <td class="px-2 py-1 whitespace-nowrap">
               <div class="flex space-x-2">
-                <button
-                  class="text-blue-600 hover:text-blue-800 focus:outline-none"
-                  @click="editEgreso(egreso)"
-                >
+                <button class="text-blue-600 hover:text-blue-800 focus:outline-none" @click="editEgreso(egreso)">
                   <i class="fas fa-edit"></i>
                 </button>
-                <button
-                  class="text-red-600 hover:text-red-800 focus:outline-none"
-                  @click="deleteModal(egreso.id)"
-                >
+                <button class="text-red-600 hover:text-red-800 focus:outline-none" @click="deleteModal(egreso.id)">
                   <i class="fas fa-trash-alt"></i>
                 </button>
               </div>
@@ -124,6 +93,41 @@
       </table>
     </div>
   </div>
+  <nav aria-label="Page navigation example">
+    <ul class="flex justify-center">
+      <li class="
+          page-item
+          bg-blue-500
+          text-white
+          font-semibold
+          px-6
+          py-3
+          w-full
+          sm:w-auto
+          rounded-md
+          m-2
+        " v-show="pag != 1" @click.prevent="pag -= 1">
+        <a href="#" aria-label="Previous">
+          <span aria-hidden="true">Anterior</span>
+        </a>
+      </li>
+      <li class="
+          page-item
+          bg-blue-500
+          text-white
+          font-semibold
+          px-6
+          py-3
+          sm:w-auto
+          rounded-md
+          m-2
+        " v-show="(pag * results) / egresos.length < 1" @click.prevent="pag += 1">
+        <a href="#" aria-label="Next">
+          <span aria-hidden="true">Siguiente</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
 </template>
 
 <script>
@@ -138,6 +142,12 @@ export default {
     Modal,
   },
   name: 'egresos',
+  data() {
+    return {
+      results: 20,
+      pag: 1,
+    };
+  },
   setup() {
     const egresos = ref([]);
     const esUnGasto = ref(false);
@@ -147,7 +157,7 @@ export default {
     const router = useRouter();
     const toastComponent = ref(null);
     const modalComponent = ref(null);
-    const modal= ref()
+    const modal = ref();
 
     const fetchEgresos = async () => {
       try {
@@ -265,21 +275,20 @@ export default {
     const deleteEgreso = async (egresoId) => {
       try {
         await egresoService.deleteEgreso(egresoId);
-        modal.value.hide()
+        modal.value.hide();
         let toast = toastComponent.value.getToast();
         toast[0].show();
         fetchEgresos();
-        
+
         // Realiza alguna lógica adicional si es necesario
       } catch (error) {
         console.error(error);
       }
     };
-    const deleteModal = async (egresoId) =>{
+    const deleteModal = async (egresoId) => {
       modal.value = await modalComponent.value.getModal(egresoId);
-      modal.value.show()
-    }
-    
+      modal.value.show();
+    };
 
     onMounted(async () => {
       await fetchEgresos();
@@ -303,7 +312,7 @@ export default {
       toastComponent,
       modalComponent,
       deleteModal,
-      modal
+      modal,
     };
   },
 };
