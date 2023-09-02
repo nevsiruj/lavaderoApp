@@ -69,7 +69,7 @@ export default {
         form.value.fechaRegistro = fechaFormateada
       }
       if (form.value.id == 0) {
-        egresoService.addEgreso(form);
+        await egresoService.addEgreso(form);
       } else {
         await egresoService.editEgreso(form.value);
       }

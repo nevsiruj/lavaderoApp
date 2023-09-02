@@ -67,8 +67,8 @@ export default {
     });
 
     const responsables = reactive([
-      { id: 1, nombre: 'Tu mama' },
-      { id: 2, nombre: 'Tu hermanito' },
+      { id: 1, nombre: 'Responsable 1' },
+      { id: 2, nombre: 'Responsable 2' },
     ]);
 
     const abrirCaja = async () => {

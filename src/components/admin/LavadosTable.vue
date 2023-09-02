@@ -181,26 +181,29 @@
           sm:my-8 sm:align-middle sm:max-w-lg sm:w-full
         ">
         <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-          <table class="table table-responsive table-hover table-striped table-sm">
-            <thead>
-              <tr>
-                <th>Fecha</th>
-                <th>Responsable</th>
-                <th>Descripción</th>
-                <th>Importe</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="lavado in lavados" :key="lavado.id">
-                <td>
-                  {{ lavado.fecha }}
-                </td>
-                <td>{{ lavado.responsable }} </td>
-                <td>{{ lavado.descripcion }}</td>
-                <td>{{ Number(lavado.importe) }}</td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="overflow-x-scroll">
+
+            <table class="table table-responsive table-hover table-striped table-sm overflow-x-auto">
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Responsable</th>
+                  <th>Descripción</th>
+                  <th>Importe</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="lavado in lavados" :key="lavado.id">
+                  <td>
+                    {{ lavado.fecha }}
+                  </td>
+                  <td>{{ lavado.responsable }} </td>
+                  <td>{{ lavado.descripcion }}</td>
+                  <td>{{ Number(lavado.importe) }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
           <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
             <button type="button" class="
               mt-3
