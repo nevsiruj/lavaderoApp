@@ -31,7 +31,7 @@ export default {
         const response = await authService.login(email.value, password.value);
         if (response.data.message === 'Logged in successfully') {
           // Redireccionar a la página después del inicio de sesión exitoso
-          router.push('/');
+          router.push('/caja');
         } else {
           console.error('Inicio de sesión fallido');
         }
@@ -39,6 +39,20 @@ export default {
         console.error('Error de inicio de sesión', error);
       }
     };
+
+    const checkUserSession = async () => {
+      try {
+        const currentUser = await authService.getCurrentUser();
+        if (currentUser) {
+          // Si getCurrentUser retorna un usuario, redirigir a /caja
+          router.push('/caja');
+        }
+      } catch (error) {
+        // Si hay un error (ej., no hay un usuario logeado), simplemente continuamos y mostramos la página de inicio de sesión
+      }
+    };
+
+    onMounted(checkUserSession);  
 
     return {
       email,
