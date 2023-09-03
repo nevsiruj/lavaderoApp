@@ -14,10 +14,16 @@ import FormIngreso from './components/ingreso/FormIngreso.vue';
 import ListIngreso from './components/ingreso/ListIngreso.vue';
 import Dashboard from './components/admin/Dashboard.vue';
 import LavadosTable from './components/admin/LavadosTable.vue';
+import Login from './components/login/Login.vue';
 
 const routes = [
   {
     path: '/',
+    name: 'Login',
+    component: Login,
+  },
+  {
+    path: '/caja',
     name: 'Caja',
     component: Caja,
   },

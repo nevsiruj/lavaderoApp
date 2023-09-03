@@ -17,7 +17,7 @@
 
 <script>
 import authService from '../../composables/api/authService.js';
-import { ref } from 'vue';
+import { ref , onMounted} from 'vue';
 import { useRouter } from 'vue-router';
 
 export default {
