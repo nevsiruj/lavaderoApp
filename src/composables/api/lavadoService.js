@@ -1,8 +1,5 @@
 import { ref } from 'vue';
-// import { axios } from 'axios';
 import { API_URL } from '../../config.js';
-
-console.log(API_URL);
 
 const lavadoService = (() => {
   const lavados = ref([
@@ -15,44 +12,80 @@ const lavadoService = (() => {
   ]);
   const error = ref(null);
   const axios = require('axios');
-  // };
+
+  const instance = axios.create({
+    baseURL: API_URL,
+    withCredentials: true, // Include cookies in requests
+  });
 
   const getLavados = async () => {
-    const response = await axios.get(`${API_URL}/Lavado`);
-    return response.data;
+    try {
+      const response = await instance.get('/Lavado');
+      return response.data;
+    } catch (error) {
+      console.error('Error:', error);
+      return null;
+    }
   };
+
   const getTipoLavado = async () => {
-    const response = await axios.get(`${API_URL}/TipoLavado`);
-    return response.data;
+    try {
+      const response = await instance.get('/TipoLavado');
+      return response.data;
+    } catch (error) {
+      console.error('Error:', error);
+      return null;
+    }
   };
 
   const getTipoVehiculo = async () => {
-    const response = await axios.get(`${API_URL}/TipoVehiculo`);
-    return response.data;
+    try {
+      const response = await instance.get('/TipoVehiculo');
+      return response.data;
+    } catch (error) {
+      console.error('Error:', error);
+      return null;
+    }
   };
 
   const getLavadosByCaja = async (_cajaid) => {
-    const response = await axios.get(`${API_URL}/Lavado/${_cajaid}/lavados`);
-    return response.data;
+    try {
+      const response = await instance.get(`/Lavado/${_cajaid}/lavados`);
+      return response.data;
+    } catch (error) {
+      console.error('Error:', error);
+      return null;
+    }
   };
 
   const getCantidadLavados = async () => {
     return lavados.value.length;
   };
+
   const getLavadoById = async (id) => {
-    const response = await axios.get(`${API_URL}/Lavado/${id}`);
-    return response.data;
+    try {
+      const response = await instance.get(`/Lavado/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error:', error);
+      return null;
+    }
   };
+
   const editLavado = async (lavado) => {
-    const lavadoId = lavado.id;
-    const response = await axios.put(`${API_URL}/Lavado/${lavadoId}`, lavado);
-    return response;
+    try {
+      const lavadoId = lavado.id;
+      const response = await instance.put(`/Lavado/${lavadoId}`, lavado);
+      return response;
+    } catch (error) {
+      console.error('Error:', error);
+      return null;
+    }
   };
 
   const deleteLavado = async (lavadoId) => {
     try {
-      const response = await axios.delete(`${API_URL}/Lavado/${lavadoId}`);
-      // Realiza alguna lógica adicional si es necesario
+      const response = await instance.delete(`/Lavado/${lavadoId}`);
       return response.data;
     } catch (error) {
       console.error('Error:', error);
@@ -60,25 +93,11 @@ const lavadoService = (() => {
     }
   };
 
-  // const addLavado = async (newLavado) => {
-  //   lavados.value.push(newLavado.value);
-  //   console.log(newLavado.value);
-  //   console.log(lavados.value);
-  // };
   const addLavado = async (_data) => {
     try {
-      const response = await fetch(`${API_URL}/Lavado`, {
-        method: 'POST',
-        body: JSON.stringify(_data.value),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      const data = await response.json();
-      console.log('Respuesta:', data);
-
-      return _data.value;
+      const response = await instance.post('/Lavado', _data.value);
+      console.log('Response:', response.data);
+      return response.data;
     } catch (error) {
       console.error('Error:', error);
     }

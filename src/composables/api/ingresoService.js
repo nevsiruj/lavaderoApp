@@ -3,39 +3,70 @@ import { API_URL } from '../../config.js';
 const ingresoService = (() => {
   const axios = require('axios');
 
+  const instance = axios.create({
+    baseURL: API_URL,
+    withCredentials: true, // Include cookies in requests
+  });
+
   const addIngreso = async (data) => {
-    await axios
-      .post(`${API_URL}/Ingreso`, data.value)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    try {
+      const response = await instance.post('/Ingreso', data.value);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   const getIngresosByCaja = async (_cajaId) => {
-    const response = await axios.get(`${API_URL}/ingreso/${_cajaId}/ingresos`);
-    return response.data;
+    try {
+      const response = await instance.get(`/ingreso/${_cajaId}/ingresos`);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
   };
+
   const getIngresos = async () => {
-    const response = await axios.get(`${API_URL}/ingreso`);
-    return response.data;
+    try {
+      const response = await instance.get('/ingreso');
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
   };
+
   const getIngresoById = async (id) => {
-    const response = await axios.get(`${API_URL}/ingreso/${id}`);
-    return response.data;
+    try {
+      const response = await instance.get(`/ingreso/${id}`);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
   };
+
   const editIngreso = async (ingreso) => {
-    const response = await axios.put(
-      `${API_URL}/ingreso/${ingreso.id}`,
-      ingreso
-    );
-    return response;
+    try {
+      const response = await instance.put(`/ingreso/${ingreso.id}`, ingreso);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
   };
+
   const deleteIngreso = async (id) => {
-    const response = await axios.delete(`${API_URL}/ingreso/${id}`);
-    return response.data;
+    try {
+      const response = await instance.delete(`/ingreso/${id}`);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
   };
+
   return {
     addIngreso,
     getIngresosByCaja,

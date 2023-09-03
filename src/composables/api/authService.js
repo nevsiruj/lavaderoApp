@@ -6,9 +6,11 @@ const authService = (() => {
       const response = await fetch(`${API_URL}/auth/login`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({ email, password }),
+        credentials: 'include',  // <-- Añade esta línea
+
       });
 
       if (response.ok) {
@@ -24,8 +26,14 @@ const authService = (() => {
 
   async function getCurrentUser() {
     try {
-      const response = await fetch(`${API_URL}/auth/GetCurrentUser`);
-      if (response.ok) {
+      const response = await fetch(`${API_URL}/auth/GetCurrentUser`, {
+        credentials: 'include', 
+        headers: {
+          // tus encabezados aquí
+          Cookie: "Test"
+        },      
+      });    
+        if (response.ok) {
         const user = await response.json();
         return user;
       } else {
@@ -44,6 +52,8 @@ const authService = (() => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(registerData),
+        credentials: 'include',  // <-- Añade esta línea
+
       });
 
       if (response.ok) {
@@ -62,6 +72,8 @@ const authService = (() => {
     try {
       const response = await fetch(`${API_URL}/auth/logout`, {
         method: 'POST',
+        credentials: 'include',  // <-- Añade esta línea
+
       });
 
       if (response.ok) {
@@ -77,8 +89,9 @@ const authService = (() => {
 
   async function getUserTenantId() {
     try {
-      const response = await fetch(`${API_URL}/auth/tenant-id`);
-      if (response.ok) {
+      const response = await fetch(`${API_URL}/auth/tenant-id`, {
+        credentials: 'include',  // <-- Añade esta línea
+      });      if (response.ok) {
         const data = await response.json();
         return data.TenantId;
       } else {
@@ -91,8 +104,9 @@ const authService = (() => {
 
   async function getUsers() {
     try {
-      const response = await fetch(`${API_URL}/auth/users`);
-      if (response.ok) {
+      const response = await fetch(`${API_URL}/auth/users`, {
+        credentials: 'include',  // <-- Añade esta línea
+      });      if (response.ok) {
         const users = await response.json();
         return users;
       } else {

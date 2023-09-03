@@ -15,6 +15,8 @@ const adminService = (() => {
         fechaInicio: fechaInicio,
         fechaFin: fechaFin,
       },
+      withCredentials: true  // Agrega esta línea
+
     });
     return response.data;
   };
@@ -24,6 +26,8 @@ const adminService = (() => {
         fechaInicio: fechaInicio,
         fechaFin: fechaFin,
       },
+      withCredentials: true  // Agrega esta línea
+
     });
     return response.data;
   };

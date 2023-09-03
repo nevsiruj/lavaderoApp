@@ -10,92 +10,77 @@ const cajaService = (() => {
     isOpen: false,
     cantidadLavados: 0,
   });
+
   const abrirCaja = async (_data) => {
     caja.value.responsable = _data.responsable;
     caja.value.montoInicial = _data.montoInicial;
     caja.value.isOpen = true;
     caja.value.cantidadLavados = 0;
-    fetch(`${API_URL}/caja`, {
-      method: 'POST',
-      body: JSON.stringify(caja.value),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('Respuesta:', data);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
+    try {
+      const response = await fetch(`${API_URL}/caja`, {
+        method: 'POST',
+        body: JSON.stringify(caja.value),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include', // Include credentials for cookies
       });
-    return await caja.value;
+
+      const data = await response.json();
+      console.log('Respuesta:', data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+    return caja.value;
   };
 
-  // const cerrarCaja = async (_data) => {
-  //   fetch(`https://localhost:44312/api/caja/cerrarCaja?cajaId=${_data}`, {
-  //     method: 'POST',
-  //   })
-  //     .then((response) => {
-  //       if (response.ok) {
-  //         // El cierre de la caja fue exitoso
-  //         console.log('La caja fue cerrada exitosamente');
-  //       } else {
-  //         throw new Error('Ocurrió un error al cerrar la caja');
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error:', error);
-  //     });
-  // };
   const cerrarCaja = async (id, data) => {
-    await axios
-      .post(`${API_URL}/caja/cerrarCaja?cajaId=${id}`, data)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
+    try {
+      await axios.post(`${API_URL}/caja/cerrarCaja?cajaId=${id}`, data, {
+        withCredentials: true, // Include credentials for cookies
       });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const getCajaAbierta = () => {
-    fetch(`${API_URL}/caja/cajaabierta`)
-      .then((response) => response.json())
-      .then((data) => {
-        // console.log(data);
-        caja.value = data;
-        return data.value;
-      })
-      .catch(() => false);
+  const getCajaAbierta = async () => {
+    try {
+      const response = await fetch(`${API_URL}/caja/cajaabierta`, { credentials: 'include' });
+      const data = await response.json();
+      caja.value = data;
+    } catch (error) {
+      console.error('Error al obtener caja abierta:', error);
+    }
 
-    // var lavadosRelacionados = lavadoService.getLavadosByCaja(caja.value.id);
-    // lavadosRelacionados.forEach((e) => {
-    //   caja.value.monto += e.importe;
-    // });
-    // caja.value.cantidadLavados = lavadosRelacionados.length;
-
-    return caja;
+    // Code related to fetching related lavados can be added here
   };
 
-  const getLavadosByCaja = () => {
-    const lavados = lavadoService.getLavados();
-    caja.value.cantidadLavados = lavados.find((e) => (e.cajaId = 1)).length;
+  const getLavadosByCaja = async () => {
+    try {
+      const lavados = await lavadoService.getLavados();
+      caja.value.cantidadLavados = lavados.filter((lavado) => lavado.cajaId === caja.value.id).length;
+    } catch (error) {
+      console.error('Error al obtener lavados por caja:', error);
+    }
   };
 
-  const getCajas = () => {
-    fetch(`${API_URL}/caja`).then((response) =>
-      response.json()
-    );
-    // .then((data) => console.log(data));
+  const getCajas = async () => {
+    try {
+      const response = await fetch(`${API_URL}/caja`, { credentials: 'include' });
+      const data = await response.json();
+      console.log(data); // Descomentado para ver la data.
+    } catch (error) {
+      console.error('Error al obtener cajas:', error);
+    }
   };
 
   const ingresar = (monto) => {
-    caja.monto += monto;
+    caja.value.monto += monto;
   };
 
   const retirar = (monto) => {
-    caja.monto -= monto;
+    caja.value.monto -= monto;
   };
 
   return {

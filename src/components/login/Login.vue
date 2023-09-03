@@ -29,7 +29,7 @@ export default {
     const login = async () => {
       try {
         const response = await authService.login(email.value, password.value);
-        if (response.data.message === 'Logged in successfully') {
+        if (response.message === 'Logged in successfully') {
           // Redireccionar a la página después del inicio de sesión exitoso
           router.push('/caja');
         } else {

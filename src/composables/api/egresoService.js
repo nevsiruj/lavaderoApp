@@ -3,39 +3,70 @@ import { API_URL } from '../../config.js';
 const egresoService = (() => {
   const axios = require('axios');
 
+  const instance = axios.create({
+    baseURL: API_URL,
+    withCredentials: true, // Include cookies in requests
+  });
+
   const addEgreso = async (data) => {
-    await axios
-      .post(`${API_URL}/Egreso`, data.value)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    try {
+      const response = await instance.post('/Egreso', data.value);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   const getEgresosByCaja = async (_cajaId) => {
-    const response = await axios.get(`${API_URL}/egreso/${_cajaId}/egresos`);
-    return response.data;
+    try {
+      const response = await instance.get(`/egreso/${_cajaId}/egresos`);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
   };
+
   const getEgresos = async () => {
-    const response = await axios.get(`${API_URL}/egreso`);
-    return response.data;
+    try {
+      const response = await instance.get('/egreso');
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
   };
+
   const getEgresoById = async (id) => {
-    const response = await axios.get(`${API_URL}/egreso/${id}`);
-    return response.data;
+    try {
+      const response = await instance.get(`/egreso/${id}`);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
   };
+
   const editEgreso = async (egresos) => {
-    const response = await axios.put(
-      `${API_URL}/egreso/${egresos.id}`,
-      egresos
-    );
-    return response;
+    try {
+      const response = await instance.put(`/egreso/${egresos.id}`, egresos);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
   };
+
   const deleteEgreso = async (id) => {
-    const response = await axios.delete(`${API_URL}/egreso/${id}`);
-    return response.data;
+    try {
+      const response = await instance.delete(`/egreso/${id}`);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
   };
+
   return {
     addEgreso,
     getEgresosByCaja,
