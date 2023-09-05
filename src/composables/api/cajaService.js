@@ -17,7 +17,7 @@ const cajaService = (() => {
     caja.value.isOpen = true;
     caja.value.cantidadLavados = 0;
     try {
-      const response = await fetch(`${API_URL}/caja`, {
+      const response = await fetchWithToken(`${API_URL}/caja`, {
         method: 'POST',
         body: JSON.stringify(caja.value),
         headers: {
@@ -46,7 +46,7 @@ const cajaService = (() => {
 
   const getCajaAbierta = async () => {
     try {
-      const response = await fetch(`${API_URL}/caja/cajaabierta`, { credentials: 'include' });
+      const response = await fetchWithToken(`${API_URL}/caja/cajaabierta`, { credentials: 'include' });
       const data = await response.json();
       caja.value = data;
     } catch (error) {
@@ -67,7 +67,7 @@ const cajaService = (() => {
 
   const getCajas = async () => {
     try {
-      const response = await fetch(`${API_URL}/caja`, { credentials: 'include' });
+      const response = await fetchWithToken(`${API_URL}/caja`, { credentials: 'include' });
       const data = await response.json();
       console.log(data); // Descomentado para ver la data.
     } catch (error) {
@@ -82,6 +82,17 @@ const cajaService = (() => {
   const retirar = (monto) => {
     caja.value.monto -= monto;
   };
+
+  async function fetchWithToken(url, options = {}) {
+    const token = localStorage.getItem('jwt-token');
+    if (token) {
+      options.headers = options.headers || {};
+      options.headers['Authorization'] = 'Bearer ' + token;
+    }
+    options.credentials = 'include';
+    const response = await fetch(url, options);
+    return response;
+  }
 
   return {
     caja,

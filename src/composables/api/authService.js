@@ -1,39 +1,40 @@
 import { API_URL } from '../../config.js';
 
 const authService = (() => {
+
+
   async function login(email, password) {
-    try {
-      const response = await fetch(`${API_URL}/auth/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email, password }),
-        credentials: 'include',  // <-- Añade esta línea
+  try {
+    const response = await fetch(`${API_URL}/auth/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email, password })
+    });
 
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        return data;
-      } else {
-        throw new Error('Login failed');
-      }
-    } catch (error) {
-      throw error;
+    if (response.ok) {
+      const data = await response.json();
+      // Asegúrate de que el nombre de la propiedad del token es correcto
+      localStorage.setItem('jwt-token', data.token); 
+      return data;
+    } else {
+      throw new Error('Login failed');
     }
+  } catch (error) {
+    throw error;
   }
+}
+
 
   async function getCurrentUser() {
     try {
-      const response = await fetch(`${API_URL}/auth/GetCurrentUser`, {
-        credentials: 'include', 
+      const response = await fetchWithToken(`${API_URL}/auth/GetCurrentUser`, {
         headers: {
-          // tus encabezados aquí
-          Cookie: "Test"
-        },      
-      });    
-        if (response.ok) {
+        },
+      });
+
+      if (response.ok) {
         const user = await response.json();
         return user;
       } else {
@@ -44,16 +45,15 @@ const authService = (() => {
     }
   }
 
+
   async function register(registerData) {
     try {
-      const response = await fetch(`${API_URL}/auth/register`, {
+      const response = await fetchWithToken(`${API_URL}/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(registerData),
-        credentials: 'include',  // <-- Añade esta línea
-
       });
 
       if (response.ok) {
@@ -68,15 +68,15 @@ const authService = (() => {
     }
   }
 
+
   async function logout() {
     try {
-      const response = await fetch(`${API_URL}/auth/logout`, {
+      const response = await fetchWithToken(`${API_URL}/auth/logout`, {
         method: 'POST',
-        credentials: 'include',  // <-- Añade esta línea
-
       });
 
       if (response.ok) {
+        localStorage.removeItem('jwt-token'); // Elimina el token al cerrar sesión
         const data = await response.json();
         return data;
       } else {
@@ -87,11 +87,12 @@ const authService = (() => {
     }
   }
 
+
   async function getUserTenantId() {
     try {
-      const response = await fetch(`${API_URL}/auth/tenant-id`, {
-        credentials: 'include',  // <-- Añade esta línea
-      });      if (response.ok) {
+      const response = await fetchWithToken(`${API_URL}/auth/tenant-id`);
+
+      if (response.ok) {
         const data = await response.json();
         return data.TenantId;
       } else {
@@ -104,9 +105,9 @@ const authService = (() => {
 
   async function getUsers() {
     try {
-      const response = await fetch(`${API_URL}/auth/users`, {
-        credentials: 'include',  // <-- Añade esta línea
-      });      if (response.ok) {
+      const response = await fetchWithToken(`${API_URL}/auth/users`);
+
+      if (response.ok) {
         const users = await response.json();
         return users;
       } else {
@@ -116,6 +117,19 @@ const authService = (() => {
       throw error;
     }
   }
+
+
+  async function fetchWithToken(url, options = {}) {
+    const token = localStorage.getItem('jwt-token');
+    if (token) {
+      options.headers = options.headers || {};
+      options.headers['Authorization'] = 'Bearer ' + token;
+    }
+    options.credentials = 'include';
+    const response = await fetch(url, options);
+    return response;
+  }
+
 
   // Agrega aquí las demás funciones que necesites
 

@@ -12,11 +12,23 @@ const lavadoService = (() => {
   ]);
   const error = ref(null);
   const axios = require('axios');
-
+  
   const instance = axios.create({
     baseURL: API_URL,
-    withCredentials: true, // Include cookies in requests
-  });
+  })
+  // Agregar interceptor para incluir token en las cabeceras
+  instance.interceptors.request.use(
+    config => {
+      const token = localStorage.getItem('jwt-token');
+      if (token) {
+        config.headers['Authorization'] = 'Bearer ' + token;
+      }
+      return config;
+    },
+    error => {
+      return Promise.reject(error);
+    }
+  );
 
   const getLavados = async () => {
     try {
