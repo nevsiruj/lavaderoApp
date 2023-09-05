@@ -108,7 +108,7 @@
           m-2
         " v-show="pag != 1" @click.prevent="pag -= 1">
         <a href="#" aria-label="Previous">
-          <span aria-hidden="true">Anterior</span>
+          <span class="hover:text-white" aria-hidden="true">Anterior</span>
         </a>
       </li>
       <li class="
@@ -123,7 +123,7 @@
           m-2
         " v-show="(pag * results) / egresos.length < 1" @click.prevent="pag += 1">
         <a href="#" aria-label="Next">
-          <span aria-hidden="true">Siguiente</span>
+          <span class="hover:text-white" aria-hidden="true">Siguiente</span>
         </a>
       </li>
     </ul>

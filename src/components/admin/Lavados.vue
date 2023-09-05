@@ -52,6 +52,12 @@
       </div>
     </div>
 
+    <select class="rounded-md mt-2" v-model="results" name="results" id="results">
+      <option value="20">20 Resultados</option>
+      <option value="30">30 Resultados</option>
+      <option value="50">50 Resultados</option>
+    </select>
+
     <div class="bg-white rounded-lg p-4 shadow-md mx-auto mt-1">
       <table class="min-w-full divide-y divide-gray-200 mt-4">
         <!-- Table headers -->
@@ -78,7 +84,7 @@
           </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
-          <tr v-for="lavado in filteredLavados" :key="lavado.id">
+          <tr v-for="(lavado, index) in lavados" v-show="(pag - 1) * results <= index && pag * results > index">
             <td class="px-2 py-1 whitespace-nowrap">
               {{ formatDate(lavado.fecha) }}
             </td>
@@ -107,6 +113,41 @@
       </table>
     </div>
   </div>
+  <nav aria-label="Page navigation example">
+    <ul class="flex justify-center">
+      <li class="
+          page-item
+          bg-blue-500
+          text-white
+          font-semibold
+          px-6
+          py-3
+          w-full
+          sm:w-auto
+          rounded-md
+          m-2
+        " v-show="pag != 1" @click.prevent="pag -= 1">
+        <a href="#" aria-label="Previous">
+          <span class="hover:text-white" aria-hidden="true">Anterior</span>
+        </a>
+      </li>
+      <li class="
+          page-item
+          bg-blue-500
+          text-white
+          font-semibold
+          px-6
+          py-3
+          sm:w-auto
+          rounded-md
+          m-2
+        " v-show="(pag * results) / lavados.length < 1" @click.prevent="pag += 1">
+        <a href="#" aria-label="Next">
+          <span class="hover:text-white" aria-hidden="true">Siguiente</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
 </template>
 
 <script>
@@ -119,6 +160,13 @@ export default {
   components: {
     Toast,
     Modal,
+  },
+  name: 'lavados',
+  data(){
+    return {
+      results: 20,
+      pag: 1,
+    }
   },
   setup() {
     const lavados = ref([]);

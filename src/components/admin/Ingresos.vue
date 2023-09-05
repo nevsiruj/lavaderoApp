@@ -131,7 +131,7 @@ export default {
     const fetchIngresos = async () => {
       try {
         const response = await ingresoService.getIngresos();
-        ingresos.value = await response.sort((a, b) => {
+        ingresos.value = response.sort((a, b) => {
           const fechaA = new Date(a.fechaRegistro);
           const fechaB = new Date(b.fechaRegistro);
 
