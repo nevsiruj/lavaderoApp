@@ -17,16 +17,16 @@
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
+              <a class="nav-link active" aria-current="page" href="#" @click.prevent="navigateTo('/')">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="/ingresos">Ingresos</a>
+              <a class="nav-link" aria-current="page" href="#" @click.prevent="navigateTo('/ingresos')">Ingresos</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="/egresos">Egresos</a>
+              <a class="nav-link" aria-current="page" href="#" @click.prevent="navigateTo('/egresos')">Egresos</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="/lavados">Lavados</a>
+              <a class="nav-link" aria-current="page" href="#" @click.prevent="navigateTo('/lavados')">Lavados</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Link</a>
@@ -68,12 +68,18 @@ export default {
   setup() {
     const router = useRouter();
 
-    const navigateToIndex = () => {
-      router.push('/');
+    // const navigateToIndex = () => {
+    //   router.push('/');
+    // };
+
+    const navigateTo = (route) => {
+      router.push(route);
     };
 
     return {
-      navigateToIndex,
+      navigateTo
+
+      // navigateToIndex,
     };
   },
 };

@@ -4,18 +4,9 @@
       <h2>Abrir caja</h2>
       <div class="mb-3">
         <label for="responsable" class="form-label">Responsable:</label>
-        <select
-          class="form-control"
-          id="responsable"
-          v-model="formData.responsable"
-          required
-        >
+        <select class="form-control" id="responsable" v-model="formData.responsable" required>
           <option disabled value="">Seleccione una opción</option>
-          <option
-            v-for="responsable in responsables"
-            :key="responsable.id"
-            :value="responsable.nombre"
-          >
+          <option v-for="responsable in responsables" :key="responsable.id" :value="responsable.nombre">
             {{ responsable.nombre }}
           </option>
         </select>
@@ -23,17 +14,9 @@
 
       <div class="mb-3">
         <label for="monto" class="form-label">Monto de apertura:</label>
-        <input
-          type="number"
-          class="form-control"
-          id="monto"
-          v-model="formData.montoInicial"
-          required
-        />
+        <input type="number" class="form-control" id="monto" v-model="formData.montoInicial" required />
       </div>
-      <button
-        type="submit"
-        class="
+      <button type="submit" class="
           bg-blue-500
           hover:bg-blue-600
           text-white
@@ -41,8 +24,7 @@
           py-2
           px-4
           rounded
-        "
-      >
+        ">
         Abrir caja
       </button>
     </form>
@@ -72,22 +54,31 @@ export default {
     ]);
 
     const abrirCaja = async () => {
-      // Aquí podrías enviar la información a una API o almacenarla en la base de datos
-      console.log(
-        'Abriendo caja con responsable',
-        formData.responsable,
-        'y monto',
-        formData.montoInicial
-      );
+      try {
+        console.log(
+          'Abriendo caja con responsable',
+          formData.responsable,
+          'y monto',
+          formData.montoInicial
+        );
 
-      await cajaService.abrirCaja(formData).then((e) => console.log(e));
-      // Reiniciamos los valores del formulario
-      formData.responsable = '';
-      formData.montoInicial = null;
-      router.push('/');
+        await cajaService.abrirCaja(formData).then((e) => {
+          console.log(e);
+          // Reiniciamos los valores del formulario
+          formData.responsable = '';
+          formData.montoInicial = null;
+          router.push('/');
+        }).catch((error) => {
+          console.error("Error al abrir la caja:", error);
+          // Aquí puedes mostrar un mensaje de error en la UI si es necesario
+        });
+      } catch (error) {
+        console.error("Error inesperado:", error);
+      }
     };
 
-    onMounted(() => {});
+
+    onMounted(() => { });
 
     return {
       formData,
