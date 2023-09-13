@@ -67,7 +67,7 @@ export default {
           // Reiniciamos los valores del formulario
           formData.responsable = '';
           formData.montoInicial = null;
-          router.push('/');
+          router.push('/caja');
         }).catch((error) => {
           console.error("Error al abrir la caja:", error);
           // Aquí puedes mostrar un mensaje de error en la UI si es necesario
