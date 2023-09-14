@@ -144,7 +144,6 @@ export default {
     // ]);
 
     const submitForm = async () => {
-      // debugger
       form.value.cajaId = cajaAbierta.value.id;
       form.value.responsable = cajaAbierta.value.responsable;
       if (form.value.fecha != '') {
