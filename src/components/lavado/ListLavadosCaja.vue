@@ -78,10 +78,11 @@ export default {
     // tipoLavado = lavadoService.getTipoLavado();
 
     onMounted(async () => {
+      debugger
       cajaAbierta = cajaService.getCajaAbierta();
       autosLavados.value = await lavadoService.getLavadosByCaja(
         cajaAbierta.value.id
-      );
+        );
       // console.log(tipoLavado);
     });
     const editLavado = (lavado) => {

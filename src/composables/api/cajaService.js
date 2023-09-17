@@ -47,9 +47,9 @@ const cajaService = (() => {
   const getCajaAbierta = async () => {
     try {
       const response = await fetchWithToken(`${API_URL}/caja/cajaabierta`, { credentials: 'include' });
-      
       const data = await response.json();
       caja.value = data;
+      return caja.value;
     } catch (error) {
       console.error('Error al obtener caja abierta:', error);
     }

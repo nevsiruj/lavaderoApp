@@ -193,10 +193,9 @@ export default {
     let cajaAbierta = ref({});
     const router = useRouter();
     const route = useRoute();
-    cajaAbierta = cajaService.getCajaAbierta();
 
-    onMounted(() => {
-      cajaAbierta = cajaService.getCajaAbierta();
+    onMounted(async() => {
+      cajaAbierta.value = await cajaService.getCajaAbierta();
       cajaService.getCajas();
     });
 
