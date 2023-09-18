@@ -3,7 +3,7 @@
 
   <div class="container">
     <div class="mb-3">
-      <router-link to="/"> &lt;Volver atrás </router-link>
+      <router-link to="/caja"> &lt;Volver atrás </router-link>
     </div>
     <h1>Ingresos</h1>
     <table class="table">

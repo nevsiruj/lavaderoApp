@@ -122,7 +122,6 @@
           font-semibold
           px-6
           py-3
-          w-full
           sm:w-auto
           rounded-md
           m-2

@@ -1,7 +1,7 @@
 <template>
   <div class="container mt-3">
     <div class="mb-3">
-      <router-link :to="isAdmin ? '/egresos' : '/'" class="text-blue-500">&lt; Volver atrás</router-link>
+      <router-link :to="isAdmin ? '/egresos' : '/caja'" class="text-blue-500">&lt; Volver atrás</router-link>
     </div>
     <h1>Egresos</h1>
     <form>
@@ -17,11 +17,11 @@
         <label for="importe">Fecha</label>
         <input type="date" class="form-control" id="importe" v-model="form.fechaRegistro" required />
       </div>
-      <div class="form-check">
+      <div class="flex justify-center">
+        <input class="form-check-input mr-2" type="checkbox" v-model="form.isGasto" id="flexCheckDefault" />
         <label class="form-check-label" for="flexCheckDefault">
           Es un Gasto
         </label>
-        <input class="form-check-input" type="checkbox" v-model="form.isGasto" id="flexCheckDefault" />
       </div>
       <button type="submit" class="
               btn btn-primary
@@ -51,7 +51,6 @@ export default {
     let cajaAbierta = ref({});
     const router = useRouter();
     const route = useRoute();
-    cajaAbierta = cajaService.getCajaAbierta();
     let form = ref({
       id: 0,
       descripcion: '',
@@ -85,7 +84,7 @@ export default {
     };
 
     onMounted(async () => {
-      cajaAbierta = cajaService.getCajaAbierta();
+      cajaAbierta.value = await cajaService.getCajaAbierta();
       const query = router.currentRoute.value.query;
       if (query.isAdmin === 'true') {
         isAdmin.value = true;

@@ -131,7 +131,6 @@ export default {
     let tiposLavados = ref([]);
     let tiposVehiculos = ref([]);
     let cajaAbierta = ref({});
-    cajaAbierta = cajaService.getCajaAbierta();
     console.log(cajaAbierta);
     // const tiposLavados = ref([{ id: 1, nombre: 'Lavado Común' }]);
     // const tiposVehiculos = useTiposVehiculos();
@@ -174,6 +173,7 @@ export default {
       }
     };
     onMounted(async () => {
+      cajaAbierta.value = await cajaService.getCajaAbierta();
       tiposLavados.value = await lavadoService.getTipoLavado();
       tiposVehiculos.value = await lavadoService.getTipoVehiculo();
 

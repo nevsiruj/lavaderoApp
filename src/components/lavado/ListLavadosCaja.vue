@@ -3,7 +3,7 @@
   <Modal message="lavado" @confirm="deleteLavado" ref="modalComponent" />
 
     <div class="mb-3">
-      <router-link to="/"> &lt;Volver atrás </router-link>
+      <router-link to="/caja"> &lt;Volver atrás </router-link>
     </div>
 
     <div class="card m-4">
@@ -78,8 +78,7 @@ export default {
     // tipoLavado = lavadoService.getTipoLavado();
 
     onMounted(async () => {
-      debugger
-      cajaAbierta = cajaService.getCajaAbierta();
+      cajaAbierta.value = await cajaService.getCajaAbierta();
       autosLavados.value = await lavadoService.getLavadosByCaja(
         cajaAbierta.value.id
         );

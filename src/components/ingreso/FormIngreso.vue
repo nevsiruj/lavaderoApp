@@ -3,7 +3,7 @@
 
     <div class="container mt-3">
       <div class="mb-3">
-        <router-link :to="isAdmin ? '/ingresos' : '/'" class="text-blue-500">&lt; Volver atrás</router-link>
+        <router-link :to="isAdmin ? '/ingresos' : '/caja'" class="text-blue-500">&lt; Volver atrás</router-link>
       </div>
       <h1>Ingresos</h1>
       <form>
@@ -82,7 +82,7 @@ export default {
     };
 
     onMounted(async () => {
-      cajaAbierta = cajaService.getCajaAbierta();
+      cajaAbierta.value = await cajaService.getCajaAbierta();
       const query = router.currentRoute.value.query;
       if (query.isAdmin === 'true') {
         isAdmin.value = true;

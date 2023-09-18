@@ -28,7 +28,7 @@
           alt=""
         />
       </div>
-      <div class="card-body rounded-t-lg p-4">
+      <div class="card_body-caja rounded-t-lg p-4">
         <div v-if="cajaAbierta.isOpen">
           <div>
             <router-link
@@ -104,19 +104,17 @@
             $ {{ cajaAbierta.totalImporteLavados ?? 0 }}
           </p>
         </div>
-        <div class="text-left text-white">
+        <div class="flex flex-col text-left text-white">
           <label>
             <strong>Ingresos:</strong> ${{
               cajaAbierta.totalImporteIngresos ?? '0.00'
             }}
           </label>
-          <br />
           <label>
             <strong>Egresos: </strong> ${{
               cajaAbierta.totalImporteEgresos ?? '0.00'
             }}
           </label>
-          <br />
           <label>
             Efectivo en caja:
             <strong>${{ cajaAbierta.efectivoEnCaja ?? '0.00' }}</strong>
@@ -215,7 +213,7 @@ export default {
 </script>
 
 <style>
-.card-body {
+.card_body-caja {
   background: url('https://us.123rf.com/450wm/ildogesto/ildogesto0812/ildogesto081200001/4063489-burbujas-en-el-agua-azul-sobre-fondo-azul-degradado-ilustraci%C3%B3n-del-vector.jpg')
     0 0 repeat;
 }
