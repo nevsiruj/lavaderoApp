@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <a href="/caja" @click="goBack">&lt; Volver atrás</a>
-    <form @submit.prevent="CerrarCaja">
+    <!-- <form @submit.prevent="CerrarCaja"> -->
       <h2>Cerrar caja</h2>
 
       <div class="mb-3">
@@ -14,7 +14,7 @@
           required
         />
       </div>
-      <button type="submit" class="btn btn-primary
+      <button @click="CerrarCaja" type="submit" class="btn btn-primary
               mt-3
               bg-blue-500
               hover:bg-blue-600
@@ -23,7 +23,7 @@
               py-2
               px-4
               rounded">Cerrar caja</button>
-    </form>
+    <!-- </form> -->
   </div>
 </template>
 
