@@ -19,9 +19,9 @@
         <label class="text-gray-600">Filtrar por fecha:</label>
       </div>
       <div class="flex space-x-2">
-        <input type="date" class="border-gray-300 rounded-md p-1 flex-grow" v-model="startDate" @change="filterEgresos" />
+        <input type="date" class="border-gray-300 rounded-md p-1 flex-grow" v-model="startDate" @change="filteredEgresos" />
         <span class="text-gray-600">-</span>
-        <input type="date" class="border-gray-300 rounded-md p-1 flex-grow" v-model="endDate" @change="filterEgresos" />
+        <input type="date" class="border-gray-300 rounded-md p-1 flex-grow" v-model="endDate" @change="filteredEgresos" />
       </div>
       <!-- Visor de cantidad de egresos mostrados -->
       <div class="mt-4 flex justify-between items-center">
