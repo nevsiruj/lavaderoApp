@@ -194,6 +194,9 @@ export default {
 
     onMounted(async() => {
       cajaAbierta.value = await cajaService.getCajaAbierta();
+      if (cajaAbierta.value == undefined) {
+        router.push('/abrircaja');
+      }
       cajaService.getCajas();
     });
 

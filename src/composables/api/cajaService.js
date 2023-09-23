@@ -36,9 +36,16 @@ const cajaService = (() => {
 
   const cerrarCaja = async (id, data) => {
     try {
-      await axios.post(`${API_URL}/caja/cerrarCaja?cajaId=${id}`, data, {
+      /* await axios.post(`${API_URL}/caja/cerrarCaja?cajaId=${id}`, data, {
         withCredentials: true, // Include credentials for cookies
-      });
+      }); */
+      const response = await fetchWithToken(`${API_URL}/caja/cerrarCaja?cajaId=${id}`, { 
+      credentials: 'include', method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      }, });
+      const respuesta = await response.json();
     } catch (error) {
       console.log(error);
     }

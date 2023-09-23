@@ -84,7 +84,7 @@
           </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
-          <tr v-for="(lavado, index) in lavados" v-show="(pag - 1) * results <= index && pag * results > index">
+          <tr v-for="(lavado, index) in filteredLavados" v-show="(pag - 1) * results <= index && pag * results > index">
             <td class="px-2 py-1 whitespace-nowrap">
               {{ formatDate(lavado.fecha) }}
             </td>

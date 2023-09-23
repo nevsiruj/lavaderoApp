@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <a href="#" @click="goBack">&lt; Volver atrás</a>
+    <a href="/caja" @click="goBack">&lt; Volver atrás</a>
     <form @submit.prevent="CerrarCaja">
       <h2>Cerrar caja</h2>
 
@@ -39,7 +39,6 @@ export default {
     const router = useRouter();
     const route = useRoute();
     let cajaAbierta = ref({});
-    cajaAbierta = cajaService.getCajaAbierta();
 
     const formData = reactive({
       efectivoDeclarado: 0,
@@ -57,7 +56,9 @@ export default {
       router.push('/abrircaja');
     };
 
-    onMounted(() => {});
+    onMounted(async() => {
+      cajaAbierta.value = await cajaService.getCajaAbierta();
+    });
 
     return {
       formData,

@@ -2,7 +2,6 @@ import { API_URL } from '../../config.js';
 
 const authService = (() => {
 
-
   async function login(email, password) {
   try {
     const response = await fetch(`${API_URL}/auth/login`, {
@@ -29,7 +28,7 @@ const authService = (() => {
 
   async function getCurrentUser() {
     try {
-      const response = await fetchWithToken(`${API_URL}/auth/GetCurrentUser`, {
+      const response = await fetchWithToken(`${API_URL}/auth/GetLoggedDUser`, {
         headers: {
         },
       });
