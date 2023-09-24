@@ -12,6 +12,7 @@ const cajaService = (() => {
   });
 
   const abrirCaja = async (_data) => {
+    caja.value = {};
     caja.value.responsable = _data.responsable;
     caja.value.montoInicial = _data.montoInicial;
     caja.value.isOpen = true;
