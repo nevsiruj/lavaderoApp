@@ -53,7 +53,9 @@ export default {
       setTimeout(function () {
         location.reload();
       }, 1000);
-      router.push('/abrircaja');
+      // router.push('/abrircaja');
+      router.replace('/abrircaja');
+
     };
 
     onMounted(async() => {
