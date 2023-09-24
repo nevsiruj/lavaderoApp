@@ -51,7 +51,7 @@ export default {
       // Reiniciamos los valores del formulario
       formData.efectivoDeclarado = '';
       setTimeout(function () {
-        location.reload();
+        // location.reload();
       }, 1000);
       // router.push('/abrircaja');
       router.replace('/abrircaja');
