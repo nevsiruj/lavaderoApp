@@ -1,6 +1,8 @@
 <template>
   <div class="container">
-    <a href="/caja" @click="goBack">&lt; Volver atrás</a>
+    <a @click.prevent="navigateTo('/caja')">&lt; Volver atrás</a>
+    <!-- <a class="nav-link active" aria-current="page" href="#" @click.prevent="navigateTo('/')">Home</a> -->
+
     <!-- <form @submit.prevent="CerrarCaja"> -->
       <h2>Cerrar caja</h2>
 
@@ -44,6 +46,11 @@ export default {
       efectivoDeclarado: 0,
     });
 
+    const navigateTo = (route) => {
+      router.push(route);
+    };
+
+
     const CerrarCaja = async () => {
       await cajaService
         .cerrarCaja(cajaAbierta.value.id, formData)
@@ -66,6 +73,7 @@ export default {
       formData,
       CerrarCaja,
       cajaAbierta,
+      navigateTo 
     };
   },
 };
