@@ -19,9 +19,9 @@
         <label class="text-gray-600">Filtrar por fecha:</label>
       </div>
       <div class="flex space-x-2">
-        <input type="date" class="border-gray-300 rounded-md p-1 flex-grow" v-model="startDate" @change="filteredEgresos" />
+        <input type="date" class="border-gray-300 rounded-md p-1 flex-grow" v-model="startDate" @change="filterEgresos" />
         <span class="text-gray-600">-</span>
-        <input type="date" class="border-gray-300 rounded-md p-1 flex-grow" v-model="endDate" @change="filteredEgresos" />
+        <input type="date" class="border-gray-300 rounded-md p-1 flex-grow" v-model="endDate" @change="filterEgresos" />
       </div>
       <!-- Visor de cantidad de egresos mostrados -->
       <div class="mt-4 flex justify-between items-center">
@@ -67,7 +67,7 @@
           </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
-          <tr v-for="(egreso, index) in egresos" v-show="(pag - 1) * results <= index && pag * results > index">
+          <tr v-for="(egreso, index) in filteredEgresos" v-show="(pag - 1) * results <= index && pag * results > index">
             <td class="px-2 py-1 whitespace-nowrap">
               {{ formatDate(egreso.fechaRegistro) }}
             </td>
@@ -196,16 +196,16 @@ export default {
           const start = startDate.value ? new Date(startDate.value) : null;
           const end = endDate.value ? new Date(endDate.value) : null;
           const isGasto = egreso.isGasto === true;
-
+          
           if (end) {
             end.setDate(end.getDate() + 1);
           }
-
+          
           return (
             (!start || egresoDate >= start) &&
             (!end || egresoDate <= end) &&
             (!esUnGasto.value || isGasto)
-          );
+        );
         });
       } else {
         if (esUnGasto.value) {
@@ -215,7 +215,6 @@ export default {
           });
         }
       }
-
       filteredEgresos.value = filtered.sort(
         (a, b) => new Date(a.fechaRegistro) - new Date(b.fechaRegistro)
       );
