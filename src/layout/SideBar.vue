@@ -1,69 +1,78 @@
 <template>
-  <nav class="navbar navbar-dark bg-dark fixed-top">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Offcanvas dark navbar</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar"
-        aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+  <nav class="text-white bg-dark fixed-top h-10 z-0">
+    <div class="flex justify-between py-2 px-3">
+      <a href="#">Offcanvas dark navbar</a>
+      <button @click="toggleSidebar" type="button">
+        <span class="inline">
+          <svg class="w-5 h-5 text-gray-800 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+            fill="Currentcolor" viewBox="0 0 17 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M1 1h15M1 7h15M1 13h15" />
+          </svg>
+        </span>
       </button>
-      <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar"
-        aria-labelledby="offcanvasDarkNavbarLabel">
-        <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">
-            Dark offcanvas
-          </h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#" @click.prevent="navigateTo('/')">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="#" @click.prevent="navigateTo('/ingresos')">Ingresos</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="#" @click.prevent="navigateTo('/egresos')">Egresos</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="#" @click.prevent="navigateTo('/lavados')">Lavados</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Dropdown
-              </a>
-              <ul class="dropdown-menu dropdown-menu-dark">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li>
-                  <hr class="dropdown-divider" />
-                </li>
-                <li>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-          <form class="d-flex mt-3" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-            <button class="btn btn-success" type="submit">Search</button>
-          </form>
-        </div>
-      </div>
     </div>
   </nav>
+  <div v-if="isOpen" class="sidebar_menu top-0 right-0 px-3 py-2 text-bg-dark text-left">
+    <div class="flex justify-around">
+      <h5 class="pr-5">
+        Dark offcanvas
+      </h5>
+      <button @click="toggleSidebar" type="button">
+        <span class="inline">
+          <svg class="w-4 h-4 text-gray-800 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+            viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+          </svg>
+        </span>
+      </button>
+    </div>
+    <div>
+      <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+        <li class="my-1">
+          <a class="hover:text-blue-700" aria-current="page" href="#"
+            @click.prevent="navigateTo('/'), toggleSidebar()">Home</a>
+        </li>
+        <li class="my-1">
+          <a class="hover:text-blue-700" aria-current="page" href="#"
+            @click.prevent="navigateTo('/ingresos'), toggleSidebar()">Ingresos</a>
+        </li>
+        <li class="my-1">
+          <a class="hover:text-blue-700" aria-current="page" href="#"
+            @click.prevent="navigateTo('/egresos'), toggleSidebar()">Egresos</a>
+        </li>
+        <li class="my-1">
+          <a class="hover:text-blue-700" aria-current="page" href="#"
+            @click.prevent="navigateTo('/lavados'), toggleSidebar()">Lavados</a>
+        </li>
+        <li class="my-1">
+          <a class="hover:text-blue-700" href="#">Link</a>
+        </li>
+      </ul>
+    </div>
+  </div>
 </template>
 
 <script>
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 export default {
   name: 'SideBar',
   props: {
     msg: String,
+  },
+  data() {
+    return {
+      isOpen: false
+    }
+  },
+  methods: {
+    toggleSidebar() {
+      this.isOpen = !this.isOpen
+      console.log(this.isOpen)
+    }
   },
   setup() {
     const router = useRouter();
@@ -85,4 +94,10 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.sidebar_menu {
+  height: 100vh;
+  position: absolute;
+  z-index: 50;
+}
+</style>
