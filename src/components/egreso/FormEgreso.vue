@@ -1,9 +1,10 @@
 <template>
-  <div class="container mt-3">
+  <div class="viewport">
+    <div class="card p-4">
     <div class="mb-3">
       <router-link :to="isAdmin ? '/egresos' : '/caja'" class="text-blue-500">&lt; Volver atrás</router-link>
     </div>
-    <h1>Egresos</h1>
+    <h1 class="font-bold">Egresos</h1>
     <form>
       <div class="form-group">
         <label for="descripcion">Descripción</label>
@@ -24,10 +25,9 @@
         </label>
       </div>
       <button type="submit" class="
-              btn btn-primary
               mt-3
-              bg-blue-500
-              hover:bg-blue-600
+              bg-blue-600
+              hover:bg-blue-500
               text-white
               font-bold
               py-2
@@ -36,6 +36,7 @@
         Guardar
       </button>
     </form>
+    </div>
   </div>
 </template>
 <script>

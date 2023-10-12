@@ -1,15 +1,14 @@
 <template>
-  <div class="container mt-3">
+  <div class="viewport">
+    <div class="card p-4">
     <div class="mb-3">
       <router-link :to="isAdmin ? '/lavados' : '/ListLavadosCaja'" class="text-blue-500">&lt; Volver atrás</router-link>
     </div>
-
-    <div class="card shadow-lg">
-      <div class="card-body">
-        <form>
-          <div class="form-group">
-            <label for="descripcion" class="text-black">Descripción</label>
-            <input type="text" class="
+    <h1 class="font-bold">Lavados</h1>
+    <form>
+      <div class="form-group">
+        <label for="descripcion" class="text-black">Descripción</label>
+        <input type="text" class="
                 form-input
                 mt-1
                 block
@@ -19,10 +18,10 @@
                 shadow-sm
                 focus:border-blue-500 focus:ring focus:ring-blue-200
               " id="descripcion" v-model="form.descripcion" />
-          </div>
-          <div class="form-group">
-            <label for="tipo-vehiculo" class="text-black">Tipo de vehículo</label>
-            <select class="
+      </div>
+      <div class="form-group">
+        <label for="tipo-vehiculo" class="text-black">Servicio</label>
+        <select class="
                 form-select
                 mt-1
                 block
@@ -32,15 +31,15 @@
                 shadow-sm
                 focus:border-blue-500 focus:ring focus:ring-blue-200
               " id="tipo-vehiculo" v-model="form.tipoVehiculoId">
-              <option value="">Seleccionar tipo de vehículo</option>
-              <option v-for="tipoVehiculo in tiposVehiculos" :key="tipoVehiculo.id" :value="tipoVehiculo.id">
-                {{ tipoVehiculo.descripcion }}
-              </option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="tipo-lavado" class="text-black">Tipo de lavado</label>
-            <select class="
+          <option value="">Seleccionar servicio</option>
+          <option v-for="tipoVehiculo in tiposVehiculos" :key="tipoVehiculo.id" :value="tipoVehiculo.id">
+            {{ tipoVehiculo.descripcion }}
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="tipo-lavado" class="text-black">Tipo de servicio</label>
+        <select class="
                 form-select
                 mt-1
                 block
@@ -50,15 +49,15 @@
                 shadow-sm
                 focus:border-blue-500 focus:ring focus:ring-blue-200
               " id="tipo-lavado" v-model="form.tipoLavadoId">
-              <option value="">Seleccionar tipo de lavado</option>
-              <option v-for="tipoLavado in tiposLavados" :key="tipoLavado.id" :value="tipoLavado.id">
-                {{ tipoLavado.descripcion }}
-              </option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="importe" class="text-black">Importe</label>
-            <input type="number" class="
+          <option value="">Seleccionar tipo de servicio</option>
+          <option v-for="tipoLavado in tiposLavados" :key="tipoLavado.id" :value="tipoLavado.id">
+            {{ tipoLavado.descripcion }}
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="importe" class="text-black">Importe</label>
+        <input type="number" class="
                 form-input
                 mt-1
                 block
@@ -68,27 +67,24 @@
                 shadow-sm
                 focus:border-blue-500 focus:ring focus:ring-blue-200
               " id="importe" v-model="form.importe" />
-          </div>
-          <div class="form-group" v-if="isAdmin">
-            <label for="importe">Fecha</label>
-            <input type="date" class="form-control" id="importe" v-model="form.fecha" required />
-          </div>
-          <button type="submit" class="
-              
-            btn btn-primary
+      </div>
+      <div class="form-group" v-if="isAdmin">
+        <label for="importe">Fecha</label>
+        <input type="date" class="form-control" id="importe" v-model="form.fecha" required />
+      </div>
+      <button type="submit" class="
               mt-3
-              bg-blue-500
-              hover:bg-blue-600
+              bg-blue-600
+              hover:bg-blue-500
               text-white
               font-bold
               py-2
               px-4
               rounded
             " @click.prevent="submitForm">
-            Guardar
-          </button>
-        </form>
-      </div>
+        Guardar
+      </button>
+    </form>
     </div>
   </div>
 </template>

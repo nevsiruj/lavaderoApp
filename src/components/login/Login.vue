@@ -1,17 +1,20 @@
 <template>
-  <div class="login-container">
-    <h2>Iniciar Sesión</h2>
-    <form @submit.prevent="login">
-      <div class="form-group">
-        <label for="email">Correo Electrónico:</label>
-        <input type="email" id="email" v-model="email" required />
-      </div>
-      <div class="form-group">
-        <label for="password">Contraseña:</label>
-        <input type="password" id="password" v-model="password" required />
-      </div>
-      <button type="submit">Iniciar Sesión</button>
-    </form>
+  <div class="viewport">
+    <div class="card shadow-md p-4">
+      <h2 class="font-bold">Iniciar sesión</h2>
+      <form @submit.prevent="login">
+        <div class="mb-3">
+          <label class="block mb-2" for="email">Correo Electrónico:</label>
+          <input class="p-2" type="email" id="email" v-model="email" required />
+        </div>
+        <div class="mb-3">
+          <label class="block mb-2" for="password">Contraseña:</label>
+          <input class="p-2" type="password" id="password" v-model="password" required />
+        </div>
+        <button class="bg-blue-600 hover:bg-blue-500 p-2 rounded-md text-white" @click="handleLogin" type="submit">Iniciar
+          Sesión</button>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -37,8 +40,8 @@ export default {
           console.log(cajaAbierta.value)
           if (cajaAbierta.value == undefined) {
             router.push('/abrircaja');
-          } 
-          else{
+          }
+          else {
             router.push('/caja');
           }
         } else {
@@ -57,8 +60,8 @@ export default {
           console.log(cajaAbierta.value)
           if (cajaAbierta.value == undefined) {
             router.push('/abrircaja');
-          } 
-          else{
+          }
+          else {
             router.push('/caja');
           }
         }
@@ -69,41 +72,20 @@ export default {
 
     /* onMounted(checkUserSession);  */
     onMounted(async () => {
-      
       checkUserSession();
     });
-
     return {
       email,
       password,
       login,
     };
-  },
+  }
 };
 </script>
 
 <style>
-.login-container {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.form-group {
-  margin-bottom: 15px;
-}
-
-label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+.container {
+  height: min-content;
+  align-self: center;
 }
 </style>

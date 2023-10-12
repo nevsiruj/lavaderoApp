@@ -1,15 +1,16 @@
 <template>
+  <div class="viewport-lists mt-10">
   <Toast message="Lavado Eliminado" ref="toastComponent" />
   <Modal message="lavado" @confirm="deleteLavado" ref="modalComponent" />
 
-  <div> 
+  <div class="m-auto rounded-lg py-2 px-2"> 
     <router-link
-      class="btn btn-sm btn-success mt-2 mr-1"
+      class="btn btn-sm btn-success my-2 mr-1"
       :to="{ path: '/formlavado', query: { isAdmin: true } }"
     >
       <i class="fas fa-plus-circle mr-1"></i> Agregar Lavado
     </router-link>
-    <button class="btn btn-sm btn-primary mt-2" @click="fetchLavados">
+    <button class="btn btn-sm btn-primary my-2" @click="fetchLavados">
       <i class="fas fa-sync-alt"></i> Actualizar
     </button>
     <div
@@ -147,6 +148,7 @@
       </li>
     </ul>
   </nav>
+</div>
 </template>
 
 <script>
@@ -287,3 +289,11 @@ export default {
   },
 };
 </script>
+
+<style>
+  .viewport{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+</style>

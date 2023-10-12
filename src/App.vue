@@ -1,7 +1,7 @@
 <template>
-  <div id="app">
+  <div class="bg-stone-200" id="app">
     <router-view />
-    <SideBar />
+    <SideBar v-if="$route.name != 'Login'"/>
   </div>
 </template>
 
@@ -29,6 +29,17 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+.viewport{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.viewport-lists{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 </style>

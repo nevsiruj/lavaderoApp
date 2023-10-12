@@ -1,38 +1,36 @@
 <template>
-  <div class="container mt-3">
-
-    <div class="container mt-3">
-      <div class="mb-3">
-        <router-link :to="isAdmin ? '/ingresos' : '/caja'" class="text-blue-500">&lt; Volver atrás</router-link>
+  <div class="viewport">
+    <div class="card p-4">
+    <div>
+      <router-link :to="isAdmin ? '/ingresos' : '/caja'" class="text-blue-500">&lt; Volver atrás</router-link>
+    </div>
+    <h1 class="font-bold mb-2">Ingresos</h1>
+    <form>
+      <div class="form-group">
+        <label for="descripcion">Descripción</label>
+        <input type="text" class="form-control" id="descripcion" v-model="form.descripcion" required />
       </div>
-      <h1>Ingresos</h1>
-      <form>
-        <div class="form-group">
-          <label for="descripcion">Descripción</label>
-          <input type="text" class="form-control" id="descripcion" v-model="form.descripcion" required />
-        </div>
-        <div class="form-group">
-          <label for="importe">Importe</label>
-          <input type="number" class="form-control" id="importe" v-model="form.importe" required />
-        </div>
-        <div class="form-group" v-if="isAdmin">
-          <label for="importe">Fecha</label>
-          <input type="date" class="form-control" id="importe" v-model="form.fechaRegistro" required />
-        </div>
-        <button type="submit" class="
-              btn btn-primary
+      <div class="form-group">
+        <label for="importe">Importe</label>
+        <input type="number" class="form-control" id="importe" v-model="form.importe" required />
+      </div>
+      <div class="form-group" v-if="isAdmin">
+        <label for="importe">Fecha</label>
+        <input type="date" class="form-control" id="importe" v-model="form.fechaRegistro" required />
+      </div>
+      <button type="submit" class="
               mt-3
-              bg-blue-500
-              hover:bg-blue-600
+              bg-blue-600
+              hover:bg-blue-500
               text-white
               font-bold
               py-2
               px-4
               rounded" @click.prevent="submitForm">
-          Guardar
-        </button>
-      </form>
-    </div>
+        Guardar
+      </button>
+    </form>
+  </div>
   </div>
 </template>
 <script>

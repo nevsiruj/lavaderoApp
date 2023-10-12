@@ -1,4 +1,5 @@
 <template>
+  <div class="viewport-lists mt-10">
   <Toast message="Egreso Eliminado" ref="toastComponent" />
   <Modal message="egreso" @confirm="deleteEgreso" ref="modalComponent" />
 
@@ -127,6 +128,7 @@
       </li>
     </ul>
   </nav>
+  </div>
 </template>
 
 <script>

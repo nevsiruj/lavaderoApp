@@ -1,41 +1,37 @@
 <template>
-  <Modal message="egreso" @confirm="deleteEgreso" ref="modalComponent" />
+  <div class="viewport">
+    <Modal message="egreso" @confirm="deleteEgreso" ref="modalComponent" />
 
-  <div class="container">
-    <div class="mb-3">
-      <router-link to="/caja"> &lt;Volver atrás </router-link>
+    <div class="login-container m-auto rounded-lg py-3 px-2 shadow-md bg-white">
+      <div class="mb-3">
+        <router-link to="/caja"> &lt;Volver atrás </router-link>
+      </div>
+      <h1>Egresos</h1>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Descripción</th>
+            <th>Importe</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="egreso in egresos" :key="egreso.id">
+            <td>{{ egreso.descripcion }}</td>
+            <td>{{ egreso.importe }}</td>
+            <td class="px-2 py-1 whitespace-nowrap">
+              <div class="flex space-x-2">
+                <button class="text-blue-600 hover:text-blue-800 focus:outline-none" @click="editEgreso(egreso)">
+                  <i class="fas fa-edit"></i>
+                </button>
+                <button class="text-red-600 hover:text-red-800 focus:outline-none" @click="deleteModal(egreso.id)">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <h1>Egresos</h1>
-    <table class="table">
-      <thead>
-        <tr> 
-          <th>Descripción</th>
-          <th>Importe</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="egreso in egresos" :key="egreso.id">
-          <td>{{ egreso.descripcion }}</td>
-          <td>{{ egreso.importe }}</td>
-          <td class="px-2 py-1 whitespace-nowrap">
-            <div class="flex space-x-2">
-              <button
-                class="text-blue-600 hover:text-blue-800 focus:outline-none"
-                @click="editEgreso(egreso)"
-              >
-                <i class="fas fa-edit"></i>
-              </button>
-              <button
-                class="text-red-600 hover:text-red-800 focus:outline-none"
-                @click="deleteModal(egreso.id)"
-              >
-                <i class="fas fa-trash-alt"></i>
-              </button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
   </div>
 </template>
 
@@ -55,10 +51,10 @@ export default {
     let cajaAbierta = ref({});
     const router = useRouter();
     const route = useRoute();
-    cajaAbierta = cajaService.getCajaAbierta();
+    // cajaAbierta = cajaService.getCajaAbierta();
     let egresos = ref([]);
     const modalComponent = ref(null);
-    const modal= ref()
+    const modal = ref()
 
     onMounted(async () => {
       // cajaAbierta = cajaService.getCajaAbierta();
@@ -76,7 +72,7 @@ export default {
     };
     const fetchEgresos = async () => {
       try {
-        cajaAbierta = cajaService.getCajaAbierta();
+        cajaAbierta.value = await cajaService.getCajaAbierta();
         egresos.value = await egresoService.getEgresosByCaja(
           cajaAbierta.value.id
         );
@@ -97,7 +93,7 @@ export default {
         console.error(error);
       }
     };
-    const deleteModal = async (egresoId) =>{
+    const deleteModal = async (egresoId) => {
       modal.value = await modalComponent.value.getModal(egresoId);
       modal.value.show()
     }
@@ -115,7 +111,7 @@ export default {
   },
   name: 'Egreso',
   props: {},
-  created() {},
+  created() { },
   data() {
     return {};
   },

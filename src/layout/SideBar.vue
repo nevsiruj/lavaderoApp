@@ -1,7 +1,7 @@
 <template>
-  <nav class="text-white bg-dark fixed-top h-10 z-0">
+  <nav v-if="!isLoggedIn" class="text-white bg-dark fixed-top h-10 z-0">
     <div class="flex justify-between py-2 px-3">
-      <a href="#">Offcanvas dark navbar</a>
+      <router-link to="/caja">Lavadero</router-link>
       <button @click="toggleSidebar" type="button">
         <span class="inline">
           <svg class="w-5 h-5 text-gray-800 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -31,23 +31,24 @@
     <div>
       <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
         <li class="my-1">
-          <a class="hover:text-blue-700" aria-current="page" href="#"
+          <a class="hover:text-blue-600" aria-current="page" href="#"
             @click.prevent="navigateTo('/'), toggleSidebar()">Home</a>
         </li>
         <li class="my-1">
-          <a class="hover:text-blue-700" aria-current="page" href="#"
+          <a class="hover:text-blue-600" aria-current="page" href="#"
             @click.prevent="navigateTo('/ingresos'), toggleSidebar()">Ingresos</a>
         </li>
         <li class="my-1">
-          <a class="hover:text-blue-700" aria-current="page" href="#"
+          <a class="hover:text-blue-600" aria-current="page" href="#"
             @click.prevent="navigateTo('/egresos'), toggleSidebar()">Egresos</a>
         </li>
         <li class="my-1">
-          <a class="hover:text-blue-700" aria-current="page" href="#"
+          <a class="hover:text-blue-600" aria-current="page" href="#"
             @click.prevent="navigateTo('/lavados'), toggleSidebar()">Lavados</a>
         </li>
         <li class="my-1">
-          <a class="hover:text-blue-700" href="#">Link</a>
+          <a class="hover:text-blue-600" href="#" @click.prevent="navigateTo('/'), toggleSidebar()">Cerrar
+            sesion</a>
         </li>
       </ul>
     </div>
@@ -55,13 +56,12 @@
 </template>
 
 <script>
-import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 export default {
   name: 'SideBar',
   props: {
-    msg: String,
+    isLoggedIn: Boolean,
   },
   data() {
     return {
@@ -87,7 +87,6 @@ export default {
 
     return {
       navigateTo
-
       // navigateToIndex,
     };
   },
