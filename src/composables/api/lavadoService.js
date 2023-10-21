@@ -84,13 +84,12 @@ const lavadoService = (() => {
     }
   };
 
-  const editLavado = async (lavado) => {
+  const editLavado = async (lavados) => {
     try {
-      const lavadoId = lavado.id;
-      const response = await instance.put(`/Lavado/${lavadoId}`, lavado);
+      const response = await instance.put(`/lavado/${lavados.id}`, lavados);
       return response;
     } catch (error) {
-      console.error('Error:', error);
+      console.log(error);
       return null;
     }
   };

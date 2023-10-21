@@ -15,8 +15,8 @@
   </nav>
   <div v-if="isOpen" class="sidebar_menu top-0 right-0 px-3 py-2 text-bg-dark text-left">
     <div class="flex justify-around">
-      <h5 class="pr-5">
-        Dark offcanvas
+      <h5 class="pr-5 font-bold">
+        Tu control
       </h5>
       <button @click="toggleSidebar" type="button">
         <span class="inline">
@@ -29,7 +29,7 @@
       </button>
     </div>
     <div>
-      <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+      <ul class="navbar-nav justify-content-end flex-grow-1 mt-2 pe-3">
         <li class="my-1">
           <a class="hover:text-blue-600" aria-current="page" href="#"
             @click.prevent="navigateTo('/'), toggleSidebar()">Home</a>
@@ -45,6 +45,10 @@
         <li class="my-1">
           <a class="hover:text-blue-600" aria-current="page" href="#"
             @click.prevent="navigateTo('/lavados'), toggleSidebar()">Lavados</a>
+        </li>
+        <li class="my-1">
+          <a class="hover:text-blue-600" aria-current="page" href="#"
+            @click.prevent="navigateTo('/dashboard'), toggleSidebar()">Dashboard</a>
         </li>
         <li class="my-1">
           <a class="hover:text-blue-600" href="#" @click.prevent="navigateTo('/'), toggleSidebar()">Cerrar

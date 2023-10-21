@@ -1,24 +1,27 @@
 <template>
   <div class="viewport">
     <div class="card p-4">
-    <div>
-      <router-link :to="isAdmin ? '/ingresos' : '/caja'" class="text-blue-500">&lt; Volver atrás</router-link>
-    </div>
-    <h1 class="font-bold mb-2">Ingresos</h1>
-    <form>
-      <div class="form-group">
-        <label for="descripcion">Descripción</label>
-        <input type="text" class="form-control" id="descripcion" v-model="form.descripcion" required />
+      <div>
+        <router-link :to="isAdmin ? '/ingresos' : '/caja'" class="text-blue-500">&lt; Volver atrás</router-link>
       </div>
-      <div class="form-group">
-        <label for="importe">Importe</label>
-        <input type="number" class="form-control" id="importe" v-model="form.importe" required />
-      </div>
-      <div class="form-group" v-if="isAdmin">
-        <label for="importe">Fecha</label>
-        <input type="date" class="form-control" id="importe" v-model="form.fechaRegistro" required />
-      </div>
-      <button type="submit" class="
+      <h1 class="font-bold mb-2">Ingresos</h1>
+      <form>
+        <div class="form-group">
+          <label for="descripcion">Descripción</label>
+          <input type="text" class="form-control" id="descripcion" v-model="form.descripcion" required />
+        </div>
+        <div class="form-group">
+          <label for="importe">Importe</label>
+          <input type="number" class="form-control" id="importe" min="1" v-model="form.importe" required />
+        </div>
+        <div v-if="isNegativeImport">
+          <p class='text-red-600'>No ingresar valores negativos</p>
+        </div>
+        <div class="form-group" v-if="isAdmin">
+          <label for="importe">Fecha</label>
+          <input type="date" class="form-control" id="importe" v-model="form.fechaRegistro" required />
+        </div>
+        <button type="submit" class="
               mt-3
               bg-blue-600
               hover:bg-blue-500
@@ -27,10 +30,10 @@
               py-2
               px-4
               rounded" @click.prevent="submitForm">
-        Guardar
-      </button>
-    </form>
-  </div>
+          Guardar
+        </button>
+      </form>
+    </div>
   </div>
 </template>
 <script>
@@ -42,21 +45,28 @@ import { useRouter, useRoute } from 'vue-router';
 
 export default {
   setup() {
-    let cajaAbierta = ref({});
     const router = useRouter();
     const route = useRoute();
-    cajaAbierta = cajaService.getCajaAbierta();
     const isAdmin = ref(false);
+    let cajaAbierta = ref({});
+    let isNegativeImport = ref(false)
+
+    cajaAbierta = cajaService.getCajaAbierta();
 
     let form = ref({
       id: 0,
       descripcion: '',
-      importe: 0,
+      importe: null,
       cajaId: 0,
       fechaRegistro: '',
     });
+
     const submitForm = async () => {
       form.value.cajaId = cajaAbierta.value.id;
+      if (form.value.importe < 1) {
+        isNegativeImport.value = true
+        return
+      }
       if (form.value.fechaRegistro != '') {
         const fecha = new Date(form.value.fechaRegistro)
         const fechaFormateada = fecha.toISOString();
@@ -93,6 +103,7 @@ export default {
     });
 
     return {
+      isNegativeImport,
       cajaAbierta,
       form,
       submitForm,
