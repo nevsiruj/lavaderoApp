@@ -48,7 +48,7 @@
         </li>
         <li class="my-1">
           <a class="hover:text-blue-600" aria-current="page" href="#"
-            @click.prevent="navigateTo('/dashboard'), toggleSidebar()">Dashboard</a>
+            @click.prevent="navigateTo('/lavadostable'), toggleSidebar()">Dashboard</a>
         </li>
         <li class="my-1">
           <a class="hover:text-blue-600" href="#" @click.prevent="navigateTo('/'), toggleSidebar()">Cerrar
