@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto">
+  <div class="viewport mx-auto">
     <h1 class="text-3xl font-semibold mb-6">Dashboard de Lavados</h1>
     <form>
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
@@ -13,27 +13,28 @@
         </div>
         <div class="flex items-end">
           <button type="button" class="
-              bg-blue-500
+          mt-3
+              bg-blue-600
+              hover:bg-blue-500
               text-white
-              font-semibold
-              px-6
-              py-3
-              w-full
-              sm:w-auto
+              font-bold
+              py-2
+              px-4
+              rounded
             " @click="filtrar">
             Filtrar
           </button>
         </div>
       </div>
-      <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <ul class="nav nav-tabs mb-2 border-none" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
-          <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button"
+          <button class="nav-link rounded-md active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button"
             role="tab" aria-controls="home" aria-selected="true">
             Home
           </button>
         </li>
         <li class="nav-item" role="presentation">
-          <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
+          <button class="nav-link rounded-md " id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
             role="tab" aria-controls="profile" aria-selected="false">
             E/R
           </button>
@@ -69,8 +70,7 @@
             <h2 class="text-xl font-semibold">Total Facturado</h2>
             <p class="text-3xl">{{ totalFacturado }}</p>
           </div>
-          <div class="bg-white rounded-lg p-4 shadow"
-          @click="mostrarTotalGastos()" >
+          <div class="bg-white rounded-lg p-4 shadow" @click="mostrarTotalGastos()">
             <h2 class="text-xl font-semibold">Gastos</h2>
             <p class="text-3xl">{{ totalGastos }}</p>
           </div>

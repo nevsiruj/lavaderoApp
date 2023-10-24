@@ -1,7 +1,7 @@
 <template>
   <div class="bg-stone-200" id="app">
-    <router-view />
     <SideBar v-if="$route.name != 'Login'"/>
+    <router-view />
   </div>
 </template>
 
