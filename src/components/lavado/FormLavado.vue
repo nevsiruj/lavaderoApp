@@ -1,10 +1,10 @@
 <template>
   <div class="viewport">
-    <div class="card p-4">
+    <div class="card p-4 mx-2 shadow-md overflow-hidden w-fit self-center">
       <div class="mb-3">
         <router-link :to="isAdmin ? '/lavados' : '/ListLavadosCaja'" class="text-blue-500">&lt; Volver atrás</router-link>
       </div>
-      <h1 class="font-bold">Lavados</h1>
+      <h1 class="font-bold">Factura</h1>
       <form>
         <div class="form-group">
           <label for="descripcion" class="text-black">Descripción</label>
@@ -178,8 +178,8 @@ export default {
       }
     };
     onMounted(async () => {
-      cajaAbierta.value = await cajaService.getCajaAbierta();
-      tiposLavados.value = await lavadoService.getTipoLavado();
+        cajaAbierta.value = await cajaService.getCajaAbierta();
+        tiposLavados.value = await lavadoService.getTipoLavado();
       tiposVehiculos.value = await lavadoService.getTipoVehiculo();
 
       const query = router.currentRoute.value.query;

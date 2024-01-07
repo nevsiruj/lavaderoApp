@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <form @submit.prevent="abrirCaja">
+  <div class="viewport">
+    <form class="w-10/12 m-auto" @submit.prevent="abrirCaja">
       <h2>Abrir caja</h2>
       <div class="mb-3">
         <label for="responsable" class="form-label">Responsable:</label>
@@ -8,6 +8,13 @@
           <option disabled value="">Seleccione una opción</option>
           <option v-for="responsable in responsables" :key="responsable.id" :value="responsable.nombre">
             {{ responsable.nombre }}
+          </option>
+        </select>
+        <label for="turno" class="form-label">Turno:</label>
+        <select class="form-control" id="turno" v-model="formData.turno" required>
+          <option disabled value="">Seleccione una opción</option>
+          <option v-for="turno in turnos" :key="turno.id" :value="turno.value">
+            {{ turno.nombre }}
           </option>
         </select>
       </div>
@@ -33,7 +40,6 @@
 
 <script>
 import { reactive, onMounted } from 'vue';
-
 import cajaService from '../../composables/api/cajaService.js';
 import { useRouter, useRoute } from 'vue-router';
 
@@ -45,6 +51,7 @@ export default {
 
     const formData = reactive({
       responsable: '',
+      turno: '',
       montoInicial: '',
     });
 
@@ -53,11 +60,18 @@ export default {
       { id: 2, nombre: 'Responsable 2' },
     ]);
 
+    const turnos = reactive([
+      { id: 1, nombre: 'Turno 1', value: 1 },
+      { id: 2, nombre: 'Turno 2', value: 2 },
+    ]); 
+
     const abrirCaja = async () => {
       try {
         console.log(
           'Abriendo caja con responsable',
           formData.responsable,
+          'en el turno',
+          formData.turno,
           'y monto',
           formData.montoInicial
         );
@@ -67,6 +81,7 @@ export default {
           // Reiniciamos los valores del formulario
           formData.responsable = '';
           formData.montoInicial = null;
+          formData.turno = '';
           router.push('/caja');
         }).catch((error) => {
           console.error("Error al abrir la caja:", error);
@@ -83,6 +98,7 @@ export default {
     return {
       formData,
       responsables,
+      turnos,
       abrirCaja,
     };
   },

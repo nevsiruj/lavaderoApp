@@ -1,5 +1,5 @@
 <template>
-  <div class="viewport-lists mt-10">
+  <div class="viewport mt-10">
     <Toast message="Lavado Eliminado" ref="toastComponent" />
     <Modal message="lavado" @confirm="deleteLavado" ref="modalComponent" />
 
@@ -9,17 +9,22 @@
           <i class="fas fa-filter text-gray-600 mr-2"></i>
           <label class="text-gray-600">Filtrar por fecha:</label>
         </div>
-        <div class="flex items-center space-x-2">
-          <input type="date" class="border-gray-300 rounded-md p-1 flex-grow" v-model="startDate"
-            @change="filterLavados" />
-          <span class="text-gray-600">-</span>
-          <input type="date" class="border-gray-300 rounded-md p-1 flex-grow" v-model="endDate" @change="filterLavados" />
-          <router-link class="btn btn-sm btn-success my-2 mr-1" :to="{ path: '/formlavado', query: { isAdmin: true } }">
-            <i class="fas fa-plus-circle mr-1"></i> Agregar Lavado
-          </router-link>
-          <button class="btn btn-sm btn-primary my-2" @click="fetchLavados">
-            <i class="fas fa-sync-alt"></i> Actualizar
-          </button>
+        <div class="flex flex-col md:flex-row md:gap-5 md:align-center">
+          <div class="mb-2">
+            <input type="date" class="border-gray-300 rounded-md p-1 flex-grow" v-model="startDate"
+              @change="filterLavados" />
+            <span class="mx-2 text-gray-600">-</span>
+            <input type="date" class="border-gray-300 rounded-md p-1 flex-grow" v-model="endDate"
+              @change="filterLavados" />
+          </div>
+          <div>
+            <router-link class="btn btn-sm btn-success mr-1" :to="{ path: '/formlavado', query: { isAdmin: true } }">
+              <i class="fas fa-plus-circle mr-1"></i> Agregar Lavado
+            </router-link>
+            <button class="btn btn-sm btn-primary" @click="fetchLavados">
+              <i class="fas fa-sync-alt"></i> Actualizar
+            </button>
+          </div>
         </div>
         <div v-if="showMessage" class="bg-green-100 text-green-800 px-4 py-2 rounded-md mt-2">
           <i class="fas fa-check-circle mr-1"></i> Actualizados
@@ -86,32 +91,14 @@
     </div>
     <nav aria-label="Page navigation example">
       <ul class="flex justify-center">
-        <li class="
-          page-item
-          bg-blue-500
-          text-white
-          font-semibold
-          px-6
-          py-3
-          sm:w-auto
-          rounded-md
-          m-2
-        " v-show="pag != 1" @click.prevent="pag -= 1">
+        <li class="page-item bg-blue-500 text-white font-semibold px-6 py-3 sm:w-auto rounded-md m-2" v-show="pag != 1"
+          @click.prevent="pag -= 1">
           <a href="#" aria-label="Previous">
             <span class="hover:text-white" aria-hidden="true">Anterior</span>
           </a>
         </li>
-        <li class="
-          page-item
-          bg-blue-500
-          text-white
-          font-semibold
-          px-6
-          py-3
-          sm:w-auto
-          rounded-md
-          m-2
-        " v-show="(pag * results) / lavados.length < 1" @click.prevent="pag += 1">
+        <li class="page-item bg-blue-500 text-white font-semibold px-6 py-3 sm:w-auto rounded-md m-2"
+          v-show="(pag * results) / lavados.length < 1" @click.prevent="pag += 1">
           <a href="#" aria-label="Next">
             <span class="hover:text-white" aria-hidden="true">Siguiente</span>
           </a>
@@ -122,32 +109,32 @@
 </template>
 
 <script>
-import lavadoService from '../../composables/api/lavadoService.js';
-import { ref, onMounted, computed } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import Toast from '../Toast/Toast.vue';
-import Modal from '../modalConfirmar/ModalConfirmar.vue';
+import lavadoService from "../../composables/api/lavadoService.js";
+import { ref, onMounted, computed } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import Toast from "../Toast/Toast.vue";
+import Modal from "../modalConfirmar/ModalConfirmar.vue";
 export default {
   components: {
     Toast,
     Modal,
   },
-  name: 'lavados',
+  name: "lavados",
   data() {
     return {
       results: 20,
       pag: 1,
-    }
+    };
   },
   setup() {
     const lavados = ref([]);
-    const startDate = ref('');
-    const endDate = ref('');
+    const startDate = ref("");
+    const endDate = ref("");
     const showMessage = ref(false);
     const router = useRouter();
     const toastComponent = ref(null);
     const modalComponent = ref(null);
-    const modal = ref()
+    const modal = ref();
 
     const fetchLavados = async () => {
       try {
@@ -169,11 +156,11 @@ export default {
     };
 
     const formatDate = (date) => {
-      const formattedDate = new Date(date).toLocaleString('es', {
-        day: '2-digit',
-        month: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
+      const formattedDate = new Date(date).toLocaleString("es", {
+        day: "2-digit",
+        month: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
       });
       return formattedDate;
     };
@@ -211,7 +198,7 @@ export default {
     };
     const editLavado = (lavado) => {
       router.push({
-        path: '/formlavado',
+        path: "/formlavado",
         query: { isAdmin: true, id: lavado.id },
       });
     };
@@ -219,10 +206,10 @@ export default {
     const deleteLavado = async (lavadoId) => {
       try {
         await lavadoService.deleteLavado(lavadoId);
-        modal.value.hide()
+        modal.value.hide();
         let toast = toastComponent.value.getToast();
         toast[0].show();
-        fetchLavados()
+        fetchLavados();
         // Realiza alguna lógica adicional si es necesario
       } catch (error) {
         console.error(error);
@@ -230,8 +217,8 @@ export default {
     };
     const openModal = async (lavadoId) => {
       modal.value = await modalComponent.value.getModal(lavadoId);
-      modal.value.show()
-    }
+      modal.value.show();
+    };
 
     onMounted(async () => {
       await fetchLavados();
@@ -242,19 +229,19 @@ export default {
       lavados,
       startDate,
       endDate,
+      showMessage,
+      filteredLavados,
+      router,
+      toastComponent,
+      modalComponent,
+      modal,
       formatDate,
       filterLavados,
-      filteredLavados,
       calculateTotalImporte,
-      showMessage,
       fetchLavados,
       deleteLavado,
       editLavado,
-      router,
-      toastComponent,
       openModal,
-      modalComponent,
-      modal
     };
   },
 };

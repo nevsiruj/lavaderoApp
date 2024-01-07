@@ -1,15 +1,11 @@
 <template>
-  <div class="viewport-lists mt-10">
+  <div class="viewport">
     <Modal message="lavado" @confirm="deleteLavado" ref="modalComponent" />
-    <router-link class="mt-2" to="/caja"> &lt;Volver atrás</router-link>
-    <div class="w-full my-2 flex gap-2 justify-center">
-      <button class="bg-blue-600 hover:bg-blue-500 text-sm text-white p-1 rounded-md">Num. de transacciones</button>
-      <button class="bg-blue-600 hover:bg-blue-500 text-sm text-white p-1 rounded-md">Total facturado</button>
-    </div>
-    <div class="login-container m-auto rounded-lg py-3 px-2 shadow-md bg-white">
+    <div class="mx-auto rounded-lg py-3 px-2 shadow-md bg-white">
+      <router-link class="mt-2" to="/caja"> &lt;Volver atrás</router-link>
       <div class="mb-3">
       </div>
-      <h1 class="font-bold text-center">Lavados</h1>
+      <h1 class="font-bold text-center">Facturas</h1>
       <div class="card-body">
         <table class="table table-responsive table-hover table-striped table-sm">
           <thead>
@@ -40,6 +36,10 @@
           </tbody>
         </table>
       </div>
+      <div class="w-full my-2 flex gap-2 justify-center">
+        <p class="text-sm p-1 rounded-md">Num. de transacciones: {{ autosLavados.length }}</p>
+        <p class="text-sm p-1 rounded-md">Total facturado:</p>
+      </div>
     </div>
   </div>
 </template>
@@ -63,9 +63,9 @@ export default {
   },
   setup() {
     let autosLavados = ref([]);
-    // let tipoLavado = ref([]);
-    const router = useRouter();
     let cajaAbierta = ref({});
+
+    const router = useRouter();
     const modalComponent = ref(null);
     const modal = ref()
 
@@ -116,11 +116,11 @@ export default {
     return {
       autosLavados,
       cajaAbierta,
-      editLavado,
-      deleteLavado,
       router,
       modalComponent,
       modal,
+      editLavado,
+      deleteLavado,
       openModal,
       formatDate
 

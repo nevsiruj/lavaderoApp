@@ -1,6 +1,6 @@
 <template>
   <div class="viewport">
-    <div class="card p-4">
+    <div class="card p-4 mx-2 shadow-md overflow-hidden w-fit self-center">
       <div>
         <router-link :to="isAdmin ? '/ingresos' : '/caja'" class="text-blue-500">&lt; Volver atrás</router-link>
       </div>
@@ -58,7 +58,7 @@ export default {
       descripcion: '',
       importe: null,
       cajaId: 0,
-      fechaRegistro: '',
+      fechaRegistro: null,
     });
 
     const submitForm = async () => {
@@ -86,7 +86,7 @@ export default {
         router.push('/ingresos');
         return;
       }
-      router.push('/');
+      router.push('/caja');
     };
 
     onMounted(async () => {

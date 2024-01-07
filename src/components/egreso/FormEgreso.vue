@@ -1,6 +1,6 @@
 <template>
   <div class="viewport">
-    <div class="card p-4">
+    <div class="card p-4 mx-2 shadow-md overflow-hidden w-fit self-center">
       <div class="mb-3">
         <router-link :to="isAdmin ? '/egresos' : '/caja'" class="text-blue-500">&lt; Volver atrás</router-link>
       </div>
@@ -62,7 +62,7 @@ export default {
       descripcion: '',
       importe: null,
       cajaId: 0,
-      fechaRegistro: '',
+      fechaRegistro: null,
       isGasto: false,
     });
 
@@ -76,7 +76,7 @@ export default {
         const fecha = new Date(form.value.fechaRegistro)
         const fechaFormateada = fecha.toISOString();
         form.value.fechaRegistro = fechaFormateada
-      }
+      } 
       if (form.value.id == 0) {
         await egresoService.addEgreso(form);
       } else {
@@ -91,7 +91,7 @@ export default {
         router.push('/egresos');
         return;
       }
-      router.push('/');
+      router.push('/caja');
     };
 
     onMounted(async () => {

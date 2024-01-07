@@ -6,7 +6,7 @@
 
 <script>
 import { reactive, onMounted, ref } from 'vue';
-import Chart from 'chart.js';
+import chart from 'chart.js';
 
 export default {
   name: 'IngresosEgresosChart',

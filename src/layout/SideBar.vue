@@ -1,5 +1,5 @@
 <template>
-  <nav v-if="!isLoggedIn" class="text-white bg-dark fixed-top h-10 z-0">
+  <nav v-if="!isLoggedIn" class="fixed text-white bg-dark fixed-top h-10 z-10">
     <div class="flex justify-between py-2 px-3">
       <router-link to="/caja">Lavadero</router-link>
       <button @click="toggleSidebar" type="button">
@@ -13,7 +13,7 @@
       </button>
     </div>
   </nav>
-  <div v-if="isOpen" class="sidebar_menu top-0 right-0 px-3 py-2 text-bg-dark text-left">
+  <div v-if="isOpen" class="sidebar_menu fixed top-0 right-0 px-3 py-2 text-bg-dark text-left z-50">
     <div class="flex justify-around">
       <h5 class="pr-5 font-bold">
         Tu control
@@ -32,7 +32,7 @@
       <ul class="navbar-nav justify-content-end flex-grow-1 mt-2 pe-3">
         <li class="my-1">
           <a class="hover:text-blue-600" aria-current="page" href="#"
-            @click.prevent="navigateTo('/'), toggleSidebar()">Home</a>
+            @click.prevent="navigateTo('/caja'), toggleSidebar()">Home</a>
         </li>
         <li class="my-1">
           <a class="hover:text-blue-600" aria-current="page" href="#"
@@ -49,6 +49,14 @@
         <li class="my-1">
           <a class="hover:text-blue-600" aria-current="page" href="#"
             @click.prevent="navigateTo('/lavadostable'), toggleSidebar()">Dashboard</a>
+        </li>
+        <li class="my-1">
+          <a class="hover:text-blue-600" aria-current="page" href="#"
+            @click.prevent="navigateTo('/servicios'), toggleSidebar()">Servicios</a>
+        </li>
+        <li class="my-1">
+          <a class="hover:text-blue-600" aria-current="page" href="#"
+            @click.prevent="navigateTo('/tipoServicios'), toggleSidebar()">Tipos de servicios</a>
         </li>
         <li class="my-1">
           <a class="hover:text-blue-600" href="#" @click.prevent="navigateTo('/'), toggleSidebar()">Cerrar
@@ -81,17 +89,12 @@ export default {
   setup() {
     const router = useRouter();
 
-    // const navigateToIndex = () => {
-    //   router.push('/');
-    // };
-
     const navigateTo = (route) => {
       router.push(route);
     };
 
     return {
       navigateTo
-      // navigateToIndex,
     };
   },
 };
@@ -100,7 +103,5 @@ export default {
 <style scoped>
 .sidebar_menu {
   height: 100vh;
-  position: absolute;
-  z-index: 50;
 }
 </style>

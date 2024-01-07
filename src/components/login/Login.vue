@@ -1,6 +1,6 @@
 <template>
   <div class="viewport">
-    <div class="card shadow-md p-4">
+    <div class="card w-fit mx-auto shadow-md p-4">
       <h2 class="font-bold">Iniciar sesión</h2>
       <form @submit.prevent="login">
         <div class="mb-3">

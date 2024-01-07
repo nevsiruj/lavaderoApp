@@ -85,8 +85,6 @@ const authService = (() => {
       throw error;
     }
   }
-
-
   async function getUserTenantId() {
     try {
       const response = await fetchWithToken(`${API_URL}/auth/tenant-id`);

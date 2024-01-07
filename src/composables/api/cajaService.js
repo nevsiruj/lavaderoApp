@@ -7,6 +7,7 @@ const cajaService = (() => {
   const caja = ref({
     responsable: '',
     montoInicial: 0,
+    turno: 0,
     isOpen: false,
     cantidadLavados: 0,
   });
@@ -14,6 +15,7 @@ const cajaService = (() => {
   const abrirCaja = async (_data) => {
     caja.value = {};
     caja.value.responsable = _data.responsable;
+    caja.value.turno = _data.turno;
     caja.value.montoInicial = _data.montoInicial;
     caja.value.isOpen = true;
     caja.value.cantidadLavados = 0;

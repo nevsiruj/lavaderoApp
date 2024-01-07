@@ -1,7 +1,7 @@
 <template>
   <div class="viewport">
     <Modal message="ingreso" @confirm="deleteIngreso" ref="modalComponent" />
-    <div class="card p-4">
+    <div class="card p-4 m-auto shadow-md overflow-hidden w-fit md:self-center">
       <div class="mb-3">
         <router-link to="/caja"> &lt;Volver atrás </router-link>
       </div>
@@ -30,6 +30,10 @@
           </tr>
         </tbody>
       </table>
+      <div class="w-full my-2 flex gap-2 justify-center">
+        <p class="text-sm p-1 rounded-md">Num. de transacciones: {{ ingresos.length }}</p>
+        <p class="text-sm p-1 rounded-md">Total facturado:</p>
+      </div>
     </div>
   </div>
 </template>

@@ -15,6 +15,10 @@ import ListIngreso from './components/ingreso/ListIngreso.vue';
 import Dashboard from './components/admin/Dashboard.vue';
 import LavadosTable from './components/admin/LavadosTable.vue';
 import Login from './components/login/Login.vue';
+import Servicios from './components/servicios/Servicios.vue'
+import FormServicios from './components/servicios/FormServicios.vue'
+import TipoServicios from './components/TipoServicios/TipoServicio.vue'
+import FormTipoServicio from './components/TipoServicios/FormTipoServicio.vue'
 
 const routes = [
   {
@@ -95,6 +99,26 @@ const routes = [
     path: '/egresos',
     name: 'Egresos',
     component: Egresos,
+  },
+  {
+    path: '/servicios',
+    name: 'Servicios',
+    component: Servicios,
+  },
+  {
+    path: '/tipoServicios',
+    name: 'TipoServicios',
+    component: TipoServicios,
+  },
+  {
+    path: '/formServicios',
+    name: 'FormServicios',
+    component: FormServicios,
+  },
+  {
+    path: '/formTipoServicio',
+    name: 'FormTipoServicio',
+    component: FormTipoServicio,
   },
   {
     path: '/cerrarcaja',
