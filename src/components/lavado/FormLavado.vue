@@ -2,7 +2,7 @@
   <div class="viewport">
     <div class="card p-4 mx-2 shadow-md overflow-hidden w-fit self-center">
       <div class="mb-3">
-        <router-link :to="isAdmin ? '/lavados' : '/ListLavadosCaja'" class="text-blue-500">&lt; Volver atrás</router-link>
+        <router-link :to="isAdmin ? '/lavados' : '/ListLavadosCaja'" class="text-emerald-300">&lt; Volver atrás</router-link>
       </div>
       <h1 class="font-bold">Factura</h1>
       <form>
@@ -14,9 +14,9 @@
                 block
                 w-full
                 rounded-md
-                border-gray-300
+                border-emerald-300
                 shadow-sm
-                focus:border-blue-500 focus:ring focus:ring-blue-200
+                focus:border-emerald-500 focus:ring focus:ring-emerald-200
               " id="descripcion" v-model="form.descripcion" />
         </div>
         <div class="form-group">
@@ -27,9 +27,9 @@
                 block
                 w-full
                 rounded-md
-                border-gray-300
+                border-emerald-300
                 shadow-sm
-                focus:border-blue-500 focus:ring focus:ring-blue-200
+                focus:border-emerald-500 focus:ring focus:ring-emerald-200
               " id="tipo-vehiculo" v-model="form.tipoVehiculoId">
             <option value="">Seleccionar servicio</option>
             <option v-for="tipoVehiculo in tiposVehiculos" :key="tipoVehiculo.id" :value="tipoVehiculo.id">
@@ -45,9 +45,9 @@
                 block
                 w-full
                 rounded-md
-                border-gray-300
+                border-emerald-300
                 shadow-sm
-                focus:border-blue-500 focus:ring focus:ring-blue-200
+                focus:border-emerald-500 focus:ring focus:ring-emerald-200
               " id="tipo-lavado" v-model="form.tipoLavadoId">
             <option value="">Seleccionar tipo de servicio</option>
             <option v-for="tipoLavado in tiposLavados" :key="tipoLavado.id" :value="tipoLavado.id">
@@ -63,9 +63,9 @@
                 block
                 w-full
                 rounded-md
-                border-gray-300
+                border-emerald-300
                 shadow-sm
-                focus:border-blue-500 focus:ring focus:ring-blue-200
+                focus:border-emerald-500 focus:ring focus:ring-emerald-200
               " id="importe" v-model="form.importe" />
         </div>
         <div v-if="isNegativeImport">
@@ -77,13 +77,15 @@
         </div>
         <button type="submit" class="
               mt-3
-              bg-blue-600
-              hover:bg-blue-500
+              bg-emerald-300
+              hover:bg-emerald-500
               text-white
               font-bold
               py-2
               px-4
               rounded
+              border-emerald-300
+              focus:border-emerald-500 focus:ring focus:ring-emerald-200
             " @click.prevent="submitForm">
           Guardar
         </button>
@@ -177,9 +179,10 @@ export default {
         router.push('/ListLavadosCaja');
       }
     };
+
     onMounted(async () => {
-        cajaAbierta.value = await cajaService.getCajaAbierta();
-        tiposLavados.value = await lavadoService.getTipoLavado();
+      cajaAbierta.value = await cajaService.getCajaAbierta();
+      tiposLavados.value = await lavadoService.getTipoLavado();
       tiposVehiculos.value = await lavadoService.getTipoVehiculo();
 
       const query = router.currentRoute.value.query;

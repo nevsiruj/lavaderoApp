@@ -1,6 +1,6 @@
 import { API_URL } from '../../config.js';
 
-const tipoServicioService = (() => {
+const servicioService = (() => {
   const axios = require('axios');
 
   const instance = axios.create({
@@ -22,9 +22,9 @@ const tipoServicioService = (() => {
   );
 
   
-  const addTipoServicio = async (tipoServicio) => {
+  const addServicio = async (Servicio) => {
     try {
-      const response = await instance.post('/api/TipoServicio', tipoServicio);
+      const response = await instance.post('/api/Servicio', Servicio);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -33,9 +33,9 @@ const tipoServicioService = (() => {
   };
    
 
-  const getAllTipoServicio = async () => {
+  const getAllServicio = async () => {
     try {
-      const response = await instance.get('/api/TipoServicio');
+      const response = await instance.get('/api/Servicio');
       return response.data;
     } catch (error) {
       console.log(error);
@@ -45,7 +45,7 @@ const tipoServicioService = (() => {
 
   const getById = async (id) => {
     try {
-      const response = await instance.get(`/api/TipoServicio/${id}`);
+      const response = await instance.get(`/api/Servicio/${id}`);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -55,10 +55,11 @@ const tipoServicioService = (() => {
 
   
   
-  const editTipoServicio = async (id, tipoServicio) => {
-    console.log("lin93", id)
+  const editServicio = async (id, Servicio) => {
+    // debugger
+    // console.log("EditServicio",servicio)
     try {
-      const response = await instance.put(`/api/TipoServicio/${id}`, tipoServicio);
+      const response = await instance.put(`/api/Servicio/${id}`, Servicio);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -68,9 +69,9 @@ const tipoServicioService = (() => {
 
   
 
-  const removeTipoServicio = async (id) => {
+  const removeServicio = async (id) => {
     try {
-      const response = await instance.delete(`/api/TipoServicio/${id}`);
+      const response = await instance.delete(`/api/Servicio/${id}`);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -79,12 +80,12 @@ const tipoServicioService = (() => {
   };
 
   return {
-    addTipoServicio,
-    getAllTipoServicio,
+    addServicio,
+    getAllServicio,
     getById,
-    editTipoServicio,
-    removeTipoServicio
+    editServicio,
+    removeServicio
   };
 })();
 
-export default tipoServicioService;
+export default servicioService;

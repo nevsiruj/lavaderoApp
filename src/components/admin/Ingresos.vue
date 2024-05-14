@@ -55,10 +55,10 @@
       </div>
     </div>
 
-    <div class="w-fit bg-white rounded-lg p-4 shadow-md mx-2 self-center mt-2">
+    <div class="w-fit tebg-whi rounded-lg p-4 shadow-md mx-2 self-center mt-2">
       <table class="divide-y divide-gray-200">
         <!-- Table headers -->
-        <thead class="bg-gray-50">
+        <thead class="bg-emerald-300 ">
           <tr>
             <th
               class="px-2 py-1 text-xs text-gray-500 uppercase tracking-wider"

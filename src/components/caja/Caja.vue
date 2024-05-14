@@ -1,23 +1,23 @@
 <template>
-  <div class="viewport mt-10">
+  <div class="viewport h-screen flex justify-center items-center">
     <div class="card self-center mx-3 w-fit shadow-md overflow-hidden">
       <div class="flex flex-col items-center my-3">
         <h3 class="text-2xl font-bold">Bienvenido</h3>
       </div>
       <div v-if="cajaAbierta.isOpen">
         <div class="pb-4 w-1/2 mx-auto md:w-full md:flex justify-center my-3 md:gap-5">
-          <router-link class="rounded-full mt-2 block p-2 text-sm shadow-md hover:bg-blue-500 bg-blue-600 text-white"
+          <router-link class="rounded-full mt-2 block p-2 text-sm shadow-md hover:bg-green-500 bg-emerald-300  text-white"
             to="/ListLavadosCaja">
-            <i class="fas fa-list-ul mr-1"></i>Facturacion diaria</router-link>
+            <i class="fas fa-list-ul mr-1"></i>Ventas diaria</router-link>
           <br />
 
           <router-link
-            class="rounded-full w-baseline mt-2 block p-2 text-sm shadow-md hover:bg-blue-500 bg-blue-600 text-white"
+            class="rounded-full w-baseline mt-2 block p-2 text-sm shadow-md hover:bg-green-500 bg-emerald-300 text-white"
             to="/listingreso">
             <i class="fas fa-list-ul mr-1"></i>Ingresos diario
           </router-link>
           <br />
-          <router-link class="rounded-full mt-2 block p-2 text-sm shadow-md hover:bg-blue-500 bg-blue-600 text-white"
+          <router-link class="rounded-full mt-2 block p-2 text-sm shadow-md hover:bg-green-500 bg-emerald-300 text-white"
             to="/listegreso">
             <i class="fas fa-list-ul mr-1"></i>Egresos diario
           </router-link>
@@ -70,7 +70,7 @@
         <router-link
           class="py-3 px-2 btn-sm text-green-600 hover:text-green-400 hover:text-green-400 hover:shadow-lg flex-grow"
           to="/formlavado">
-          <i class="fas fa-plus-circle mr-1"></i> Agregar factura
+          <i class="fas fa-plus-circle mr-1"></i> Agregar venta
         </router-link>
         <router-link class="py-3 px-2 btn-sm text-green-600 hover:text-green-400 hover:shadow-lg flex-grow"
           to="/formingreso">
@@ -115,4 +115,6 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+
+</style>

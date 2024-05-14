@@ -10,9 +10,11 @@
           >
             <i class="fas fa-plus-circle mr-1"></i> Agregar tipo de servicio
           </router-link>
-          <button class="btn btn-sm btn-primary my-2">
-            <i class="fas fa-sync-alt"></i> Actualizar
-          </button>
+          <router-link 
+             :to="{ path: '/tipoServicios' }"
+              class="btn btn-sm btn-primary my-2">
+            <i class="fas fa-sync-alt my-1"></i> Actualizar
+          </router-link>
         </div>
         <div
           v-if="showMessage"
@@ -22,10 +24,10 @@
         </div>
       </div>
       <div
-        class="bg-white rounded-lg overflow-hidden shadow-md mx-auto mt-1 w-min"
+        class="bg-emerald-300 rounded-lg overflow-hidden shadow-md mx-auto mt-1 w-min"
       >
         <table class="divide-y divide-gray-200">
-          <thead class="bg-gray-50">
+          <thead class="bg-emerald-300">
             <tr>
               <th
                 class="px-3 py-2 text-xs text-gray-500 uppercase tracking-wider whitespace-nowrap"
@@ -35,21 +37,21 @@
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200 text-left">
-            <tr v-for="categoria in categorias">
+            <tr v-for="tipoServicio in tipoServicios">
               <td class="px-3 py-1 whitespace-nowrap">
-                {{ categoria.nombre }}
+                {{ tipoServicio.nombre }}
               </td>
-              <td class="px-3 py-1 whitespace-nowrap">
-                <div class="flex space-x-2">
+              <td class="px-3 py-1 whitespace-nowrap ">
+                <div class="flex space-x-2 ">
                   <button
                     class="text-blue-600 hover:text-blue-800 focus:outline-none"
-                    @click="editLavado(servicio)"
+                    @click="editarTipoServicio(tipoServicio)"
                   >
                     <i class="fas fa-edit"></i>
                   </button>
                   <button
                     class="text-red-600 hover:text-red-800 focus:outline-none"
-                    @click="openModal(servicio.id)"
+                    @click="deleteTipoServicio(tipoServicio.id)"
                   >
                     <i class="fas fa-trash-alt"></i>
                   </button>
@@ -64,29 +66,77 @@
 </template>
 <script>
 import { ref, onMounted } from "vue";
-import tipoServicioService from '../../composables/api/tipoServicioService'
+import tipoServicioService  from "../../composables/api/tipoServicioService.js";
+import { useRouter, useRoute } from "vue-router";
 
 export default {
-  name: "tipoCategoria",
+  name: "tipoServicios",
   setup() {
     const tipoServicios = ref([]);
     const showMessage = ref(false);
-    // const modalComponent = ref(null);
     const modal = ref();
+    const router = useRouter();   
 
-    const obtenerTipoServicios = async () => {
-        tipoServicios.value = await tipoServicioService.getAll()
+
+
+
+    const editarTipoServicio = (servicio) => {
+      router.push({
+        path: 'formTipoServicio',
+        query: { isAdmin: false, id: servicio.id },
+      });
+      
     };
+    
 
-    onMounted(() => {
-      obtenerTipoServicios();
-    });
+    const deleteTipoServicio = async (tipoServicioId) => {
+    try {
+      
+      await tipoServicioService.removeTipoServicio(tipoServicioId);       
+      tipoServicios.value = await tipoServicioService.getAllTipoServicio();   
+    } catch (error) {
+      console.error(error);
+    }
+    fetchServicios()
+};
+
+const fetchServicios = async () => {
+  try {
+    tipoServicios.value = await tipoServicioService.getAllTipoServicio();
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+
+    onMounted(async() => {
+      fetchServicios();
+      
+    });    
+    
+
+    const openModal = async (id) => {
+      const servicio = tipoServicios.value.find(s => s.id === id);
+      modal.value = modalComponent({
+        servicio,
+        onClose: () => {
+          modal.value = null;
+        },
+      });
+    };
 
     return {
       showMessage,
       modal,
-      obtenerTipoServicios,
+      editarTipoServicio,
+      openModal,
+      tipoServicios,
+      // agregarTipoServicio,
+      fetchServicios,
+      deleteTipoServicio,
+      router
     };
   },
 };
+
 </script>

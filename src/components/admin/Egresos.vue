@@ -42,7 +42,7 @@
         <i class="fas fa-check-circle mr-1"></i> Actualizados
       </div>
       <!-- Visor de cantidad de egresos mostrados -->
-      <div class="mt-4 flex justify-evenly items-center">
+      <div class="mt-4 flex justify-evenly items-center ">
         <div class="flex items-center text-gray-600">
           <i class="fas fa-clipboard-list mr-1"></i>
           <span>Egresos: {{ filteredEgresos.length }}</span>
@@ -65,7 +65,7 @@
 
     <div>
       <select
-        class="rounded-md mt-2"
+        class="rounded-md mt-2 "
         v-model="results"
         name="results"
         id="results"
@@ -80,7 +80,7 @@
       >
         <table class="divide-y divide-gray-200 mt-4">
           <!-- Table headers -->
-          <thead class="bg-gray-50">
+          <thead class="bg-emerald-300">
             <tr>
               <th
                 class="px-2 py-1 text-xs text-gray-500 uppercase tracking-wider"
@@ -146,7 +146,7 @@
     <nav aria-label="Page navigation example">
       <ul class="flex justify-center">
         <li
-          class="page-item bg-blue-500 text-white font-semibold px-6 py-3 sm:w-auto rounded-md m-2"
+          class="page-item bg-emerald-300 text-white font-semibold px-6 py-3 sm:w-auto rounded-md m-2"
           v-show="pag != 1"
           @click.prevent="pag -= 1"
         >
@@ -155,12 +155,12 @@
           </a>
         </li>
         <li
-          class="page-item bg-blue-500 text-white font-semibold px-6 py-3 sm:w-auto rounded-md m-2"
+          class="page-item bg-emerald-300 text-white font-semibold px-6 py-3 sm:w-auto rounded-md m-2"
           v-show="(pag * results) / egresos.length < 1"
           @click.prevent="pag += 1"
         >
           <a href="#" aria-label="Next">
-            <span class="hover:text-white" aria-hidden="true">Siguiente</span>
+            <span class="hover:text-white " aria-hidden="true">Siguiente</span>
           </a>
         </li>
       </ul>

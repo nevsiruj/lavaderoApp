@@ -1,6 +1,6 @@
 import { API_URL } from '../../config.js';
 
-const tipoServicioService = (() => {
+const agendaService = (() => {
   const axios = require('axios');
 
   const instance = axios.create({
@@ -21,10 +21,9 @@ const tipoServicioService = (() => {
     }
   );
 
-  
-  const addTipoServicio = async (tipoServicio) => {
+  const addAgenda = async (agenda) => {
     try {
-      const response = await instance.post('/api/TipoServicio', tipoServicio);
+      const response = await instance.post('/api/Agenda', agenda);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -32,10 +31,9 @@ const tipoServicioService = (() => {
     }
   };
    
-
-  const getAllTipoServicio = async () => {
+  const getAllAgenda = async () => {
     try {
-      const response = await instance.get('/api/TipoServicio');
+      const response = await instance.get('/api/Agenda');
       return response.data;
     } catch (error) {
       console.log(error);
@@ -45,7 +43,7 @@ const tipoServicioService = (() => {
 
   const getById = async (id) => {
     try {
-      const response = await instance.get(`/api/TipoServicio/${id}`);
+      const response = await instance.get(`/api/Agenda/${id}`);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -53,12 +51,9 @@ const tipoServicioService = (() => {
     }
   };
 
-  
-  
-  const editTipoServicio = async (id, tipoServicio) => {
-    console.log("lin93", id)
+  const editAgenda = async (id, agenda) => {
     try {
-      const response = await instance.put(`/api/TipoServicio/${id}`, tipoServicio);
+      const response = await instance.put(`/api/Agenda/${id}`, agenda);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -66,11 +61,9 @@ const tipoServicioService = (() => {
     }
   };
 
-  
-
-  const removeTipoServicio = async (id) => {
+  const removeAgenda = async (id) => {
     try {
-      const response = await instance.delete(`/api/TipoServicio/${id}`);
+      const response = await instance.delete(`/api/Agenda/${id}`);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -79,12 +72,12 @@ const tipoServicioService = (() => {
   };
 
   return {
-    addTipoServicio,
-    getAllTipoServicio,
+    addAgenda,
+    getAllAgenda,
     getById,
-    editTipoServicio,
-    removeTipoServicio
+    editAgenda,
+    removeAgenda
   };
 })();
 
-export default tipoServicioService;
+export default agendaService;

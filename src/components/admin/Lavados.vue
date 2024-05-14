@@ -51,7 +51,7 @@
       <div class="bg-white rounded-lg p-4 shadow-md mx-auto mt-1 w-min">
         <table class="divide-y divide-gray-200">
           <!-- Table headers -->
-          <thead class="bg-gray-50">
+          <thead class="bg-emerald-300">
             <tr>
               <th class="px-2 py-1 text-xs text-gray-500 uppercase tracking-wider">
                 Fecha
@@ -91,13 +91,13 @@
     </div>
     <nav aria-label="Page navigation example">
       <ul class="flex justify-center">
-        <li class="page-item bg-blue-500 text-white font-semibold px-6 py-3 sm:w-auto rounded-md m-2" v-show="pag != 1"
+        <li class="page-item bg-emerald-300 text-white font-semibold px-6 py-3 sm:w-auto rounded-md m-2" v-show="pag != 1"
           @click.prevent="pag -= 1">
           <a href="#" aria-label="Previous">
             <span class="hover:text-white" aria-hidden="true">Anterior</span>
           </a>
         </li>
-        <li class="page-item bg-blue-500 text-white font-semibold px-6 py-3 sm:w-auto rounded-md m-2"
+        <li class="page-item bg-emerald-300 text-white font-semibold px-6 py-3 sm:w-auto rounded-md m-2"
           v-show="(pag * results) / lavados.length < 1" @click.prevent="pag += 1">
           <a href="#" aria-label="Next">
             <span class="hover:text-white" aria-hidden="true">Siguiente</span>

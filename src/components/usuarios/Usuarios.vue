@@ -4,8 +4,8 @@
             <div class="flex justify-center">
                 <div class="flex items-center space-x-2">
                     <!--, query: { isAdmin: true } }"> -->
-                    <router-link :to="{ path: '/formServicios' }" class="btn btn-sm btn-success my-2 mr-1">
-                        <i class="fas fa-plus-circle mr-1"></i> Agregar Servicio
+                    <router-link :to="{ path: '/formusuarios' }" class="btn btn-sm btn-success my-2 mr-1">
+                        <i class="fas fa-plus-circle mr-1"></i> Agregar Usuarios
                     </router-link>
                     <button class="btn btn-sm btn-primary my-2">
                         <i class="fas fa-sync-alt"></i> Actualizar
@@ -23,32 +23,34 @@
                                 Nombre
                             </th>
                             <th class="px-2 py-1 text-xs text-gray-500 uppercase tracking-wider">
-                                Descripción
+                                Apellido
                             </th>
                             <th class="px-2 py-1 text-xs text-gray-500 uppercase tracking-wider">
-                                Precio
+                                Dni
                             </th>
                             <th class="px-2 py-1 text-xs text-gray-500 uppercase tracking-wider">
-                                Tipo Servicio
+                                Username
+                            </th>
+                            <th class="px-2 py-1 text-xs text-gray-500 uppercase tracking-wider">
+                                Rol
                             </th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200 text-left">
-                        <tr v-for="servicio in servicios">
-                            <td class="px-3 py-1 whitespace-nowrap">{{ servicio.nombre }}</td>
-                            <td class="px-3 py-1 whitespace-nowrap">{{ servicio.descripcion }}</td>
-                            <td class="px-3 py-1 whitespace-nowrap">{{ servicio.precio }}</td>
-                            <!-- <td class="px-3 py-1 whitespace-nowrap">{{ servicio.tipoServicio }}</td> -->
-                            <td class="px-3 py-1 whitespace-nowrap">{{ servicio.tipoServicio }}</td>
-
+                        <tr v-for="usuario in usuarios">
+                            <td class="px-3 py-1 whitespace-nowrap">{{ usuario.nombre }}</td>
+                            <td class="px-3 py-1 whitespace-nowrap">{{ usuario.apellido }}</td>
+                            <td class="px-3 py-1 whitespace-nowrap">{{ usuario.dni }}</td>
+                            <td class="px-3 py-1 whitespace-nowrap">{{ usuario.username }}</td>
+                            <td class="px-3 py-1 whitespace-nowrap">{{ usuario.rol }}</td>
                             <td class="px-3 py-1 whitespace-nowrap">
-                                <div class="flex space-x-2">
+                                <div class="flex space-x-2 ">
                                     <button class="text-blue-600 hover:text-blue-800 focus:outline-none"
-                                        @click="editarServicio(servicio)">
+                                        @click="editarUsuario(usuario)">
                                         <i class="fas fa-edit"></i>
                                     </button>
                                     <button class="text-red-600 hover:text-red-800 focus:outline-none"
-                                        @click="deleteServicio(servicio.id)">
+                                        @click="deleteUsuario(usuario.id)">
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
                                 </div>
@@ -63,17 +65,15 @@
 <script>
 
 import { ref, onMounted } from "vue";
-import servicioService  from "../../composables/api/servicioService.js";
+import usuariosService from "../../composables/api/usuariosService";
 import { useRouter, useRoute } from "vue-router";
 import ModalConfirmar from "../modalConfirmar/ModalConfirmar.vue";
-import tipoServicioService from "../../composables/api/tipoServicioService";
 
 
 export default {
-    name: 'servicios',
+    name: 'usuarios',
     setup() {
-        const servicios = ref([]);
-        const tiposServicio = ref([]);
+        const usuarios = ref([]);
         const showMessage = ref(false);        
         // const modalComponent = ref(null);
         const modal = ref()
@@ -81,50 +81,41 @@ export default {
 
         
 
-        const editarServicio = (servicio) => {
+        const editarUsuario = (usuario) => {
             router.push({
-                path: 'formServicios',
-                query: { isAdmin: false, id: servicio.id },
+                path: 'formUsuarios',
+                query: { isAdmin: false, id: usuario.id },
             });
         };
 
 
-        const deleteServicio = async (ServicioId) => {
+        const deleteUsuario = async (UsuarioId) => {
             try {
 
-                await servicioService.removeServicio(ServicioId);
-                servicios.value = await servicioService.getAllServicio();
+                await usuariosService.removeUsuario(UsuarioId);
+                usuarios.value = await usuariosService.getAllUsuario();
             } catch (error) {
                 console.error(error);
             }
-            fetchServicios(),
-            fetchTipoServicios()
+            fetchUsuarios()
         };
 
-        const fetchServicios = async () => {
+        const fetchUsuarios = async () => {
             try {
-                servicios.value = await servicioService.getAllServicio();
-            } catch (error) {
-                console.error(error);
-            }
-        };
-        const fetchTipoServicios = async () => {
-            try {
-                tiposServicio.value = await tipoServicioService.getAllTipoServicio();
+                usuarios.value = await usuariosService.getAllUsuarios();
             } catch (error) {
                 console.error(error);
             }
         };
 
         onMounted(() => {
-            fetchServicios();
-            fetchTipoServicios();
+            fetchUsuarios();
         });
 
         const openModal = async (id) => {
-            const servicio = servicios.value.find(s => s.id === id);
+            const usuario = usuarios.value.find(s => s.id === id);
             modal.value = modalComponent({
-                servicio,
+                usuario,
                 onClose: () => {
                     modal.value = null;
                 },
@@ -132,14 +123,13 @@ export default {
         };
 
         return {
-            servicios,
+            usuarios,
             showMessage,
-            fetchServicios,
+            fetchUsuarios,
             modal,
             openModal,
-            editarServicio,
-            deleteServicio,
-            fetchTipoServicios
+            editarUsuario,
+            deleteUsuario
         };
     },
 };

@@ -1,30 +1,30 @@
 <template>
   <div class="viewport w-fit mx-auto">
-    <h1 class="text-3xl font-semibold mb-6">Dashboard de Lavados</h1>
+    <h1 class="text-3xl font-semibold mb-6 " >Dashboard de Ventas</h1>
     <form>
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
         <div>
           <label class="block mb-2">Fecha inicio:</label>
-          <input type="date" class="form-control" v-model="fechaInicio" />
+          <input type="date" class="form-control border-emerald-300" v-model="fechaInicio" />
         </div>
         <div>
           <label class="block mb-2">Fecha fin:</label>
-          <input type="date" class="form-control" v-model="fechaFin" />
+          <input type="date" class="form-control border-emerald-300" v-model="fechaFin" />
         </div>
         <div class="flex items-end">
           <button
             type="button"
-            class="mt-3 bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded"
+            class="mt-3 bg-emerald-300 hover:bg-emerald-500 text-white font-bold py-2 px-4 rounded"
             @click="filtrar"
           >
             Filtrar
           </button>
         </div>
       </div>
-      <ul class="nav nav-tabs mb-2 border-none" id="myTab" role="tablist">
+      <ul class="nav nav-tabs mb-2 border-none " id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
           <button
-            class="nav-link rounded-md active"
+            class="nav-link rounded-md active text-black hover:bg-emerald-400"
             id="home-tab"
             data-bs-toggle="tab"
             data-bs-target="#home"
@@ -38,7 +38,7 @@
         </li>
         <li class="nav-item" role="presentation">
           <button
-            class="nav-link rounded-md"
+            class="nav-link rounded-md text-black hover:bg-emerald-400"
             id="profile-tab"
             data-bs-toggle="tab"
             data-bs-target="#profile"
@@ -68,7 +68,7 @@
             id="boxSelect"
             @click="mostrarDetalle('totalLavados')"
           >
-            <h2 class="text-xl font-semibold">Cantidad Lavados</h2>
+            <h2 class="text-xl font-semibold">Cantidad Ventas</h2>
             <p class="text-3xl">{{ totalLavados }}</p>
           </div>
           <div

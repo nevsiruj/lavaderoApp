@@ -1,11 +1,12 @@
 <template>
     <div class="viewport">
+        <Modal message="agenda" @confirm="deleteLavado" ref="modalComponent" />
         <div class="m-auto rounded-lg py-2 px-2">
             <div class="flex justify-center">
                 <div class="flex items-center space-x-2">
                     <!--, query: { isAdmin: true } }"> -->
-                    <router-link :to="{ path: '/formServicios' }" class="btn btn-sm btn-success my-2 mr-1">
-                        <i class="fas fa-plus-circle mr-1"></i> Agregar Servicio
+                    <router-link :to="{ path: '/formagenda' }" class="btn btn-sm btn-success my-2 mr-1">
+                        <i class="fas fa-plus-circle mr-1"></i> Agregar Agenda
                     </router-link>
                     <button class="btn btn-sm btn-primary my-2">
                         <i class="fas fa-sync-alt"></i> Actualizar
@@ -20,35 +21,30 @@
                     <thead class="bg-emerald-300">
                         <tr>
                             <th class="px-3 py-2 text-xs text-gray-500 uppercase tracking-wider whitespace-nowrap">
-                                Nombre
+                                Cliente
                             </th>
                             <th class="px-2 py-1 text-xs text-gray-500 uppercase tracking-wider">
-                                Descripción
+                                Whatsapp
                             </th>
                             <th class="px-2 py-1 text-xs text-gray-500 uppercase tracking-wider">
-                                Precio
+                                Fecha
                             </th>
-                            <th class="px-2 py-1 text-xs text-gray-500 uppercase tracking-wider">
-                                Tipo Servicio
-                            </th>
+                            
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200 text-left">
-                        <tr v-for="servicio in servicios">
-                            <td class="px-3 py-1 whitespace-nowrap">{{ servicio.nombre }}</td>
-                            <td class="px-3 py-1 whitespace-nowrap">{{ servicio.descripcion }}</td>
-                            <td class="px-3 py-1 whitespace-nowrap">{{ servicio.precio }}</td>
-                            <!-- <td class="px-3 py-1 whitespace-nowrap">{{ servicio.tipoServicio }}</td> -->
-                            <td class="px-3 py-1 whitespace-nowrap">{{ servicio.tipoServicio }}</td>
-
+                        <tr v-for="agenda in agendas">
+                            <td class="px-3 py-1 whitespace-nowrap">{{ agenda.cliente }}</td>
+                            <td class="px-3 py-1 whitespace-nowrap">{{ agenda.whatsapp }}</td>
+                            <td class="px-3 py-1 whitespace-nowrap">{{ agenda.fecha }}</td>                            
                             <td class="px-3 py-1 whitespace-nowrap">
                                 <div class="flex space-x-2">
                                     <button class="text-blue-600 hover:text-blue-800 focus:outline-none"
-                                        @click="editarServicio(servicio)">
+                                        @click="editarAgenda(agenda)">
                                         <i class="fas fa-edit"></i>
                                     </button>
                                     <button class="text-red-600 hover:text-red-800 focus:outline-none"
-                                        @click="deleteServicio(servicio.id)">
+                                        @click="deleteAgenda(agenda.id)">
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
                                 </div>
@@ -63,17 +59,15 @@
 <script>
 
 import { ref, onMounted } from "vue";
-import servicioService  from "../../composables/api/servicioService.js";
+import agendaService from "../../composables/api/agendaService";
 import { useRouter, useRoute } from "vue-router";
 import ModalConfirmar from "../modalConfirmar/ModalConfirmar.vue";
-import tipoServicioService from "../../composables/api/tipoServicioService";
 
 
 export default {
-    name: 'servicios',
+    name: 'agendas',
     setup() {
-        const servicios = ref([]);
-        const tiposServicio = ref([]);
+        const agendas = ref([]);
         const showMessage = ref(false);        
         // const modalComponent = ref(null);
         const modal = ref()
@@ -81,50 +75,41 @@ export default {
 
         
 
-        const editarServicio = (servicio) => {
+        const editarAgenda = (agenda) => {
             router.push({
-                path: 'formServicios',
-                query: { isAdmin: false, id: servicio.id },
+                path: 'formAgenda',
+                query: { isAdmin: false, id: agenda.id },
             });
         };
 
 
-        const deleteServicio = async (ServicioId) => {
+        const deleteAgenda = async (AgendaId) => {
             try {
 
-                await servicioService.removeServicio(ServicioId);
-                servicios.value = await servicioService.getAllServicio();
+                await agendaService.removeAgenda(AgendaId);
+                agendas.value = await agendaService.getAllAgenda();
             } catch (error) {
                 console.error(error);
             }
-            fetchServicios(),
-            fetchTipoServicios()
+            fetchAgendas()
         };
 
-        const fetchServicios = async () => {
+        const fetchAgendas = async () => {
             try {
-                servicios.value = await servicioService.getAllServicio();
-            } catch (error) {
-                console.error(error);
-            }
-        };
-        const fetchTipoServicios = async () => {
-            try {
-                tiposServicio.value = await tipoServicioService.getAllTipoServicio();
+                agendas.value = await agendaService.getAllAgenda();
             } catch (error) {
                 console.error(error);
             }
         };
 
         onMounted(() => {
-            fetchServicios();
-            fetchTipoServicios();
+            fetchAgendas();
         });
 
         const openModal = async (id) => {
-            const servicio = servicios.value.find(s => s.id === id);
+            const agenda = agendas.value.find(s => s.id === id);
             modal.value = modalComponent({
-                servicio,
+                agenda,
                 onClose: () => {
                     modal.value = null;
                 },
@@ -132,14 +117,13 @@ export default {
         };
 
         return {
-            servicios,
+            agendas,
             showMessage,
-            fetchServicios,
+            fetchAgendas,
             modal,
             openModal,
-            editarServicio,
-            deleteServicio,
-            fetchTipoServicios
+            editarAgenda,
+            deleteAgenda
         };
     },
 };

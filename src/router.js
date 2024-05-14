@@ -19,6 +19,11 @@ import Servicios from './components/servicios/Servicios.vue'
 import FormServicios from './components/servicios/FormServicios.vue'
 import TipoServicios from './components/TipoServicios/TipoServicio.vue'
 import FormTipoServicio from './components/TipoServicios/FormTipoServicio.vue'
+import FormAgenda from './components/agenda/FormAgenda.vue'
+import Agenda from './components/agenda/Agenda.vue'
+import FormUsuarios from './components/usuarios/FormUsuarios.vue'
+import Usuarios from './components/usuarios/Usuarios.vue'
+
 
 const routes = [
   {
@@ -124,6 +129,26 @@ const routes = [
     path: '/cerrarcaja',
     name: 'CerrarCaja',
     component: CerrarCaja,
+  },
+  {
+    path: '/formAgenda',
+    name: 'FormAgenda',
+    component: FormAgenda,
+  },
+  {
+    path: '/agenda',
+    name: 'Agenda',
+    component: Agenda,
+  },
+  {
+    path: '/formUsuarios',
+    name: 'FormUsuarios',
+    component: FormUsuarios,
+  },
+  {
+    path: '/usuarios',
+    name: 'Usuarios',
+    component: Usuarios,
   },
 
   // { path: '/editar/:id',  component: FrutaForm, props: true },
