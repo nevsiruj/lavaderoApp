@@ -3,91 +3,102 @@
     <Toast message="Lavado Eliminado" ref="toastComponent" />
     <Modal message="lavado" @confirm="deleteLavado" ref="modalComponent" />
 
-    <div class="m-auto rounded-lg py-2 px-2">
-      <div class="bg-white rounded-lg p-4 shadow-md mx-auto mb-0">
-        <div class="flex items-center mb-2">
-          <i class="fas fa-filter text-gray-600 mr-2"></i>
-          <label class="text-gray-600">Filtrar por fecha:</label>
-        </div>
-        <div class="flex flex-col md:flex-row md:gap-5 md:align-center">
-          <div class="mb-2">
-            <input type="date" class="border-gray-300 rounded-md p-1 flex-grow" v-model="startDate"
-              @change="filterLavados" />
-            <span class="mx-2 text-gray-600">-</span>
-            <input type="date" class="border-gray-300 rounded-md p-1 flex-grow" v-model="endDate"
-              @change="filterLavados" />
-          </div>
-          <div>
-            <router-link class="btn btn-sm btn-success mr-1" :to="{ path: '/formlavado', query: { isAdmin: true } }">
-              <i class="fas fa-plus-circle mr-1"></i> Agregar Lavado
-            </router-link>
-            <button class="btn btn-sm btn-primary" @click="fetchLavados">
-              <i class="fas fa-sync-alt"></i> Actualizar
-            </button>
-          </div>
-        </div>
-        <div v-if="showMessage" class="bg-green-100 text-green-800 px-4 py-2 rounded-md mt-2">
-          <i class="fas fa-check-circle mr-1"></i> Actualizados
-        </div>
-        <!-- Visor de cantidad de lavados mostrados -->
-        <div class="mt-4 flex justify-evenly items-center">
-          <div class="flex items-center text-gray-600">
-            <i class="fas fa-clipboard-list mr-1"></i>
-            <span>Lavados: {{ filteredLavados.length }}</span>
-          </div>
-          <div class="flex items-center text-gray-600">
-            <i class="fas fa-dollar-sign mr-1"></i>
-            <span>Facturado: ${{ calculateTotalImporte() }}</span>
-          </div>
-        </div>
+    <div class="m-auto rounded-lg py-4 px-4">
+  <div class="bg-white rounded-lg p-6 shadow-md mx-auto mb-0">
+    <div class="flex items-center mb-4">
+      <i class="fas fa-filter text-gray-600 mr-4"></i>
+      <label class="text-gray-600 text-base">Filtrar por fecha:</label>
+    </div>
+    <div class="flex flex-col md:flex-row md:gap-6 md:align-center mb-4">
+      <div class="mb-4">
+        <input type="date" class="border-gray-300 rounded-md p-2 flex-grow text-base" v-model="startDate"
+          @change="filterLavados" />
+        <span class="mx-4 text-gray-600 text-base">-</span>
+        <input type="date" class="border-gray-300 rounded-md p-2 flex-grow text-base" v-model="endDate"
+          @change="filterLavados" />
       </div>
+      <div>
+        <router-link class="btn btn-base btn-success mr-4" :to="{ path: '/formlavado', query: { isAdmin: true } }">
+          <i class="fas fa-plus-circle mr-2"></i> Agregar Lavado
+        </router-link>
+        <button class="btn btn-base btn-primary" @click="fetchLavados">
+          <i class="fas fa-sync-alt mr-2"></i> Actualizar
+        </button>
+      </div>
+    </div>
+    <div v-if="showMessage" class="bg-green-100 text-green-800 px-4 py-2 rounded-md mt-4 text-base">
+      <i class="fas fa-check-circle mr-2"></i> Actualizados
+    </div>
+    <!-- Visor de cantidad de lavados mostrados -->
+    <div class="mt-6 flex justify-evenly items-center">
+      <div class="flex items-center text-gray-600 text-base">
+        <i class="fas fa-clipboard-list mr-2"></i>
+        <span>Lavados: {{ filteredLavados.length }}</span>
+      </div>
+      <div class="flex items-center text-gray-600 text-base">
+        <i class="fas fa-dollar-sign mr-2"></i>
+        <span>Facturado: ${{ calculateTotalImporte() }}</span>
+      </div>
+    </div>
+  </div>
+</div>
 
-      <select class="rounded-md mt-2" v-model="results" name="results" id="results">
+
+<div>
+      <select
+        class="rounded-md mt-2 "
+        v-model="results"
+        name="results"
+        id="results"
+      >
         <option value="20">20 Resultados</option>
         <option value="30">30 Resultados</option>
         <option value="50">50 Resultados</option>
       </select>
 
-      <div class="bg-white rounded-lg p-4 shadow-md mx-auto mt-1 w-min">
-        <table class="divide-y divide-gray-200">
-          <!-- Table headers -->
-          <thead class="bg-emerald-300">
-            <tr>
-              <th class="px-2 py-1 text-xs text-gray-500 uppercase tracking-wider">
-                Fecha
-              </th>
-              <th class="px-2 py-1 text-xs text-gray-500 uppercase tracking-wider">
-                Descripción
-              </th>
-              <th class="px-2 py-1 text-xs text-gray-500 uppercase tracking-wider">
-                Importe
-              </th>
-              <th class="px-2 py-1 text-xs text-gray-500 uppercase tracking-wider"></th>
-            </tr>
-          </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
-            <tr v-for="(lavado, index) in filteredLavados" v-show="(pag - 1) * results <= index && pag * results > index">
-              <td class="px-2 py-1 whitespace-nowrap">
-                {{ formatDate(lavado.fecha) }}
-              </td>
-              <td class="px-2 py-1 whitespace-nowrap">
-                {{ lavado.descripcion }}
-              </td>
-              <td class="px-2 py-1 whitespace-nowrap">${{ lavado.importe }}</td>
-              <td class="px-2 py-1 whitespace-nowrap">
-                <div class="flex space-x-2">
-                  <button class="text-blue-600 hover:text-blue-800 focus:outline-none" @click="editLavado(lavado)">
-                    <i class="fas fa-edit"></i>
-                  </button>
-                  <button class="text-red-600 hover:text-red-800 focus:outline-none" @click="openModal(lavado.id)">
-                    <i class="fas fa-trash-alt"></i>
-                  </button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
       </div>
+
+      <div class="bg-white rounded-lg p-6 shadow-lg mx-auto mt-4 w-fit">
+  <table class="divide-y divide-gray-300">
+    <!-- Table headers -->
+    <thead class="bg-emerald-300">
+      <tr>
+        <th class="px-6 py-3 text-sm text-gray-700 uppercase tracking-wider">
+          Fecha
+        </th>
+        <th class="px-6 py-3 text-sm text-gray-700 uppercase tracking-wider">
+          Descripción
+        </th>
+        <th class="px-6 py-3 text-sm text-gray-700 uppercase tracking-wider">
+          Importe
+        </th>
+        <th class="px-6 py-3 text-sm text-gray-700 uppercase tracking-wider"></th>
+      </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-gray-200">
+      <tr v-for="(lavado, index) in filteredLavados" v-show="(pag - 1) * results <= index && pag * results > index" :key="lavado.id">
+        <td class="px-6 py-3 whitespace-nowrap text-base">
+          {{ formatDate(lavado.fecha) }}
+        </td>
+        <td class="px-6 py-3 whitespace-nowrap text-base">
+          {{ lavado.descripcion }}
+        </td>
+        <td class="px-6 py-3 whitespace-nowrap text-base">${{ lavado.importe }}</td>
+        <td class="px-6 py-3 whitespace-nowrap text-base">
+          <div class="flex space-x-4">
+            <button class="text-blue-600 hover:text-blue-800 focus:outline-none text-xl" @click="editLavado(lavado)">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="text-red-600 hover:text-red-800 focus:outline-none text-xl" @click="openModal(lavado.id)">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
     </div>
     <nav aria-label="Page navigation example">
       <ul class="flex justify-center">
@@ -105,7 +116,7 @@
         </li>
       </ul>
     </nav>
-  </div>
+ 
 </template>
 
 <script>

@@ -1,114 +1,117 @@
 <template>
-  <div class="viewport">
+  <div class="viewport px-3 mt-10">
+    <Toast message="Egreso Eliminado" ref="toastComponent" />
     <Modal message="ingreso" @confirm="deleteIngreso" ref="modalComponent" />
-    <div class="bg-white self-center w-fit rounded-lg p-4 shadow-md mx-3 mt-2">
+    <div class="bg-white self-center w-fit rounded-lg p-6 shadow-md mx-3 mt-6">
+  <div>
+    <div class="flex items-center mb-4">
+      <i class="fas fa-filter text-gray-600 mr-4"></i>
+      <label class="text-gray-600 text-base">Filtrar por fecha:</label>
+    </div>
+    <div class="flex flex-col md:flex-row md:gap-5 md:align-center mb-4">
+      <div class="mb-2">
+        <input
+          type="date"
+          class="border-gray-300 rounded-md p-2 flex-grow text-base"
+          v-model="startDate"
+          @change="filterIngresos"
+        />
+        <span class="mx-3 text-gray-600 text-base">-</span>
+        <input
+          type="date"
+          class="border-gray-300 rounded-md p-2 flex-grow text-base"
+          v-model="endDate"
+          @change="filterIngresos"
+        />
+      </div>
       <div>
-        <div class="flex items-center mb-2">
-          <i class="fas fa-filter text-gray-600 mr-2"></i>
-          <label class="text-gray-600">Filtrar por fecha:</label>
-        </div>
-        <div class="flex flex-col md:flex-row md:gap-5 md:align-center">
-          <div class="mb-2">
-            <input
-              type="date"
-              class="border-gray-300 rounded-md p-1 flex-grow"
-              v-model="startDate"
-              @change="filterIngresos"
-            />
-            <span class="mx-2 text-gray-600">-</span>
-            <input
-              type="date"
-              class="border-gray-300 rounded-md p-1 flex-grow"
-              v-model="endDate"
-              @change="filterIngresos"
-            />
-          </div>
-          <div>
-            <router-link
-              class="btn btn-sm btn-success mr-1"
-              :to="{ path: '/formingreso', query: { isAdmin: true } }"
-            >
-              <i class="fas fa-plus-circle mr-1"></i> Agregar Ingreso
-            </router-link>
-            <button class="btn btn-sm btn-primary" @click="fetchIngresos">
-              <i class="fas fa-sync-alt"></i> Actualizar
+        <router-link
+          class="btn btn-base btn-success mr-4"
+          :to="{ path: '/formingreso', query: { isAdmin: true } }"
+        >
+          <i class="fas fa-plus-circle mr-2"></i> Agregar Ingreso
+        </router-link>
+        <button class="btn btn-base btn-primary" @click="fetchIngresos">
+          <i class="fas fa-sync-alt mr-2"></i> Actualizar
+        </button>
+      </div>
+    </div>
+    <div
+      v-if="showMessage"
+      class="bg-green-100 text-green-800 px-4 py-2 rounded-md mt-4 text-base"
+    >
+      <i class="fas fa-check-circle mr-2"></i> Actualizados
+    </div>
+  </div>
+  <!-- Visor de cantidad de ingresos mostrados -->
+  <div class="mt-6 flex justify-evenly items-center">
+    <div class="flex items-center text-gray-600 text-base">
+      <i class="fas fa-clipboard-list mr-2"></i>
+      <span>Ingresos: {{ filteredIngresos.length }}</span>
+    </div>
+    <div class="flex items-center text-gray-600 text-base">
+      <i class="fas fa-dollar-sign mr-2"></i>
+      <span>Facturado: ${{ calculateTotalImporte() }}</span>
+    </div>
+  </div>
+</div>
+
+    
+
+    <div>
+      <select
+        class="rounded-md mt-2 "
+        v-model="results"
+        name="results"
+        id="results"
+      >
+        <option value="20">20 Resultados</option>
+        <option value="30">30 Resultados</option>
+        <option value="50">50 Resultados</option>
+      </select>
+
+      </div>
+      <div class="w-fit bg-white rounded-lg p-6 shadow-lg mx-auto mt-4 overflow-hidden">
+  <table class="divide-y divide-gray-300 mt-6">
+    <!-- Table headers -->
+    <thead class="bg-emerald-300">
+      <tr>
+        <th class="px-6 py-3 text-sm text-gray-700 uppercase tracking-wider">
+          Fecha
+        </th>
+        <th class="px-6 py-3 text-sm text-gray-700 uppercase tracking-wider">
+          Descripción
+        </th>
+        <th class="px-6 py-3 text-sm text-gray-700 uppercase tracking-wider">
+          Importe
+        </th>
+        <th class="px-6 py-3 text-sm text-gray-700 uppercase tracking-wider"></th>
+      </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-gray-200">
+      <tr v-for="ingreso in filteredIngresos" :key="ingreso.id">
+        <td class="px-6 py-3 whitespace-nowrap text-base">
+          {{ formatDate(ingreso.fechaRegistro) }}
+        </td>
+        <td class="px-6 py-3 whitespace-nowrap text-base">
+          {{ ingreso.descripcion }}
+        </td>
+        <td class="px-6 py-3 whitespace-nowrap text-base">${{ ingreso.importe }}</td>
+        <td class="px-6 py-3 whitespace-nowrap text-base">
+          <div class="flex space-x-4">
+            <button class="text-blue-600 hover:text-blue-800 focus:outline-none text-xl" @click="editIngreso(ingreso)">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="text-red-600 hover:text-red-800 focus:outline-none text-xl" @click="openModal(ingreso.id)">
+              <i class="fas fa-trash-alt"></i>
             </button>
           </div>
-        </div>
-        <div
-          v-if="showMessage"
-          class="bg-green-100 text-green-800 px-4 py-2 rounded-md mt-2"
-        >
-          <i class="fas fa-check-circle mr-1"></i> Actualizados
-        </div>
-      </div>
-      <!-- Visor de cantidad de ingresos mostrados -->
-      <div class="mt-4 flex justify-evenly items-center">
-        <div class="flex items-center text-gray-600">
-          <i class="fas fa-clipboard-list mr-1"></i>
-          <span>Ingresos: {{ filteredIngresos.length }}</span>
-        </div>
-        <div class="flex items-center text-gray-600">
-          <i class="fas fa-dollar-sign mr-1"></i>
-          <span>Facturado: ${{ calculateTotalImporte() }}</span>
-        </div>
-      </div>
-    </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
-    <div class="w-fit tebg-whi rounded-lg p-4 shadow-md mx-2 self-center mt-2">
-      <table class="divide-y divide-gray-200">
-        <!-- Table headers -->
-        <thead class="bg-emerald-300 ">
-          <tr>
-            <th
-              class="px-2 py-1 text-xs text-gray-500 uppercase tracking-wider"
-            >
-              Fecha
-            </th>
-            <th
-              class="px-2 py-1 text-xs text-gray-500 uppercase tracking-wider"
-            >
-              Descripción
-            </th>
-            <th
-              class="px-2 py-1 text-xs text-gray-500 uppercase tracking-wider"
-            >
-              Importe
-            </th>
-            <th
-              class="px-2 py-1 text-xs text-gray-500 uppercase tracking-wider"
-            ></th>
-          </tr>
-        </thead>
-        <tbody class="bg-white divide-y divide-gray-200">
-          <tr v-for="ingreso in filteredIngresos" :key="ingreso.id">
-            <td class="px-2 py-1 whitespace-nowrap">
-              {{ formatDate(ingreso.fechaRegistro) }}
-            </td>
-            <td class="px-2 py-1 whitespace-nowrap">
-              {{ ingreso.descripcion }}
-            </td>
-            <td class="px-2 py-1 whitespace-nowrap">${{ ingreso.importe }}</td>
-            <td class="px-2 py-1 whitespace-nowrap">
-              <div class="flex space-x-2">
-                <button
-                  class="text-blue-600 hover:text-blue-800 focus:outline-none"
-                  @click="editIngreso(ingreso)"
-                >
-                  <i class="fas fa-edit"></i>
-                </button>
-                <button
-                  class="text-red-600 hover:text-red-800 focus:outline-none"
-                  @click="openModal(ingreso.id)"
-                >
-                  <i class="fas fa-trash-alt"></i>
-                </button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
   </div>
 </template>
 

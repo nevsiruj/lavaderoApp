@@ -42,7 +42,7 @@
             @click.prevent="navigateTo('/lavadostable'), toggleSidebar()"><i class="fas fa-chart-line mr-1"></i> Dashboard</a>
         </li>
         <li class="my-1">
-          <a class="text-blackhover:text-black" aria-current="page" href="#"
+          <a class="text-black hover:text-black" aria-current="page" href="#"
             @click.prevent="navigateTo('/ingresos'), toggleSidebar()"><i class="fas fa-hand-holding-usd"></i> Ingresos</a>
         </li>
         

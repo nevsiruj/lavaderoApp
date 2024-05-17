@@ -1,87 +1,82 @@
 <template>
   <div class="viewport h-screen flex justify-center items-center">
     <div class="card self-center mx-3 w-fit shadow-md overflow-hidden">
-      <div class="flex flex-col items-center my-3">
-        <h3 class="text-2xl font-bold">Bienvenido</h3>
+      <div class="flex flex-col items-center my-6">
+        <h3 class="text-4xl font-bold">Bienvenido</h3>
       </div>
       <div v-if="cajaAbierta.isOpen">
-        <div class="pb-4 w-1/2 mx-auto md:w-full md:flex justify-center my-3 md:gap-5">
-          <router-link class="rounded-full mt-2 block p-2 text-sm shadow-md hover:bg-green-500 bg-emerald-300  text-white"
+        <div class="pb-6 w-3/4 mx-auto md:w-full md:flex justify-center my-6 md:gap-8">
+          <router-link class="rounded-full mt-4 block p-4 text-lg shadow-md hover:bg-green-500 bg-emerald-300  text-white"
             to="/ListLavadosCaja">
-            <i class="fas fa-list-ul mr-1"></i>Ventas diaria</router-link>
+            <i class="fas fa-list-ul mr-2 text-xl"></i>Ventas diaria</router-link>
           <br />
 
           <router-link
-            class="rounded-full w-baseline mt-2 block p-2 text-sm shadow-md hover:bg-green-500 bg-emerald-300 text-white"
+            class="rounded-full mt-4 block p-4 text-lg shadow-md hover:bg-green-500 bg-emerald-300 text-white"
             to="/listingreso">
-            <i class="fas fa-list-ul mr-1"></i>Ingresos diario
+            <i class="fas fa-list-ul mr-2 text-xl"></i>Ingresos diario
           </router-link>
           <br />
-          <router-link class="rounded-full mt-2 block p-2 text-sm shadow-md hover:bg-green-500 bg-emerald-300 text-white"
+          <router-link class="rounded-full mt-4 block p-4 text-lg shadow-md hover:bg-green-500 bg-emerald-300 text-white"
             to="/listegreso">
-            <i class="fas fa-list-ul mr-1"></i>Egresos diario
+            <i class="fas fa-list-ul mr-2 text-xl"></i>Egresos diario
           </router-link>
         </div>
-        <div class="flex flex-col items-center mt-4" v-if="!cajaAbierta.isOpen">
-          <span class="text-red-500 font-bold">No hay cajas abiertas</span>
-          <router-link class="text-blue-500 mt-2" to="/abrircaja">Abrir caja</router-link>
+        <div class="flex flex-col items-center mt-8" v-if="!cajaAbierta.isOpen">
+          <span class="text-red-500 font-bold text-lg">No hay cajas abiertas</span>
+          <router-link class="text-blue-500 mt-4 text-lg" to="/abrircaja">Abrir caja</router-link>
         </div>
-        <div class="px-3">
-          <div class="flex items-center">
-            <strong>Fecha: </strong>
-            <h5 class="card-text text-left">
+        <div class="px-6">
+          <div class="flex items-center mt-8">
+            <strong class="text-lg">Fecha: </strong>
+            <h5 class="card-text text-lg">
               {{ new Date().toLocaleDateString() }}
             </h5>
           </div>
-          <p class="card-text text-left">
+          <p class="flex card-text text-lg">
             <strong>Responsable:</strong> {{ cajaAbierta.responsable }}
           </p>
-          <p class="card-text text-left">
+          <p class="flex card-text text-lg">
             <strong>Turno:</strong> {{ cajaAbierta.turno }}
           </p>
-          <p class="card-text text-left">
-            <strong>Inicial: </strong>: ${{
-              cajaAbierta.montoInicial ?? "0.00"
-            }}
+          <p class="flex card-text text-lg">
+            <strong>Inicial: </strong>: ${{ cajaAbierta.montoInicial ?? "0.00" }}
           </p>
-          <p class="card-text text-left">
+          <p class="flex card-text text-lg">
             <strong>Cantidad:</strong>
-            {{ cajaAbierta.cantidadLavados ?? 0 }}
-            <br />
-            <strong>Importe:</strong>
-            $ {{ cajaAbierta.totalImporteLavados ?? 0 }}
+            {{ cajaAbierta.cantidadLavados ?? 0 }}           
           </p>
-          <p class="card-text text-left">
-            <strong>Ingresos:</strong> ${{
-              cajaAbierta.totalImporteIngresos ?? "0.00"
-            }}
+          <p class="flex card-text text-lg">
+          <strong>Importe:</strong>
+            ${{ cajaAbierta.totalImporteLavados ?? 0 }}
           </p>
-          <p class="card-text text-left">
-            <strong>Egresos: </strong> ${{
-              cajaAbierta.totalImporteEgresos ?? "0.00"
-            }}
+          <p class="flex card-text text-lg">
+            <strong>Ingresos:</strong> ${{ cajaAbierta.totalImporteIngresos ?? "0.00" }}
           </p>
-          <p class="card-text text-left">
+          <p class="flex card-text text-lg">
+            <strong>Egresos: </strong> ${{ cajaAbierta.totalImporteEgresos ?? "0.00" }}
+          </p>
+          <p class="flex card-text text-lg">
             <strong>Efectivo en caja:</strong> ${{ cajaAbierta.efectivoEnCaja ?? "0.00" }}
           </p>
         </div>
       </div>
-      <div class="flex p-0">
+      <div class="flex p-0 mt-8">
         <router-link
-          class="py-3 px-2 btn-sm text-green-600 hover:text-green-400 hover:text-green-400 hover:shadow-lg flex-grow"
+          class="py-4 px-6 btn-md text-xl text-green-600 hover:text-green-400 hover:text-green-400 hover:shadow-lg flex-grow"
           to="/formlavado">
-          <i class="fas fa-plus-circle mr-1"></i> Agregar venta
+          <i class="fas fa-plus-circle mr-2 text-xl"></i> Agregar venta
         </router-link>
-        <router-link class="py-3 px-2 btn-sm text-green-600 hover:text-green-400 hover:shadow-lg flex-grow"
+        <router-link class="py-4 px-6 btn-md text-xl text-green-600 hover:text-green-400 hover:shadow-lg flex-grow"
           to="/formingreso">
-          <i class="fas fa-plus-circle mr-1"></i> Agregar ingreso
+          <i class="fas fa-plus-circle mr-2 text-xl"></i> Agregar ingreso
         </router-link>
-        <router-link class="py-3 px-2 btn-sm text-green-600 hover:text-green-400 hover:shadow-lg flex-grow"
+        <router-link class="py-4 px-6 btn-md text-xl text-green-600 hover:text-green-400 hover:shadow-lg flex-grow"
           to="/formegreso">
-          <i class="fas fa-plus-circle mr-1"></i> Agregar egreso
+          <i class="fas fa-plus-circle mr-2 text-xl"></i> Agregar egreso
         </router-link>
-        <router-link class="py-3 px-2 btn-sm text-red-600 hover:text-red-400 hover:shadow-lg flex-grow" to="/cerrarcaja">
-          <i class="fa fa-times-circle mr-1"></i> Cerrar caja
+        <router-link class="py-4 px-6 btn-md text-xl text-red-600 hover:text-red-400 hover:shadow-lg flex-grow" to="/cerrarcaja">
+          <i class="fa fa-times-circle mr-2 text-xl"></i> Cerrar caja
         </router-link>
       </div>
     </div>

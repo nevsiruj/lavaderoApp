@@ -1,33 +1,32 @@
 <template>
-  <div class="container">
-    <a @click.prevent="navigateTo('/caja')">&lt; Volver atrás</a>
-    <!-- <a class="nav-link active" aria-current="page" href="#" @click.prevent="navigateTo('/')">Home</a> -->
-
-    <!-- <form @submit.prevent="CerrarCaja"> -->
-      <h2>Cerrar caja</h2>
-
-      <div class="mb-3">
-        <label for="monto" class="form-label">Declarar Efectivo:</label>
-        <input
-          type="number"
-          class="form-control"
-          id="efectivoDeclarado"
-          v-model="formData.efectivoDeclarado"
-          required
-        />
+  <div class="viewport">
+    <div class="container mx-auto px-4 py-8">
+      <div class="mb-6">
+        <router-link :to="'/caja'" class="text-base text-emerald-300 font-bold hover:text-emerald-600">&lt; Volver atrás</router-link>
       </div>
-      <button @click="CerrarCaja" type="submit" class="btn btn-primary
-              mt-3
-              bg-blue-500
-              hover:bg-blue-600
-              text-white
-              font-bold
-              py-2
-              px-4
-              rounded">Cerrar caja</button>
-    <!-- </form> -->
+      <h2 class="text-2xl font-bold mb-6 text-black">Cerrar caja</h2>
+
+      <div class="mb-6 flex flex-col items-center">
+  <label for="monto" class="text-gray-700 text-base font-bold mb-2">Declarar Efectivo:</label>
+  <div class="w-1/4">
+    <input
+      type="number"
+      class="w-full border border-gray-300 rounded-md py-2 px-3 leading-tight focus:outline-none focus:border-emerald-500"
+      id="efectivoDeclarado"
+      v-model="formData.efectivoDeclarado"
+      required
+    />
+  </div>
+</div>
+      <button @click="CerrarCaja" type="submit"
+        class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 px-4 rounded">
+        Cerrar caja
+      </button>
+    </div>
   </div>
 </template>
+
+
 
 <script>
 import { reactive, onMounted, ref } from 'vue';
@@ -65,7 +64,7 @@ export default {
 
     };
 
-    onMounted(async() => {
+    onMounted(async () => {
       cajaAbierta.value = await cajaService.getCajaAbierta();
     });
 
@@ -73,7 +72,7 @@ export default {
       formData,
       CerrarCaja,
       cajaAbierta,
-      navigateTo 
+      navigateTo
     };
   },
 };

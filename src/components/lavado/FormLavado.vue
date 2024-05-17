@@ -2,34 +2,20 @@
   <div class="viewport">
     <div class="card p-4 mx-2 shadow-md overflow-hidden w-fit self-center">
       <div class="mb-3">
-        <router-link :to="isAdmin ? '/lavados' : '/ListLavadosCaja'" class="text-emerald-300">&lt; Volver atrás</router-link>
+        <router-link :to="isAdmin ? '/lavados' : '/ListLavadosCaja'" class="text-emerald-300 hover:text-emerald-600">&lt; Volver atrás</router-link>
       </div>
       <h1 class="font-bold">Factura</h1>
       <form>
         <div class="form-group">
           <label for="descripcion" class="text-black">Descripción</label>
           <input type="text" class="
-                form-input
-                mt-1
-                block
-                w-full
-                rounded-md
-                border-emerald-300
-                shadow-sm
-                focus:border-emerald-500 focus:ring focus:ring-emerald-200
+          form-control form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-300 focus:ring focus:ring-blue-200
               " id="descripcion" v-model="form.descripcion" />
         </div>
         <div class="form-group">
           <label for="tipo-vehiculo" class="text-black">Servicio</label>
           <select class="
-                form-select
-                mt-1
-                block
-                w-full
-                rounded-md
-                border-emerald-300
-                shadow-sm
-                focus:border-emerald-500 focus:ring focus:ring-emerald-200
+          form-select form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-300 focus:ring focus:ring-blue-200
               " id="tipo-vehiculo" v-model="form.tipoVehiculoId">
             <option value="">Seleccionar servicio</option>
             <option v-for="tipoVehiculo in tiposVehiculos" :key="tipoVehiculo.id" :value="tipoVehiculo.id">
@@ -40,14 +26,7 @@
         <div class="form-group">
           <label for="tipo-lavado" class="text-black">Tipo de servicio</label>
           <select class="
-                form-select
-                mt-1
-                block
-                w-full
-                rounded-md
-                border-emerald-300
-                shadow-sm
-                focus:border-emerald-500 focus:ring focus:ring-emerald-200
+          form-control form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-300 focus:ring focus:ring-blue-200
               " id="tipo-lavado" v-model="form.tipoLavadoId">
             <option value="">Seleccionar tipo de servicio</option>
             <option v-for="tipoLavado in tiposLavados" :key="tipoLavado.id" :value="tipoLavado.id">
@@ -58,14 +37,7 @@
         <div class="form-group">
           <label for="importe" class="text-black">Importe</label>
           <input type="number" class="
-                form-input
-                mt-1
-                block
-                w-full
-                rounded-md
-                border-emerald-300
-                shadow-sm
-                focus:border-emerald-500 focus:ring focus:ring-emerald-200
+          form-input form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-300 focus:ring focus:ring-blue-200
               " id="importe" v-model="form.importe" />
         </div>
         <div v-if="isNegativeImport">
@@ -76,16 +48,7 @@
           <input type="date" class="form-control" id="importe" v-model="form.fecha" required />
         </div>
         <button type="submit" class="
-              mt-3
-              bg-emerald-300
-              hover:bg-emerald-500
-              text-white
-              font-bold
-              py-2
-              px-4
-              rounded
-              border-emerald-300
-              focus:border-emerald-500 focus:ring focus:ring-emerald-200
+        form-control form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-300 focus:ring focus:ring-blue-200
             " @click.prevent="submitForm">
           Guardar
         </button>

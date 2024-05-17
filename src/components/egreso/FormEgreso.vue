@@ -2,7 +2,7 @@
   <div class="viewport">
     <div class="card p-4 mx-2 shadow-md overflow-hidden w-fit self-center">
       <div class="mb-3">
-        <router-link :to="isAdmin ? '/egresos' : '/caja'" class="text-emerald-300">&lt; Volver atrás</router-link>
+        <router-link :to="isAdmin ? '/egresos' : '/caja'" class="text-emerald-300 hover:text-emerald-600">&lt; Volver atrás</router-link>
       </div>
       <h1 class="font-bold">Egresos</h1>
       <form @submit="submitForm">

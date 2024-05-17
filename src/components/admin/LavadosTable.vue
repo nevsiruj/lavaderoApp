@@ -9,12 +9,12 @@
         </div>
         <div>
           <label class="block mb-2">Fecha fin:</label>
-          <input type="date" class="form-control border-emerald-300" v-model="fechaFin" />
+          <input type="date" class="form-control border-emerald-300 px-4" v-model="fechaFin" />
         </div>
         <div class="flex items-end">
           <button
             type="button"
-            class="mt-3 bg-emerald-300 hover:bg-emerald-500 text-white font-bold py-2 px-4 rounded"
+            class="mt-4 bg-emerald-300 hover:bg-emerald-500 text-white font-bold py-2 px-4 rounded"
             @click="filtrar"
           >
             Filtrar

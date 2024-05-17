@@ -1,13 +1,13 @@
 <template>
     <div class="viewport">
         <div class="m-auto rounded-lg py-2 px-2">
-            <div class="flex justify-center">
+            <div class="flex justify-end">
                 <div class="flex items-center space-x-2">
                     <!--, query: { isAdmin: true } }"> -->
-                    <router-link :to="{ path: '/formusuarios' }" class="btn btn-sm btn-success my-2 mr-1">
+                    <router-link :to="{ path: '/formusuarios' }" class="btn btn-base btn-success my-2 mr-1">
                         <i class="fas fa-plus-circle mr-1"></i> Agregar Usuarios
                     </router-link>
-                    <button class="btn btn-sm btn-primary my-2">
+                    <button class="btn btn-base btn-primary my-2">
                         <i class="fas fa-sync-alt"></i> Actualizar
                     </button>
                 </div>
@@ -15,50 +15,50 @@
                     <i class="fas fa-check-circle mr-1"></i> Actualizados
                 </div>
             </div>
-            <div class="bg-emerald-300 rounded-lg overflow-hidden shadow-md mx-auto mt-1 w-min">
-                <table class="divide-y divide-gray-200">
-                    <thead class="bg-emerald-300">
-                        <tr>
-                            <th class="px-3 py-2 text-xs text-gray-500 uppercase tracking-wider whitespace-nowrap">
-                                Nombre
-                            </th>
-                            <th class="px-2 py-1 text-xs text-gray-500 uppercase tracking-wider">
-                                Apellido
-                            </th>
-                            <th class="px-2 py-1 text-xs text-gray-500 uppercase tracking-wider">
-                                Dni
-                            </th>
-                            <th class="px-2 py-1 text-xs text-gray-500 uppercase tracking-wider">
-                                Username
-                            </th>
-                            <th class="px-2 py-1 text-xs text-gray-500 uppercase tracking-wider">
-                                Rol
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y divide-gray-200 text-left">
-                        <tr v-for="usuario in usuarios">
-                            <td class="px-3 py-1 whitespace-nowrap">{{ usuario.nombre }}</td>
-                            <td class="px-3 py-1 whitespace-nowrap">{{ usuario.apellido }}</td>
-                            <td class="px-3 py-1 whitespace-nowrap">{{ usuario.dni }}</td>
-                            <td class="px-3 py-1 whitespace-nowrap">{{ usuario.username }}</td>
-                            <td class="px-3 py-1 whitespace-nowrap">{{ usuario.rol }}</td>
-                            <td class="px-3 py-1 whitespace-nowrap">
-                                <div class="flex space-x-2 ">
-                                    <button class="text-blue-600 hover:text-blue-800 focus:outline-none"
-                                        @click="editarUsuario(usuario)">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="text-red-600 hover:text-red-800 focus:outline-none"
-                                        @click="deleteUsuario(usuario.id)">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <div class="bg-emerald-300 rounded-lg overflow-hidden shadow-lg mx-auto mt-4 w-fit">
+  <table class="divide-y divide-gray-300">
+    <thead class="bg-emerald-300">
+      <tr>
+        <th class="px-6 py-3 text-sm text-gray-700 uppercase tracking-wider whitespace-nowrap">
+          Nombre
+        </th>
+        <th class="px-6 py-3 text-sm text-gray-700 uppercase tracking-wider">
+          Apellido
+        </th>
+        <th class="px-6 py-3 text-sm text-gray-700 uppercase tracking-wider">
+          Dni
+        </th>
+        <th class="px-6 py-3 text-sm text-gray-700 uppercase tracking-wider">
+          Username
+        </th>
+        <th class="px-6 py-3 text-sm text-gray-700 uppercase tracking-wider">
+          Rol
+        </th>
+        <th class="px-6 py-3 text-sm text-gray-700 uppercase tracking-wider"></th>
+      </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-gray-200 text-left">
+      <tr v-for="usuario in usuarios" :key="usuario.id">
+        <td class="px-6 py-3 whitespace-nowrap text-lg">{{ usuario.nombre }}</td>
+        <td class="px-6 py-3 whitespace-nowrap text-lg">{{ usuario.apellido }}</td>
+        <td class="px-6 py-3 whitespace-nowrap text-lg">{{ usuario.dni }}</td>
+        <td class="px-6 py-3 whitespace-nowrap text-lg">{{ usuario.username }}</td>
+        <td class="px-6 py-3 whitespace-nowrap text-lg">{{ usuario.rol }}</td>
+        <td class="px-6 py-3 whitespace-nowrap text-lg">
+          <div class="flex space-x-4">
+            <button class="text-blue-600 hover:text-blue-800 focus:outline-none text-xl" @click="editarUsuario(usuario)">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="text-red-600 hover:text-red-800 focus:outline-none text-xl" @click="deleteUsuario(usuario.id)">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
         </div>
     </div>
 </template>

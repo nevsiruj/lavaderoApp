@@ -2,7 +2,7 @@
   <div class="viewport">
     <div class="card w-max m-auto p-4">
       <div class="mb-3">
-        <router-link :to="'/tipoServicios'" class="text-emerald-300">&lt; Volver
+        <router-link :to="'/tipoServicios'" class="text-emerald-300 hover:text-emerald-600">&lt; Volver
           atrás
         </router-link>
       </div>
