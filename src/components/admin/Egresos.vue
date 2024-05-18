@@ -78,7 +78,7 @@
     </div>
 
     
-    <div class="md:w-fit w-full overflow-x-auto bg-white rounded-lg p-2 shadow-lg mx-auto mt-2">
+    <div class="md:w-fit w-full overflow-x-auto bg-white rounded-lg p-2 shadow-md mx-auto mt-2">
       <table class="min-w-full divide-y divide-gray-300 mt-4">
         <!-- Table headers -->
         <thead class="bg-emerald-300">
