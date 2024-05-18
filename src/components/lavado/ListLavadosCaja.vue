@@ -2,7 +2,7 @@
   <div class="viewport">
     <Modal message="lavado" @confirm="deleteLavado" ref="modalComponent" />
     <div class="mx-auto rounded-lg py-3 px-2 shadow-md bg-white">
-      <router-link class="mt-2" to="/caja"> &lt;Volver atrás</router-link>
+      <router-link class="mt-2 text-emerald-300 hover:text-emerald-600" to="/caja"> &lt;Volver atrás</router-link>
       <div class="mb-3">
       </div>
       <h1 class="font-bold text-center">Facturas</h1>

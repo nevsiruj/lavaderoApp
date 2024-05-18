@@ -8,11 +8,11 @@
       <form>
         <div class="form-group ">
           <label for="descripcion">Descripción</label>
-          <input type="text" class="form-control form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-300 focus:ring focus:ring-blue-200 " id="descripcion" v-model="form.descripcion" required />
+          <input type="text" class="form-control form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-300 focus:ring focus:ring-blue-200" id="descripcion" v-model="form.descripcion" required />
         </div>
         <div class="form-group">
           <label for="importe">Importe</label>
-          <input type="number" class="form-control form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-300 focus:ring focus:ring-blue-200 form-control" id="importe" min="1" v-model="form.importe" required />
+          <input type="number" class="form-control form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-300 focus:ring focus:ring-blue-200" id="importe" min="1" v-model="form.importe" required />
         </div>
         <div v-if="isNegativeImport">
           <p class='text-red-600'>No ingresar valores negativos</p>

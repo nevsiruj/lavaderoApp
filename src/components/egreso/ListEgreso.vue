@@ -4,7 +4,7 @@
 
     <div class="w-fit mx-auto rounded-lg p-4 px-2 shadow-md bg-white">
       <div class="mb-3">
-        <router-link to="/caja"> &lt;Volver atrás </router-link>
+        <router-link class="mt-2 text-emerald-300 hover:text-emerald-600" to="/caja"> &lt;Volver atrás </router-link>
       </div>
       <h1>Egresos</h1>
       <table class="table">

@@ -2,7 +2,7 @@
   <div class="viewport">
     <div class="card p-4 mx-2 shadow-md overflow-hidden w-fit self-center">
       <div class="mb-3">
-        <router-link :to="isAdmin ? '/lavados' : '/ListLavadosCaja'" class="text-emerald-300 hover:text-emerald-600">&lt; Volver atrás</router-link>
+        <router-link :to="isAdmin ? '/lavados' : '/Caja'" class="text-emerald-300 hover:text-emerald-600">&lt; Volver atrás</router-link>
       </div>
       <h1 class="font-bold">Factura</h1>
       <form>

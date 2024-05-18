@@ -3,7 +3,7 @@
     <Modal message="ingreso" @confirm="deleteIngreso" ref="modalComponent" />
     <div class="card p-4 m-auto shadow-md overflow-hidden w-fit md:self-center">
       <div class="mb-3">
-        <router-link to="/caja"> &lt;Volver atrás </router-link>
+        <router-link class="mt-2 text-emerald-300 hover:text-emerald-600" to="/caja"> &lt;Volver atrás </router-link>
       </div>
       <h1 class="font-bold">Lista de Ingresos</h1>
       <table class="table">

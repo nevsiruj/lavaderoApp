@@ -3,70 +3,70 @@
     <Toast message="Egreso Eliminado" ref="toastComponent" />
     <Modal message="egreso" @confirm="deleteEgreso" ref="modalComponent" />
     <div class="bg-white self-center w-fit rounded-lg p-6 shadow-md mx-3 mt-6">
-  <div class="flex items-center mb-4">
-    <i class="fas fa-filter text-gray-600 mr-4"></i>
-    <label class="text-gray-600 text-base">Filtrar por fecha:</label>
+      <div class="flex items-center mb-4">
+        <i class="fas fa-filter text-gray-600 mr-4"></i>
+        <label class="text-gray-600 text-base">Filtrar por fecha:</label>
+      </div>
+      <div class="flex flex-col md:flex-row md:gap-5 md:items-center mb-4">
+  <div class="flex flex-col md:flex-row md:items-center p-2 md:mb-0 w-full md:w-auto">
+    <input
+      type="date"
+      class="border-gray-300 rounded-md p-2 flex-grow text-base w-full md:w-auto mb-2 md:mb-0 md:mr-4"
+      v-model="startDate"
+      @change="filterEgresos"
+    />
+    <span class="mx-4 text-gray-600 text-base hidden md:inline-block">-</span>
+    <input
+      type="date"
+      class="border-gray-300 rounded-md p-2 flex-grow text-base w-full md:w-auto"
+      v-model="endDate"
+      @change="filterEgresos"
+    />
   </div>
-  <div class="flex flex-col md:flex-row md:gap-5 md:align-center mb-4">
-    <div class="mb-4">
-      <input
-        type="date"
-        class="border-gray-300 rounded-md p-2 flex-grow text-base"
-        v-model="startDate"
-        @change="filterEgresos"
-      />
-      <span class="mx-4 text-gray-600 text-base">-</span>
-      <input
-        type="date"
-        class="border-gray-300 rounded-md p-2 flex-grow text-base"
-        v-model="endDate"
-        @change="filterEgresos"
-      />
-    </div>
-    <div>
-      <router-link
-        class="btn btn-base btn-success mr-4"
-        :to="{ path: '/formEgreso', query: { isAdmin: true } }"
-      >
-        <i class="fas fa-plus-circle mr-2"></i> Agregar Egreso
-      </router-link>
-      <button class="btn btn-base btn-primary" @click="fetchEgresos">
-        <i class="fas fa-sync-alt mr-2"></i> Actualizar
-      </button>
-    </div>
-  </div>
-  <div
-    v-if="showMessage"
-    class="bg-green-100 text-green-800 px-4 py-2 rounded-md mt-4 text-base"
-  >
-    <i class="fas fa-check-circle mr-2"></i> Actualizados
-  </div>
-  <!-- Visor de cantidad de egresos mostrados -->
-  <div class="mt-6 flex justify-evenly items-center">
-    <div class="flex items-center text-gray-600 text-base">
-      <i class="fas fa-clipboard-list mr-2"></i>
-      <span>Egresos: {{ filteredEgresos.length }}</span>
-    </div>
-    <div class="flex items-center text-gray-600 text-base">
-      <i class="fas fa-dollar-sign mr-2"></i>
-      <span>Total: ${{ calculateTotalImporte() }}</span>
-    </div>
-    <div class="flex items-center text-gray-600 text-base">
-      <input
-        type="checkbox"
-        class="mr-2"
-        v-model="esUnGasto"
-        @change="filterEgresos"
-      />
-      <span>Es un Gasto</span>
-    </div>
+  <div class="flex items-center">
+    <router-link
+      class="btn btn-base btn-success mr-4"
+      :to="{ path: '/formEgreso', query: { isAdmin: true } }"
+    >
+      <i class="fas fa-plus-circle mr-2"></i> Agregar Egreso
+    </router-link>
+    <button class="btn btn-base btn-primary" @click="fetchEgresos">
+      <i class="fas fa-sync-alt mr-2"></i> Actualizar
+    </button>
   </div>
 </div>
 
+      <div
+        v-if="showMessage"
+        class="bg-green-100 text-green-800 px-4 py-2 rounded-md mt-4 text-base"
+      >
+        <i class="fas fa-check-circle mr-2"></i> Actualizados
+      </div>
+      <!-- Visor de cantidad de egresos mostrados -->
+      <div class="mt-6 flex justify-evenly items-center">
+        <div class="flex items-center text-gray-600 text-base">
+          <i class="fas fa-clipboard-list mr-2"></i>
+          <span>Egresos: {{ filteredEgresos.length }}</span>
+        </div>
+        <div class="flex items-center text-gray-600 text-base">
+          <i class="fas fa-dollar-sign mr-2"></i>
+          <span>Total: ${{ calculateTotalImporte() }}</span>
+        </div>
+        <div class="flex items-center text-gray-600 text-base">
+          <input
+            type="checkbox"
+            class="mr-2"
+            v-model="esUnGasto"
+            @change="filterEgresos"
+          />
+          <span>Es un Gasto</span>
+        </div>
+      </div>
+    </div>
 
     <div>
       <select
-        class="rounded-md mt-2 "
+        class="rounded-md mt-2"
         v-model="results"
         name="results"
         id="results"
@@ -75,55 +75,66 @@
         <option value="30">30 Resultados</option>
         <option value="50">50 Resultados</option>
       </select>
-
-      <div class="w-fit bg-white rounded-lg p-6 shadow-lg mx-auto mt-4 overflow-hidden">
-  <table class="divide-y divide-gray-300 mt-6">
-    <!-- Table headers -->
-    <thead class="bg-emerald-300">
-      <tr>
-        <th class="px-6 py-3 text-sm text-gray-700 uppercase tracking-wider">
-          Fecha
-        </th>
-        <th class="px-6 py-3 text-sm text-gray-700 uppercase tracking-wider">
-          Descripción
-        </th>
-        <th class="px-6 py-3 text-sm text-gray-700 uppercase tracking-wider">
-          Importe
-        </th>
-        <th class="px-6 py-3 text-sm text-gray-700 uppercase tracking-wider">
-          Gasto
-        </th>
-        <th class="px-6 py-3 text-sm text-gray-700 uppercase tracking-wider"></th>
-      </tr>
-    </thead>
-    <tbody class="bg-white divide-y divide-gray-200">
-      <tr v-for="(egreso, index) in filteredEgresos" v-show="(pag - 1) * results <= index && pag * results > index" :key="egreso.id">
-        <td class="px-6 py-3 whitespace-nowrap text-base">
-          {{ formatDate(egreso.fechaRegistro) }}
-        </td>
-        <td class="px-6 py-3 whitespace-nowrap text-base">
-          {{ egreso.descripcion }}
-        </td>
-        <td class="px-6 py-3 whitespace-nowrap text-base">${{ egreso.importe }}</td>
-        <td class="px-6 py-3 whitespace-nowrap text-base">
-          <input type="checkbox" :checked="egreso.isGasto" disabled />
-        </td>
-        <td class="px-6 py-3 whitespace-nowrap text-base">
-          <div class="flex space-x-4">
-            <button class="text-blue-600 hover:text-blue-800 focus:outline-none text-xl" @click="editEgreso(egreso)">
-              <i class="fas fa-edit"></i>
-            </button>
-            <button class="text-red-600 hover:text-red-800 focus:outline-none text-xl" @click="deleteModal(egreso.id)">
-              <i class="fas fa-trash-alt"></i>
-            </button>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
     </div>
+
+    
+    <div class="md:w-fit w-full overflow-x-auto bg-white rounded-lg p-2 shadow-lg mx-auto mt-2">
+      <table class="min-w-full divide-y divide-gray-300 mt-4">
+        <!-- Table headers -->
+        <thead class="bg-emerald-300">
+          <tr>
+            <th class="px-4 py-2 text-xs text-gray-700 uppercase tracking-wider">
+              Fecha
+            </th>
+            <th class="px-4 py-2 text-xs text-gray-700 uppercase tracking-wider">
+              Descripción
+            </th>
+            <th class="px-4 py-2 text-xs text-gray-700 uppercase tracking-wider">
+              Importe
+            </th>
+            <th class="px-4 py-2 text-xs text-gray-700 uppercase tracking-wider">
+              Gasto
+            </th>
+            <th class="px-4 py-2 text-xs text-gray-700 uppercase tracking-wider"></th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <tr
+            v-for="(egreso, index) in filteredEgresos"
+            v-show="(pag - 1) * results <= index && pag * results > index"
+            :key="egreso.id"
+          >
+            <td class="px-4 py-2 whitespace-nowrap">
+              {{ formatDate(egreso.fechaRegistro) }}
+            </td>
+            <td class="px-4 py-2 whitespace-nowrap">
+              {{ egreso.descripcion }}
+            </td>
+            <td class="px-4 py-2 whitespace-nowrap">${{ egreso.importe }}</td>
+            <td class="px-4 py-2 whitespace-nowrap">
+              <input type="checkbox" :checked="egreso.isGasto" disabled />
+            </td>
+            <td class="px-4 py-2 whitespace-nowrap">
+              <div class="flex space-x-2">
+                <button
+                  class="text-blue-600 hover:text-blue-800 focus:outline-none"
+                  @click="editEgreso(egreso)"
+                >
+                  <i class="fas fa-edit"></i>
+                </button>
+                <button
+                  class="text-red-600 hover:text-red-800 focus:outline-none"
+                  @click="deleteModal(egreso.id)"
+                >
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
     <nav aria-label="Page navigation example">
       <ul class="flex justify-center">
         <li
@@ -141,13 +152,14 @@
           @click.prevent="pag += 1"
         >
           <a href="#" aria-label="Next">
-            <span class="hover:text-white " aria-hidden="true">Siguiente</span>
+            <span class="hover:text-white" aria-hidden="true">Siguiente</span>
           </a>
         </li>
       </ul>
     </nav>
   </div>
 </template>
+
 
 <script>
 import egresoService from "../../composables/api/egresoService.js";
@@ -335,3 +347,18 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.viewport {
+  max-width: 100%;
+}
+
+.table-container {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+table {
+  min-width: 100%;
+}
+</style>

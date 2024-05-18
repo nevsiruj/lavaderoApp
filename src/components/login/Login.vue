@@ -24,7 +24,7 @@
       <img class="w-full sm:w-1/2 rounded-xl ml-6" src="../../Img/imglogin.jpg" alt="Imagen de inicio de sesión">
     </div>
 
-    <p>v.153714052024</p>
+   
   </div>
 </template>
 

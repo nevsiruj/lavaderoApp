@@ -24,8 +24,8 @@
         <input type="number" class="form-control" id="monto" v-model="formData.montoInicial" required />
       </div>
       <button type="submit" class="
-          bg-blue-500
-          hover:bg-blue-600
+          bg-emerald-300
+          hover:bg-emerald-600
           text-white
           font-semibold
           py-2

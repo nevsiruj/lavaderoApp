@@ -63,14 +63,14 @@
           <a class="text-black hover:text-black" aria-current="page" href="#"
             @click.prevent="navigateTo('/tipoServicios'), toggleSidebar()"><i class="fas fa-tag"></i> Tipos de servicios</a>
         </li>
-        <li class="my-1">
+        <!-- <li class="my-1">
           <a class="text-black hover:text-black" aria-current="page" href="#"
             @click.prevent="navigateTo('/usuarios'), toggleSidebar()"><i class="fas fa-users"></i> Usuarios</a>
         </li>
         <li class="my-1">
           <a class="text-black hover:text-black" aria-current="page" href="#"
             @click.prevent="navigateTo('/agenda'), toggleSidebar()"><i class="fas fa-calendar-alt"></i> Agenda</a>
-        </li>
+        </li> -->
         <li class="my-1">
           <a class="text-black hover:text-black" href="#" @click.prevent="navigateTo('/'), toggleSidebar()"><i class="fas fa-sign-out-alt"></i> Cerrar
             sesion</a>
