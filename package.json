@@ -6,8 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "deploy": "vue-cli-service build && npx firebase deploy",
-    "copy-dist": "xcopy dist \\vm06\\shared\\tst.blegur.vylaris.online /E /Y"
+    "deploy": "vue-cli-service build && xcopy dist \\vm06\\shared\\tst.blegur.vylaris.online /E /Y"
   },
   "dependencies": {
     "@heroicons/vue": "^2.0.18",
