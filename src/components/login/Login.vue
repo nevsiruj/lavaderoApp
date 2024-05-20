@@ -76,7 +76,6 @@ export default {
         const currentUser = await authService.getCurrentUser();
         if (currentUser) {
           cajaAbierta.value = await cajaService.getCajaAbierta();
-          console.log(cajaAbierta.value)
           if (cajaAbierta.value == undefined) {
             router.push('/abrircaja');
           }

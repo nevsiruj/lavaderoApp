@@ -9,38 +9,25 @@
           <label class="text-gray-600 text-base">Filtrar por fecha:</label>
         </div>
         <div class="flex flex-col md:flex-row md:gap-5 md:items-center mb-4">
-  <div class="flex flex-col md:flex-row md:items-center p-2 md:mb-0 w-full md:w-auto">
-    <input
-      type="date"
-      class="border-gray-300 rounded-md p-2 flex-grow text-base w-full md:w-auto mb-2 md:mb-0 md:mr-3"
-      v-model="startDate"
-      @change="filterIngresos"
-    />
-    <span class="mx-3 text-gray-600 text-base hidden md:inline-block">-</span>
-    <input
-      type="date"
-      class="border-gray-300 rounded-md p-2 flex-grow text-base w-full md:w-auto"
-      v-model="endDate"
-      @change="filterIngresos"
-    />
-  </div>
-  <div class="flex items-center">
-    <router-link
-      class="btn btn-base btn-success mr-4"
-      :to="{ path: '/formingreso', query: { isAdmin: true } }"
-    >
-      <i class="fas fa-plus-circle mr-2"></i> Agregar Ingreso
-    </router-link>
-    <button class="btn btn-base btn-primary" @click="fetchIngresos">
-      <i class="fas fa-sync-alt mr-2"></i> Actualizar
-    </button>
-  </div>
-</div>
+          <div class="flex flex-col md:flex-row md:items-center p-2 md:mb-0 w-full md:w-auto">
+            <input type="date"
+              class="border-gray-300 rounded-md p-2 flex-grow text-base w-full md:w-auto mb-2 md:mb-0 md:mr-3"
+              v-model="startDate" @change="filterIngresos" />
+            <span class="mx-3 text-gray-600 text-base hidden md:inline-block">-</span>
+            <input type="date" class="border-gray-300 rounded-md p-2 flex-grow text-base w-full md:w-auto"
+              v-model="endDate" @change="filterIngresos" />
+          </div>
+          <div class="flex items-center">
+            <router-link class="btn btn-base btn-success mr-4" :to="{ path: '/formingreso', query: { isAdmin: true } }">
+              <i class="fas fa-plus-circle mr-2"></i> Agregar Ingreso
+            </router-link>
+            <button class="btn btn-base btn-primary" @click="fetchIngresos">
+              <i class="fas fa-sync-alt mr-2"></i> Actualizar
+            </button>
+          </div>
+        </div>
 
-        <div
-          v-if="showMessage"
-          class="bg-green-100 text-green-800 px-4 py-2 rounded-md mt-4 text-base"
-        >
+        <div v-if="showMessage" class="bg-green-100 text-green-800 px-4 py-2 rounded-md mt-4 text-base">
           <i class="fas fa-check-circle mr-2"></i> Actualizados
         </div>
       </div>
@@ -58,42 +45,29 @@
     </div>
 
     <div>
-      <select
-        class="rounded-md mt-2"
-        v-model="results"
-        name="results"
-        id="results"
-      >
+      <select class="rounded-md mt-2" v-model="results" name="results" id="results">
         <option value="20">20 Resultados</option>
         <option value="30">30 Resultados</option>
         <option value="50">50 Resultados</option>
       </select>
     </div>
 
-    
+
     <div class="md:w-fit w-full overflow-x-auto bg-white rounded-lg p-2 shadow-md mx-auto mt-2">
       <table class="min-w-full divide-y divide-gray-200 mt-4">
         <!-- Table headers -->
         <thead class="bg-emerald-300">
           <tr>
-            <th
-              class="px-4 py-2 text-xs text-gray-500 uppercase tracking-wider"
-            >
+            <th class="px-4 py-2 text-xs text-gray-500 uppercase tracking-wider">
               Fecha
             </th>
-            <th
-              class="px-4 py-2 text-xs text-gray-500 uppercase tracking-wider"
-            >
+            <th class="px-4 py-2 text-xs text-gray-500 uppercase tracking-wider">
               Descripción
             </th>
-            <th
-              class="px-4 py-2 text-xs text-gray-500 uppercase tracking-wider"
-            >
+            <th class="px-4 py-2 text-xs text-gray-500 uppercase tracking-wider">
               Importe
             </th>
-            <th
-              class="px-4 py-2 text-xs text-gray-500 uppercase tracking-wider"
-            ></th>
+            <th class="px-4 py-2 text-xs text-gray-500 uppercase tracking-wider"></th>
           </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
@@ -107,16 +81,10 @@
             <td class="px-4 py-2 whitespace-nowrap">${{ ingreso.importe }}</td>
             <td class="px-4 py-2 whitespace-nowrap">
               <div class="flex space-x-2">
-                <button
-                  class="text-blue-600 hover:text-blue-800 focus:outline-none"
-                  @click="editIngreso(ingreso)"
-                >
+                <button class="text-blue-600 hover:text-blue-800 focus:outline-none" @click="editIngreso(ingreso)">
                   <i class="fas fa-edit"></i>
                 </button>
-                <button
-                  class="text-red-600 hover:text-red-800 focus:outline-none"
-                  @click="openModal(ingreso.id)"
-                >
+                <button class="text-red-600 hover:text-red-800 focus:outline-none" @click="openModal(ingreso.id)">
                   <i class="fas fa-trash-alt"></i>
                 </button>
               </div>
@@ -269,4 +237,3 @@ table {
   min-width: 100%;
 }
 </style>
-

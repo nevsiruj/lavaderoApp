@@ -74,7 +74,6 @@
   
       
       const agregarAgenda = async () => {
-        console.log(form.value)
         const Agenda = {
           id: form.value.id,
           cliente: form.value.cliente,
@@ -84,7 +83,6 @@
         };
   
         try {
-          console.log(Agenda)
           await agendaService.addAgenda(Agenda);
           router.push('/Agenda');
         } catch (error) {
@@ -112,7 +110,6 @@
           return;
         }
        
-        console.log("submitForm",form.value.id)
   
         if (form.value.id == 0 || !form.value.id) {
           await agregarAgenda();

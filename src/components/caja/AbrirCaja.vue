@@ -77,7 +77,6 @@ export default {
         );
 
         await cajaService.abrirCaja(formData).then((e) => {
-          console.log(e);
           // Reiniciamos los valores del formulario
           formData.responsable = '';
           formData.montoInicial = null;

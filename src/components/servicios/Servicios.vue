@@ -1,36 +1,26 @@
 <template>
     <div class="viewport px-3 mt-10">
-        <div class="m-auto rounded-lg py-2 px-2">
-            <div class="flex justify-center">
-                <div class="flex items-center space-x-2">
-                    <router-link :to="{ path: '/formServicios' }" class="btn btn-sm btn-success my-2 mr-1">
-                        <i class="fas fa-plus-circle mr-1"></i> Agregar Servicio
-                    </router-link>
-                    <button class="btn btn-sm btn-primary my-2" @click="fetchServicios">
-                        <i class="fas fa-sync-alt"></i> Actualizar
-                    </button>
-                </div>
-
+        <div class="md:w-fit w-full overflow-x-auto bg-white rounded-lg p-2 shadow-md mx-auto mt-2">
+            <div class="flex flex-col items-center md:flex-row justify-between space-y-2 md:space-y-0 md:space-x-2">
+                <router-link :to="{ path: '/formServicios' }" class="btn btn-sm btn-success">
+                    <i class="fas fa-plus-circle mr-1"></i> Agregar Servicio
+                </router-link>
+                <button class="btn btn-sm btn-primary" @click="fetchServicios">
+                    <i class="fas fa-sync-alt"></i> Actualizar
+                </button>
                 <div v-if="showMessage" class="bg-green-100 text-green-800 px-4 py-2 rounded-md mt-2">
                     <i class="fas fa-check-circle mr-1"></i> Actualizados
                 </div>
             </div>
-            <div class="md:w-fit w-full bg-white rounded-lg p-2 shadow-md mx-auto mt-2 overflow-x-auto table-responsive">
-                <table class=" divide-y divide-gray-300 mt-4">
+            <div class="md:w-fit w-full overflow-x-auto bg-white rounded-lg p-2 shadow-md mx-auto mt-2">
+                <table class="min-w-full divide-y divide-gray-200 mt-4">
                     <thead class="bg-emerald-300">
                         <tr>
                             <th class="px-4 py-2 text-xs text-gray-500 uppercase tracking-wider whitespace-nowrap">
-                                Nombre
-                            </th>
-                            <th class="px-4 py-2 text-xs text-gray-500 uppercase tracking-wider">
-                                Descripción
-                            </th>
-                            <th class="px-4 py-2 text-xs text-gray-500 uppercase tracking-wider">
-                                Precio
-                            </th>
-                            <th class="px-4 py-2 text-xs text-gray-500 uppercase tracking-wider">
-                                Tipo Servicio
-                            </th>
+                                Nombre</th>
+                            <th class="px-4 py-2 text-xs text-gray-500 uppercase tracking-wider">Descripción</th>
+                            <th class="px-4 py-2 text-xs text-gray-500 uppercase tracking-wider">Precio</th>
+                            <th class="px-4 py-2 text-xs text-gray-500 uppercase tracking-wider">Tipo Servicio</th>
                             <th class="px-2 py-2 text-xs text-gray-500 uppercase tracking-wider"></th>
                         </tr>
                     </thead>
@@ -42,10 +32,12 @@
                             <td class="px-4 py-2 whitespace-nowrap">{{ servicio.tipoServicio }}</td>
                             <td class="px-4 py-2 whitespace-nowrap">
                                 <div class="flex space-x-2">
-                                    <button class="text-blue-600 hover:text-blue-800 focus:outline-none text-xl" @click="editarServicio(servicio)">
+                                    <button class="text-blue-600 hover:text-blue-800 focus:outline-none text-xl"
+                                        @click="editarServicio(servicio)">
                                         <i class="fas fa-edit"></i>
                                     </button>
-                                    <button class="text-red-600 hover:text-red-800 focus:outline-none text-xl" @click="deleteServicio(servicio.id)">
+                                    <button class="text-red-600 hover:text-red-800 focus:outline-none text-xl"
+                                        @click="deleteServicio(servicio.id)">
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
                                 </div>
@@ -57,6 +49,7 @@
         </div>
     </div>
 </template>
+
 
 
 
@@ -152,17 +145,17 @@ export default {
 
 <style>
 .viewport {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 100%;
 }
 
 .table-responsive {
-  overflow-x: auto;
+    overflow-x: auto;
 }
 
 table {
-  min-width: 100%;
+    min-width: 100%;
 }
 </style>

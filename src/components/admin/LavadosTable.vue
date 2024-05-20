@@ -341,7 +341,6 @@ export default {
       totalGastos.value = datos.totalGastos;
       gastos.value = datos.gastos;
       totalFacturado.value = datos.totalFacturado;
-      console.log(datos);
 
       formatearLavados();
 
