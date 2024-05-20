@@ -1,5 +1,6 @@
 <template>
   <div class="viewport px-3 mt-10 ">
+    <h1 class="text-3xl font-semibold mb-6 " >Ingresos</h1>
     <Toast message="Egreso Eliminado" ref="toastComponent" />
     <Modal message="ingreso" @confirm="deleteIngreso" ref="modalComponent" />
     <div class="bg-white self-center w-fit rounded-lg p-6 shadow-md mx-3 mt-6">

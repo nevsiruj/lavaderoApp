@@ -1,5 +1,6 @@
 <template>
   <div class="viewport mt-10">
+    <h1 class="text-3xl font-semibold mb-6 " >Ventas</h1>
     <Toast message="Lavado Eliminado" ref="toastComponent" />
     <Modal message="lavado" @confirm="deleteLavado" ref="modalComponent" />
 
@@ -10,7 +11,7 @@
           <label class="text-gray-600 text-base">Filtrar por fecha:</label>
         </div>
         <div class="flex flex-col md:flex-row md:gap-6 md:items-center mb-4">
-  <div class="flex flex-col md:flex-row md:items-center p-2 md:mb-0 w-full md:w-auto">
+  <div class="flex flex-col md:flex-row md:items-center  md:mb-0 w-full md:w-auto">
     <input
       type="date"
       class="border-gray-300 rounded-md p-2 flex-grow text-base w-full md:w-auto mb-2 md:mb-0 md:mr-4"
