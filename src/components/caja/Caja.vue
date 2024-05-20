@@ -1,115 +1,110 @@
 <template>
-  <div class="flex flex-col items-center">
-    <h3 class="mt-3 text-2xl font-bold">Bienvenido</h3>
-  </div>
-
-  <div class="container mx-auto">
-    <div class="card shadow-lg">
-      <div class="card-header bg-blue-500 py-2">
-        <h5 class="text-white text-lg font-semibold">
-          {{ new Date().toLocaleDateString() }}
-        </h5>
+  <div class="viewport h-screen flex justify-center items-center overflow-x-hidden">
+    <div class="card self-center mx-3 w-full md:w-auto shadow-md overflow-hidden">
+      <div class="flex flex-col items-center my-4">
+        <h3 class="text-3xl font-bold">Bienvenido</h3>
       </div>
-      <div class="card-body p-4">
-        <div v-if="cajaAbierta.isOpen">
-          <p class="card-text">
+      <div v-if="cajaAbierta.isOpen">
+        <div class="pb-4 w-3/4 mx-auto md:w-full md:flex justify-center my-4 md:gap-6">
+          <router-link
+            class="rounded-full mt-3 block p-3 text-sm shadow-md hover:bg-green-500 bg-emerald-300 text-white"
+            to="/ListLavadosCaja">
+            <i class="fas fa-list-ul mr-1 text-sm"></i>Ventas diaria
+          </router-link>
+          <router-link
+            class="rounded-full mt-3 block p-3 text-sm shadow-md hover:bg-green-500 bg-emerald-300 text-white"
+            to="/listingreso">
+            <i class="fas fa-list-ul mr-1 text-sm"></i>Ingresos diario
+          </router-link>
+          <router-link
+            class="rounded-full mt-3 block p-3 text-sm shadow-md hover:bg-green-500 bg-emerald-300 text-white"
+            to="/listegreso">
+            <i class="fas fa-list-ul mr-1 text-sm"></i>Egresos diario
+          </router-link>
+        </div>
+        <div class="flex flex-col items-center mt-6" v-if="!cajaAbierta.isOpen">
+          <span class="text-red-500 font-bold text-sm">No hay cajas abiertas</span>
+          <router-link class="text-blue-500 mt-3 text-sm" to="/abrircaja">Abrir caja</router-link>
+        </div>
+        <div class="px-4">
+          <div class="flex items-center mt-6">
+            <strong class="text-sm">Fecha: </strong>
+            <h5 class="card-text text-sm">
+              {{ new Date().toLocaleDateString() }}
+            </h5>
+          </div>
+          <p class="flex card-text text-sm">
             <strong>Responsable:</strong> {{ cajaAbierta.responsable }}
           </p>
-          <label class="card-text">
-            <strong>Inicial: </strong>: ${{
-              cajaAbierta.montoInicial ?? '0.00'
-            }}
-          </label>
-          <br />
-          <router-link class="btn btn-sm btn-danger mt-2" to="/cerrarcaja">
-            <i class="fa fa-times-circle mr-1"></i> Cerrar caja
-          </router-link>
-          <br />
-          <label class="card-text">
-            <strong>Cantidad Lavados:</strong>
-            {{ cajaAbierta.cantidadLavados ?? 0 }}
-            <br />
-            <strong>Importe Lavados:</strong>
-            $ {{ cajaAbierta.totalImporteLavados ?? 0 }}
-          </label>
-          <br />
-
-          <router-link class="btn btn-sm btn-success mt-2 m-2" to="/formlavado">
-            <i class="fas fa-plus-circle mr-1"></i> Agregar lavado
-          </router-link>
-          <router-link
-            class="btn btn-sm btn-outline-success mt-2 m-2"
-            to="/ListLavadosCaja"
-          >
-            <i class="fas fa-list-ul mr-1"></i> Listado de lavados
-          </router-link>
-          <br />
-          <label class="card-text">
-            <strong>Ingresos:</strong> ${{
-              cajaAbierta.totalImporteIngresos ?? '0.00'
-            }}
-          </label>
-          <br />
-          <router-link
-            class="btn btn-sm btn-success mt-2 m-2"
-            to="/formingreso"
-          >
-            <i class="fas fa-plus-circle mr-1"></i> Agregar ingreso
-          </router-link>
-          <router-link
-            class="btn btn-sm btn-outline-success mt-2 m-2"
-            to="/listingreso"
-          >
-            <i class="fas fa-list-ul mr-1"></i> Listado de ingresos
-          </router-link>
-          <br />
-          <label class="card-text">
-            <strong>Egresos: </strong> ${{
-              cajaAbierta.totalImporteEgresos ?? '0.00'
-            }}
-          </label>
-          <br />
-          <router-link class="btn btn-sm btn-success mt-2 m-2" to="/formegreso">
-            <i class="fas fa-plus-circle mr-1"></i> Agregar egreso
-          </router-link>
-          <router-link
-            class="btn btn-sm btn-outline-success mt-2 m-2"
-            to="/listegreso"
-          >
-            <i class="fas fa-list-ul mr-1"></i> Listado de egresos
-          </router-link>
-          <br />
-          <label class="card-text">
-            Efectivo en caja:
-            <strong>${{ cajaAbierta.efectivoEnCaja ?? '0.00' }}</strong>
-          </label>
-        </div>
-        <div class="flex flex-col items-center mt-4" v-if="!cajaAbierta.isOpen">
-          <span class="text-red-500 font-bold">No hay cajas abiertas</span>
-          <router-link class="text-blue-500 mt-2" to="/abrircaja"
-            >Abrir caja</router-link
-          >
+          <p class="flex card-text text-sm">
+            <strong>Turno:</strong> {{ cajaAbierta.turno }}
+          </p>
+          <p class="flex card-text text-sm">
+            <strong>Inicial:</strong> ${{ cajaAbierta.montoInicial ?? "0.00" }}
+          </p>
+          <p class="flex card-text text-sm">
+            <strong>Cantidad:</strong> {{ cajaAbierta.cantidadLavados ?? 0 }}
+          </p>
+          <p class="flex card-text text-sm">
+            <strong>Importe:</strong> ${{ cajaAbierta.totalImporteLavados ?? 0 }}
+          </p>
+          <p class="flex card-text text-sm">
+            <strong>Ingresos:</strong> ${{ cajaAbierta.totalImporteIngresos ?? "0.00" }}
+          </p>
+          <p class="flex card-text text-sm">
+            <strong>Egresos:</strong> ${{ cajaAbierta.totalImporteEgresos ?? "0.00" }}
+          </p>
+          <p class="flex card-text text-sm">
+            <strong>Efectivo en caja:</strong> ${{ cajaAbierta.efectivoEnCaja ?? "0.00" }}
+          </p>
         </div>
       </div>
+      <div class="flex p-0 mt-4 gap-1">
+  <router-link
+    class="py-2 px-2 btn-base text-sm text-green-600 hover:text-green-400 hover:shadow-lg flex-grow"
+    to="/formlavado">
+    <i class="fas fa-plus-circle mr-1 text-sm"></i> Agregar venta
+  </router-link>
+  <router-link
+    class="py-2 px-2 btn-base text-sm text-green-600 hover:text-green-400 hover:shadow-lg flex-grow"
+    to="/formingreso">
+    <i class="fas fa-plus-circle mr-1 text-sm"></i> Agregar ingreso
+  </router-link>
+  <router-link
+    class="py-2 px-2 btn-base text-sm text-green-600 hover:text-green-400 hover:shadow-lg flex-grow"
+    to="/formegreso">
+    <i class="fas fa-plus-circle mr-1 text-sm"></i> Agregar egreso
+  </router-link>
+  <router-link
+    class="py-2 px-2 btn-base text-sm text-red-600 hover:text-red-400 hover:shadow-lg flex-grow"
+    to="/cerrarcaja">
+    <i class="fa fa-times-circle mr-1 text-sm"></i> Cerrar caja
+  </router-link>
+</div>
+
     </div>
   </div>
 </template>
 
+
+
 <script>
-// import cajaService from '../services/caja.service.js';
-import cajaService from '../../composables/api/cajaService.js';
-import { reactive, onMounted, ref } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
+import cajaService from "../../composables/api/cajaService.js";
+import { reactive, onMounted, ref } from "vue";
+import { useRouter, useRoute } from "vue-router";
 
 export default {
+  name: "caja",
   setup() {
     let cajaAbierta = ref({});
     const router = useRouter();
     const route = useRoute();
-    cajaAbierta = cajaService.getCajaAbierta();
 
-    onMounted(() => {
-      cajaAbierta = cajaService.getCajaAbierta();
+    onMounted(async () => {
+      cajaAbierta.value = await cajaService.getCajaAbierta();
+      if (cajaAbierta.value == undefined) {
+        router.push("/abrircaja");
+      }
       cajaService.getCajas();
     });
 
@@ -117,13 +112,9 @@ export default {
       cajaAbierta,
     };
   },
-  name: 'Caja',
-  props: {},
-  components: {},
-  created() {},
-  data() {
-    return {};
-  },
-  methods: {},
 };
 </script>
+
+<style>
+
+</style>

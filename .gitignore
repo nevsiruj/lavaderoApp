@@ -1,3 +1,10 @@
 node_modules
 package.json
 package-lock.json
+/dist
+src/config.js
+dist.zip
+src/config.js
+src/config.js
+.vscode/launch.json
+package.json

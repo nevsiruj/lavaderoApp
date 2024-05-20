@@ -1,18 +1,17 @@
 <template>
-  <div class="chart-container">
-    <h3>Ingresos y Egresos</h3>
+  <div class="viewport">
     <canvas ref="chart"></canvas>
   </div>
 </template>
 
 <script>
-import { reactive, onMounted } from 'vue';
-import Chart from 'chart.js';
+import { reactive, onMounted, ref } from 'vue';
+import chart from 'chart.js';
 
 export default {
   name: 'IngresosEgresosChart',
-
   setup() {
+    const chartRef = ref(null)
     const state = reactive({
       chart: null,
       data: {
@@ -63,25 +62,27 @@ export default {
     };
 
     const createChart = () => {
-      const ctx = state.$refs.chart.getContext('2d');
+      if (chartRef.value) {
+        const ctx = chartRef.value.getContext('2d');
 
-      state.chart = new Chart(ctx, {
-        type: 'line',
-        data: state.data,
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            yAxes: [
-              {
-                ticks: {
-                  beginAtZero: true,
+        state.chart = new Chart(ctx, {
+          type: 'line',
+          data: state.data,
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              yAxes: [
+                {
+                  ticks: {
+                    beginAtZero: true,
+                  },
                 },
-              },
-            ],
+              ],
+            },
           },
-        },
-      });
+        });
+      }
     };
 
     onMounted(() => {
@@ -89,13 +90,16 @@ export default {
       createChart();
     });
 
-    return { state };
+    return { state, chartRef };
   },
 };
 </script>
 
-<style scoped>
-.chart-container {
-  margin-top: 2rem;
+<style>
+.container-fluid>.row {
+  padding-top: 5rem;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
 }
 </style>

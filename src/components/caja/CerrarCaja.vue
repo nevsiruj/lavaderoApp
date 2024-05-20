@@ -1,23 +1,32 @@
 <template>
-  <div class="container">
-    <a href="#" @click="goBack">&lt; Volver atrás</a>
-    <form @submit.prevent="CerrarCaja">
-      <h2>Cerrar caja</h2>
-
-      <div class="mb-3">
-        <label for="monto" class="form-label">Declarar Efectivo:</label>
-        <input
-          type="number"
-          class="form-control"
-          id="efectivoDeclarado"
-          v-model="formData.efectivoDeclarado"
-          required
-        />
+  <div class="viewport">
+    <div class="container mx-auto px-4 py-8">
+      <div class="mb-6">
+        <router-link :to="'/caja'" class="text-base text-emerald-300 font-bold hover:text-emerald-600">&lt; Volver atrás</router-link>
       </div>
-      <button type="submit" class="btn btn-primary">Cerrar caja</button>
-    </form>
+      <h2 class="text-2xl font-bold mb-6 text-black">Cerrar caja</h2>
+
+      <div class="mb-6 flex flex-col items-center">
+  <label for="monto" class="text-gray-700 text-base font-bold mb-2">Declarar Efectivo:</label>
+  <div class="w-1/4">
+    <input
+      type="number"
+      class="w-full border border-gray-300 rounded-md py-2 px-3 leading-tight focus:outline-none focus:border-emerald-500"
+      id="efectivoDeclarado"
+      v-model="formData.efectivoDeclarado"
+      required
+    />
+  </div>
+</div>
+      <button @click="CerrarCaja" type="submit"
+        class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 px-4 rounded">
+        Cerrar caja
+      </button>
+    </div>
   </div>
 </template>
+
+
 
 <script>
 import { reactive, onMounted, ref } from 'vue';
@@ -31,11 +40,15 @@ export default {
     const router = useRouter();
     const route = useRoute();
     let cajaAbierta = ref({});
-    cajaAbierta = cajaService.getCajaAbierta();
 
     const formData = reactive({
       efectivoDeclarado: 0,
     });
+
+    const navigateTo = (route) => {
+      router.push(route);
+    };
+
 
     const CerrarCaja = async () => {
       await cajaService
@@ -44,17 +57,22 @@ export default {
       // Reiniciamos los valores del formulario
       formData.efectivoDeclarado = '';
       setTimeout(function () {
-        location.reload();
+        // location.reload();
       }, 1000);
-      router.push('/abrircaja');
+      // router.push('/abrircaja');
+      router.replace('/abrircaja');
+
     };
 
-    onMounted(() => {});
+    onMounted(async () => {
+      cajaAbierta.value = await cajaService.getCajaAbierta();
+    });
 
     return {
       formData,
       CerrarCaja,
       cajaAbierta,
+      navigateTo
     };
   },
 };

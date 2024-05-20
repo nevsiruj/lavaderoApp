@@ -4,14 +4,18 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Eliminar {{ message }}</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
                 </div>
                 <div class="modal-body">
                     <p>Desea eliminar este {{ message }}?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" @click="confirmar()">Confirmar</button>
+                    <button type="button" data-bs-dismiss="modal">
+                        <span class="btn btn-secondary">Cancelar</span>
+                    </button>
+                    <button type="button" @click="confirmar()">
+                        <span class="btn btn-primary">Confirmar</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -26,14 +30,14 @@ export default {
         message: {
             type: String,
             required: true
-        },  required: true
-        
+        }, required: true
+
     },
-    setup(props, {emit}) {
+    setup(props, { emit }) {
         onMounted(async () => {
             console.log("modal mount")
         });
-        const id= ref(0)
+        const id = ref(0)
         const confirmar = () => {
 
             emit('confirm', id.value);
@@ -46,7 +50,7 @@ export default {
                 backdrop: true
             };
             const myModal = new Modal(modal, option);
-            
+
             return myModal;
         };
 
@@ -56,7 +60,7 @@ export default {
             getModal,
             confirmar,
             id
-            
+
         };
     }
 };

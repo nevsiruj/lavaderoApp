@@ -1,17 +1,13 @@
 <template>
-  <div>
-  <Modal message="lavado" @confirm="deleteLavado" ref="modalComponent" />
-
-    <div class="mb-3">
-      <router-link to="/"> &lt;Volver atrás </router-link>
-    </div>
-
-    <div class="card m-4">
-      <div class="card-header">Lavados</div>
+  <div class="viewport">
+    <Modal message="lavado" @confirm="deleteLavado" ref="modalComponent" />
+    <div class="mx-auto rounded-lg py-3 px-2 shadow-md bg-white">
+      <router-link class="mt-2 text-emerald-300 hover:text-emerald-600" to="/caja"> &lt;Volver atrás</router-link>
+      <div class="mb-3">
+      </div>
+      <h1 class="font-bold text-center">Facturas</h1>
       <div class="card-body">
-        <table
-          class="table table-responsive table-hover table-striped table-sm"
-        >
+        <table class="table table-responsive table-hover table-striped table-sm">
           <thead>
             <tr>
               <th>Fecha</th>
@@ -28,16 +24,10 @@
               <td>{{ Number(lavado.importe) }}</td>
               <td class="px-2 py-1 whitespace-nowrap">
                 <div class="flex space-x-2">
-                  <button
-                    class="text-blue-600 hover:text-blue-800 focus:outline-none"
-                    @click="editLavado(lavado)"
-                  >
+                  <button class="text-blue-600 hover:text-blue-800 focus:outline-none" @click="editLavado(lavado)">
                     <i class="fas fa-edit"></i>
                   </button>
-                  <button
-                    class="text-red-600 hover:text-red-800 focus:outline-none"
-                    @click="openModal(lavado.id)"
-                  >
+                  <button class="text-red-600 hover:text-red-800 focus:outline-none" @click="openModal(lavado.id)">
                     <i class="fas fa-trash-alt"></i>
                   </button>
                 </div>
@@ -45,6 +35,10 @@
             </tr>
           </tbody>
         </table>
+      </div>
+      <div class="w-full my-2 flex gap-2 justify-center">
+        <p class="text-sm p-1 rounded-md">Num. de transacciones: {{ autosLavados.length }}</p>
+        <p class="text-sm p-1 rounded-md">Total facturado:</p>
       </div>
     </div>
   </div>
@@ -69,16 +63,16 @@ export default {
   },
   setup() {
     let autosLavados = ref([]);
-    // let tipoLavado = ref([]);
-    const router = useRouter();
     let cajaAbierta = ref({});
+
+    const router = useRouter();
     const modalComponent = ref(null);
-    const modal= ref()
+    const modal = ref()
 
     // tipoLavado = lavadoService.getTipoLavado();
 
     onMounted(async () => {
-      cajaAbierta = cajaService.getCajaAbierta();
+      cajaAbierta.value = await cajaService.getCajaAbierta();
       autosLavados.value = await lavadoService.getLavadosByCaja(
         cajaAbierta.value.id
       );
@@ -104,7 +98,7 @@ export default {
         console.error(error);
       }
     };
-    const openModal= async (lavadoId) =>{
+    const openModal = async (lavadoId) => {
       modal.value = await modalComponent.value.getModal(lavadoId);
       modal.value.show()
     }
@@ -122,19 +116,19 @@ export default {
     return {
       autosLavados,
       cajaAbierta,
-      editLavado,
-      deleteLavado,
       router,
       modalComponent,
       modal,
+      editLavado,
+      deleteLavado,
       openModal,
       formatDate
-      
+
     };
   },
   name: 'LavadoList',
   props: {},
-  created() {},
+  created() { },
   data() {
     return {};
   },

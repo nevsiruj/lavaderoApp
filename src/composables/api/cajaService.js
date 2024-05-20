@@ -7,96 +7,103 @@ const cajaService = (() => {
   const caja = ref({
     responsable: '',
     montoInicial: 0,
+    turno: 0,
     isOpen: false,
     cantidadLavados: 0,
   });
+
   const abrirCaja = async (_data) => {
+    caja.value = {};
     caja.value.responsable = _data.responsable;
+    caja.value.turno = _data.turno;
     caja.value.montoInicial = _data.montoInicial;
     caja.value.isOpen = true;
     caja.value.cantidadLavados = 0;
-    fetch(`${API_URL}/caja`, {
-      method: 'POST',
-      body: JSON.stringify(caja.value),
+    try {
+      const response = await fetchWithToken(`${API_URL}/caja`, {
+        method: 'POST',
+        body: JSON.stringify(caja.value),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include', // Include credentials for cookies
+      });
+
+      const data = await response.json();
+      console.log('Respuesta:', data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+    return caja.value;
+  };
+
+  const cerrarCaja = async (id, data) => {
+    try {
+      /* await axios.post(`${API_URL}/caja/cerrarCaja?cajaId=${id}`, data, {
+        withCredentials: true, // Include credentials for cookies
+      }); */
+      const response = await fetchWithToken(`${API_URL}/caja/cerrarCaja?cajaId=${id}`, { 
+      credentials: 'include', method: 'POST',
+      body: JSON.stringify(data),
       headers: {
         'Content-Type': 'application/json',
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('Respuesta:', data);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-    return await caja.value;
+      }, });
+      const respuesta = await response.json();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  // const cerrarCaja = async (_data) => {
-  //   fetch(`https://localhost:44312/api/caja/cerrarCaja?cajaId=${_data}`, {
-  //     method: 'POST',
-  //   })
-  //     .then((response) => {
-  //       if (response.ok) {
-  //         // El cierre de la caja fue exitoso
-  //         console.log('La caja fue cerrada exitosamente');
-  //       } else {
-  //         throw new Error('Ocurrió un error al cerrar la caja');
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error:', error);
-  //     });
-  // };
-  const cerrarCaja = async (id, data) => {
-    await axios
-      .post(`${API_URL}/caja/cerrarCaja?cajaId=${id}`, data)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const getCajaAbierta = async () => {
+    try {
+      const response = await fetchWithToken(`${API_URL}/caja/cajaabierta`, { credentials: 'include' });
+      const data = await response.json();
+      caja.value = data;
+      return caja.value;
+    } catch (error) {
+      console.error('Error al obtener caja abierta:', error);
+    }
+
+    // Code related to fetching related lavados can be added here
   };
 
-  const getCajaAbierta = () => {
-    fetch(`${API_URL}/caja/cajaabierta`)
-      .then((response) => response.json())
-      .then((data) => {
-        // console.log(data);
-        caja.value = data;
-        return data.value;
-      })
-      .catch(() => false);
-
-    // var lavadosRelacionados = lavadoService.getLavadosByCaja(caja.value.id);
-    // lavadosRelacionados.forEach((e) => {
-    //   caja.value.monto += e.importe;
-    // });
-    // caja.value.cantidadLavados = lavadosRelacionados.length;
-
-    return caja;
+  const getLavadosByCaja = async () => {
+    try {
+      const lavados = await lavadoService.getLavados();
+      caja.value.cantidadLavados = lavados.filter((lavado) => lavado.cajaId === caja.value.id).length;
+    } catch (error) {
+      console.error('Error al obtener lavados por caja:', error);
+    }
   };
 
-  const getLavadosByCaja = () => {
-    const lavados = lavadoService.getLavados();
-    caja.value.cantidadLavados = lavados.find((e) => (e.cajaId = 1)).length;
-  };
-
-  const getCajas = () => {
-    fetch(`${API_URL}/caja`).then((response) =>
-      response.json()
-    );
-    // .then((data) => console.log(data));
+  const getCajas = async () => {
+    try {
+      const response = await fetchWithToken(`${API_URL}/caja`, { credentials: 'include' });
+      const data = await response.json();
+      console.log(data); // Descomentado para ver la data.
+    } catch (error) {
+      console.error('Error al obtener cajas:', error);
+    }
   };
 
   const ingresar = (monto) => {
-    caja.monto += monto;
+    caja.value.monto += monto;
   };
 
   const retirar = (monto) => {
-    caja.monto -= monto;
+    caja.value.monto -= monto;
   };
+
+  async function fetchWithToken(url, options = {}) {
+    const token = localStorage.getItem('jwt-token');
+    if (token) {
+      options.headers = options.headers || {};
+      options.headers['Authorization'] = 'Bearer ' + token;
+    }
+    options.credentials = 'include';
+    const response = await fetch(url, options);
+    return response;
+  }
 
   return {
     caja,

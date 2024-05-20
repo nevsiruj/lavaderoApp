@@ -14,10 +14,25 @@ import FormIngreso from './components/ingreso/FormIngreso.vue';
 import ListIngreso from './components/ingreso/ListIngreso.vue';
 import Dashboard from './components/admin/Dashboard.vue';
 import LavadosTable from './components/admin/LavadosTable.vue';
+import Login from './components/login/Login.vue';
+import Servicios from './components/servicios/Servicios.vue'
+import FormServicios from './components/servicios/FormServicios.vue'
+import TipoServicios from './components/TipoServicios/TipoServicio.vue'
+import FormTipoServicio from './components/TipoServicios/FormTipoServicio.vue'
+import FormAgenda from './components/agenda/FormAgenda.vue'
+import Agenda from './components/agenda/Agenda.vue'
+import FormUsuarios from './components/usuarios/FormUsuarios.vue'
+import Usuarios from './components/usuarios/Usuarios.vue'
+
 
 const routes = [
   {
     path: '/',
+    name: 'Login',
+    component: Login,
+  },
+  {
+    path: '/caja',
     name: 'Caja',
     component: Caja,
   },
@@ -91,9 +106,49 @@ const routes = [
     component: Egresos,
   },
   {
+    path: '/servicios',
+    name: 'Servicios',
+    component: Servicios,
+  },
+  {
+    path: '/tipoServicios',
+    name: 'TipoServicios',
+    component: TipoServicios,
+  },
+  {
+    path: '/formServicios',
+    name: 'FormServicios',
+    component: FormServicios,
+  },
+  {
+    path: '/formTipoServicio',
+    name: 'FormTipoServicio',
+    component: FormTipoServicio,
+  },
+  {
     path: '/cerrarcaja',
     name: 'CerrarCaja',
     component: CerrarCaja,
+  },
+  {
+    path: '/formAgenda',
+    name: 'FormAgenda',
+    component: FormAgenda,
+  },
+  {
+    path: '/agenda',
+    name: 'Agenda',
+    component: Agenda,
+  },
+  {
+    path: '/formUsuarios',
+    name: 'FormUsuarios',
+    component: FormUsuarios,
+  },
+  {
+    path: '/usuarios',
+    name: 'Usuarios',
+    component: Usuarios,
   },
 
   // { path: '/editar/:id',  component: FrutaForm, props: true },
@@ -101,6 +156,7 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(),
+  base: '/',
   routes,
 });
 

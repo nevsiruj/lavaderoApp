@@ -1,133 +1,58 @@
 <template>
-  <div class="container mt-3">
-    <div class="mb-3">
-      <router-link :to="isAdmin ? '/lavados' : '/ListLavadosCaja'" class="text-blue-500"
-        >&lt; Volver atrás</router-link
-      >
-    </div>
-
-    <div class="card shadow-lg">
-      <div class="card-body">
-        <form>
-          <div class="form-group">
-            <label for="descripcion" class="text-black">Descripción</label>
-            <input
-              type="text"
-              class="
-                form-input
-                mt-1
-                block
-                w-full
-                rounded-md
-                border-gray-300
-                shadow-sm
-                focus:border-blue-500 focus:ring focus:ring-blue-200
-              "
-              id="descripcion"
-              v-model="form.descripcion"
-            />
-          </div>
-          <div class="form-group">
-            <label for="tipo-vehiculo" class="text-black"
-              >Tipo de vehículo</label
-            >
-            <select
-              class="
-                form-select
-                mt-1
-                block
-                w-full
-                rounded-md
-                border-gray-300
-                shadow-sm
-                focus:border-blue-500 focus:ring focus:ring-blue-200
-              "
-              id="tipo-vehiculo"
-              v-model="form.tipoVehiculoId"
-            >
-              <option value="">Seleccionar tipo de vehículo</option>
-              <option
-                v-for="tipoVehiculo in tiposVehiculos"
-                :key="tipoVehiculo.id"
-                :value="tipoVehiculo.id"
-              >
-                {{ tipoVehiculo.descripcion }}
-              </option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="tipo-lavado" class="text-black">Tipo de lavado</label>
-            <select
-              class="
-                form-select
-                mt-1
-                block
-                w-full
-                rounded-md
-                border-gray-300
-                shadow-sm
-                focus:border-blue-500 focus:ring focus:ring-blue-200
-              "
-              id="tipo-lavado"
-              v-model="form.tipoLavadoId"
-            >
-              <option value="">Seleccionar tipo de lavado</option>
-              <option
-                v-for="tipoLavado in tiposLavados"
-                :key="tipoLavado.id"
-                :value="tipoLavado.id"
-              >
-                {{ tipoLavado.descripcion }}
-              </option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="importe" class="text-black">Importe</label>
-            <input
-              type="number"
-              class="
-                form-input
-                mt-1
-                block
-                w-full
-                rounded-md
-                border-gray-300
-                shadow-sm
-                focus:border-blue-500 focus:ring focus:ring-blue-200
-              "
-              id="importe"
-              v-model="form.importe"
-            />
-          </div>
-          <div class="form-group" v-if="isAdmin">
-        <label for="importe">Fecha</label>
-        <input
-          type="date"
-          class="form-control"
-          id="importe"
-          v-model="form.fecha"
-          required
-        />
+  <div class="viewport">
+    <div class="card p-4 mx-2 shadow-md overflow-hidden w-fit self-center">
+      <div class="mb-3">
+        <router-link :to="isAdmin ? '/lavados' : '/Caja'" class="text-emerald-300 hover:text-emerald-600">&lt; Volver atrás</router-link>
       </div>
-          <button
-            type="submit"
-            class="
-              btn btn-primary
-              mt-3
-              bg-blue-500
-              hover:bg-blue-600
-              text-white
-              font-bold
-              py-2
-              px-4
-              rounded
-            "
-            @click.prevent="submitForm"
-          >
-            Guardar
-          </button>
-        </form>
-      </div>
+      <h1 class="font-bold">Factura</h1>
+      <form>
+        <div class="form-group">
+          <label for="descripcion" class="text-black">Descripción</label>
+          <input type="text" class="
+          form-control form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-300 focus:ring focus:ring-blue-200
+              " id="descripcion" v-model="form.descripcion" />
+        </div>
+        <div class="form-group">
+          <label for="tipo-vehiculo" class="text-black">Servicio</label>
+          <select class="
+          form-select form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-300 focus:ring focus:ring-blue-200
+              " id="tipo-vehiculo" v-model="form.tipoVehiculoId">
+            <option value="">Seleccionar servicio</option>
+            <option v-for="tipoVehiculo in tiposVehiculos" :key="tipoVehiculo.id" :value="tipoVehiculo.id">
+              {{ tipoVehiculo.descripcion }}
+            </option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="tipo-lavado" class="text-black">Tipo de servicio</label>
+          <select class="
+          form-control form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-300 focus:ring focus:ring-blue-200
+              " id="tipo-lavado" v-model="form.tipoLavadoId">
+            <option value="">Seleccionar tipo de servicio</option>
+            <option v-for="tipoLavado in tiposLavados" :key="tipoLavado.id" :value="tipoLavado.id">
+              {{ tipoLavado.descripcion }}
+            </option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="importe" class="text-black">Importe</label>
+          <input type="number" class="
+          form-input form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-300 focus:ring focus:ring-blue-200
+              " id="importe" v-model="form.importe" />
+        </div>
+        <div v-if="isNegativeImport">
+          <p class='text-red-600'>No ingresar valores negativos</p>
+        </div>
+        <div class="form-group" v-if="isAdmin">
+          <label for="importe">Fecha</label>
+          <input type="date" class="form-control" id="importe" v-model="form.fecha" required />
+        </div>
+        <button type="submit" class="
+        form-control form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-300 focus:ring focus:ring-blue-200
+            " @click.prevent="submitForm">
+          Guardar
+        </button>
+      </form>
     </div>
   </div>
 </template>
@@ -145,19 +70,23 @@ export default {
     const router = useRouter();
     const route = useRoute();
     const idCaja = route.query.idCaja;
-    const isAdmin = ref(false);
+    let isAdmin = ref(false);
+    let cajaAbierta = ref({});
+    let tiposLavados = ref([]);
+    let tiposVehiculos = ref([]);
+    let isNegativeImport = ref(false)
 
     // alert(idCaja);
-    const form = ref({
+    let form = ref({
       id: 0,
       cajaId: 0,
       fecha: '',
       tipoVehiculoId: '',
       tipoLavadoId: '',
       descripcion: '',
-      importe: '',
+      importe: null,
       responsable: '',
-      fecha:''
+      fecha: ''
       // tipoVehiculo: {
       //   id: 0,
       //   descripcion: '',
@@ -167,10 +96,7 @@ export default {
       //   descripcion: '',
       // },
     });
-    let tiposLavados = ref([]);
-    let tiposVehiculos = ref([]);
-    let cajaAbierta = ref({});
-    cajaAbierta = cajaService.getCajaAbierta();
+
     console.log(cajaAbierta);
     // const tiposLavados = ref([{ id: 1, nombre: 'Lavado Común' }]);
     // const tiposVehiculos = useTiposVehiculos();
@@ -183,14 +109,17 @@ export default {
     // ]);
 
     const submitForm = async () => {
-      // debugger
       form.value.cajaId = cajaAbierta.value.id;
       form.value.responsable = cajaAbierta.value.responsable;
+      if (form.value.importe < 1) {
+        isNegativeImport.value = true
+        return
+      }
       if (form.value.fecha != '') {
-        const fecha= new Date(form.value.fecha)
-        const fechaFormateada= fecha.toISOString();
+        const fecha = new Date(form.value.fecha)
+        const fechaFormateada = fecha.toISOString();
         form.value.fecha = fechaFormateada
-      }else{
+      } else {
         form.value.fecha = new Date().toISOString()
       }
       if (form.value.id == 0) {
@@ -203,7 +132,7 @@ export default {
       form.tipoVehiculoId = '';
       form.tipoLavadoId = '';
       form.descripcion = '';
-      form.importe = '';
+      form.importe = null;
       form.responsable = '';
       form.fecha = '';
       if (isAdmin.value) {
@@ -213,7 +142,9 @@ export default {
         router.push('/ListLavadosCaja');
       }
     };
+
     onMounted(async () => {
+      cajaAbierta.value = await cajaService.getCajaAbierta();
       tiposLavados.value = await lavadoService.getTipoLavado();
       tiposVehiculos.value = await lavadoService.getTipoVehiculo();
 
@@ -233,6 +164,7 @@ export default {
     });
 
     return {
+      isNegativeImport,
       form,
       tiposVehiculos,
       tiposLavados,

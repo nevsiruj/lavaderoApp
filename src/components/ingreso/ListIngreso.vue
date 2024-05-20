@@ -1,41 +1,40 @@
 <template>
-  <Modal message="ingreso" @confirm="deleteIngreso" ref="modalComponent" />
-
-  <div class="container">
-    <div class="mb-3">
-      <router-link to="/"> &lt;Volver atrás </router-link>
+  <div class="viewport">
+    <Modal message="ingreso" @confirm="deleteIngreso" ref="modalComponent" />
+    <div class="card p-4 m-auto shadow-md overflow-hidden w-fit md:self-center">
+      <div class="mb-3">
+        <router-link class="mt-2 text-emerald-300 hover:text-emerald-600" to="/caja"> &lt;Volver atrás </router-link>
+      </div>
+      <h1 class="font-bold">Lista de Ingresos</h1>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Descripción</th>
+            <th>Importe</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="ingreso in ingresos" :key="ingreso.id">
+            <td>{{ ingreso.descripcion }}</td>
+            <td>{{ ingreso.importe }}</td>
+            <td class="px-2 py-1 whitespace-nowrap">
+              <div class="flex space-x-2">
+                <button class="text-blue-600 hover:text-blue-800 focus:outline-none" @click="editIngreso(ingreso)">
+                  <i class="fas fa-edit"></i>
+                </button>
+                <button class="text-red-600 hover:text-red-800 focus:outline-none" @click="openModal(ingreso.id)">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="w-full my-2 flex gap-2 justify-center">
+        <p class="text-sm p-1 rounded-md">Num. de transacciones: {{ ingresos.length }}</p>
+        <p class="text-sm p-1 rounded-md">Total facturado:</p>
+      </div>
     </div>
-    <h1>Ingresos</h1>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Descripción</th> 
-          <th>Importe</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="ingreso in ingresos" :key="ingreso.id">
-          <td>{{ ingreso.descripcion }}</td>
-          <td>{{ ingreso.importe }}</td>
-          <td class="px-2 py-1 whitespace-nowrap">
-            <div class="flex space-x-2">
-              <button
-                class="text-blue-600 hover:text-blue-800 focus:outline-none"
-                @click="editIngreso(ingreso)"
-              >
-                <i class="fas fa-edit"></i>
-              </button>
-              <button
-                class="text-red-600 hover:text-red-800 focus:outline-none"
-                @click="openModal(ingreso.id)"
-              >
-                <i class="fas fa-trash-alt"></i>
-              </button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
   </div>
 </template>
 
@@ -56,10 +55,10 @@ export default {
     let cajaAbierta = ref({});
     const router = useRouter();
     const route = useRoute();
-    cajaAbierta = cajaService.getCajaAbierta();
+    // cajaAbierta = cajaService.getCajaAbierta(); 
     let ingresos = ref([]);
-    const modalComponent= ref(null)
-    const modal= ref()
+    const modalComponent = ref(null)
+    const modal = ref()
 
     onMounted(async () => {
       fetchIngresos();
@@ -72,7 +71,7 @@ export default {
     };
     const fetchIngresos = async () => {
       try {
-        cajaAbierta = cajaService.getCajaAbierta();
+        cajaAbierta.value = await cajaService.getCajaAbierta();
         ingresos.value = await ingresoService.getIngresosByCaja(
           cajaAbierta.value.id
         );
@@ -93,7 +92,7 @@ export default {
         console.error(error);
       }
     };
-    const openModal = async (ingresoId)=>{
+    const openModal = async (ingresoId) => {
       modal.value = await modalComponent.value.getModal(ingresoId);
       modal.value.show()
     }
@@ -106,12 +105,12 @@ export default {
       modalComponent,
       modal,
       openModal
-      
+
     };
   },
   name: 'Ingreso',
   props: {},
-  created() {},
+  created() { },
   data() {
     return {};
   },
