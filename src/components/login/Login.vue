@@ -21,7 +21,7 @@
           <button class="w-full mb-3 px-4 py-3 rounded-md bg-blue-600 hover:bg-blue-500 focus:outline-none" type="submit">Iniciar Sesión</button>
         </form>      
       </div>      
-      <img class="w-full sm:w-1/2 rounded-xl ml-6" src="../../Img/imglogin.jpg" alt="Imagen de inicio de sesión">
+      <img class="w-3/4 md-w-full rounded-xl ml-6" src="../../Img/imglogin.jpg" alt="Imagen de inicio de sesión">
     </div>   
   </div>
 
