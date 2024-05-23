@@ -161,8 +161,8 @@ export default {
 </script>
 
 <style>
-/*.container {
+container {
   height: min-content;
   align-self: center;
-}*/
+}
 </style>
