@@ -24,7 +24,6 @@
       <img class="w-3/4 md-w-full rounded-xl ml-6" src="../../Img/imglogin.jpg" alt="Imagen de inicio de sesión">
     </div>   
   </div>
-
   <!-------------------------------------------->
 
   <!--<div
