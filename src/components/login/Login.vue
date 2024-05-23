@@ -1,5 +1,5 @@
 <template>
-  <!--<div class="bg-gray-900 min-h-screen flex justify-center items-center">
+  <div class="bg-gray-900 min-h-screen flex justify-center items-center">
     <div class="flex flex-col sm:flex-row max-w-4xl w-full">
       <div class="w-full sm:max-w-md p-8 space-y-3 rounded-xl bg-gray-800 shadow-lg text-white">
         <h2 class="text-2xl font-bold text-center">Iniciar sesión en tu cuenta</h2>
@@ -12,7 +12,7 @@
             <label class="block mb-3" for="password">Password</label>
             <input class="w-full mb-3 px-4 py-3 rounded-md bg-gray-700 focus:outline-none" type="password" id="password" v-model="password" required />
           </div>
-           Mover el spinner aquí 
+           <!--Mover el spinner aquí -->
           <div v-if="loading" class="flex justify-center items-center">
             <div class="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full" role="status">
               <span class="visually-hidden">Cargando...</span>
@@ -23,11 +23,11 @@
       </div>      
       <img class="w-full sm:w-1/2 rounded-xl ml-6" src="../../Img/imglogin.jpg" alt="Imagen de inicio de sesión">
     </div>   
-  </div>-->
+  </div>
 
   <!-------------------------------------------->
 
-  <div
+  <!--<div
     class="bg-gray-900 flex min-h-screen flex-col justify-content: flex-start px-6 py-12 lg:px-8"
   >
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -90,7 +90,7 @@
         </div>
       </form>
     </div>
-  </div>
+  </div>-->
 </template>
 
 <script>
