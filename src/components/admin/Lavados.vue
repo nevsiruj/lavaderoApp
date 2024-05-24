@@ -1,5 +1,5 @@
 <template>
-  <div class="viewport mt-10">
+  <div class="mt-10">
     <h1 class="text-3xl font-semibold mb-6 " >Ventas</h1>
     <Toast message="Lavado Eliminado" ref="toastComponent" />
     <Modal message="lavado" @confirm="deleteLavado" ref="modalComponent" />

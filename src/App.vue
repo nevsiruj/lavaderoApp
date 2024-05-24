@@ -1,8 +1,15 @@
 <template>
-  <div class="bg-stone-200" id="app">
+  <!--<div class="bg-stone-200" id="app">
+    <SideBar v-if="$route.name != 'Login'" />
+    <router-view />
+  </div>-->
+
+  <div id="app">
     <SideBar v-if="$route.name != 'Login'" />
     <router-view />
   </div>
+
+
 </template>
 
 <script>
