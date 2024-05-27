@@ -31,7 +31,7 @@
       class="btn btn-base btn-success mr-4"
       :to="{ path: '/formlavado', query: { isAdmin: true } }"
     >
-      <i class="fas fa-plus-circle mr-2"></i> Agregar Lavado
+      <i class="fas fa-plus-circle mr-2"></i> Agregar Ventas
     </router-link>
     <button class="btn btn-base btn-primary" @click="fetchLavados">
       <i class="fas fa-sync-alt mr-2"></i> Actualizar
