@@ -1,5 +1,5 @@
 <template>
-  <div class="viewport px-3 mt-10">    
+  <div class="px-3 mt-10">    
     <div class="m-auto rounded-lg py-2 px-2">
       <h1 class="text-3xl font-semibold mb-4">Tipos de Servicios</h1>
       <div class="flex justify-center">

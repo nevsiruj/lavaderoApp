@@ -24,7 +24,6 @@ import Agenda from './components/agenda/Agenda.vue'
 import FormUsuarios from './components/usuarios/FormUsuarios.vue'
 import Usuarios from './components/usuarios/Usuarios.vue'
 
-
 const routes = [
   {
     path: '/',

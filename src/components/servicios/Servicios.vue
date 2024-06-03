@@ -1,5 +1,5 @@
 <template>
-    <div class="viewport px-3 mt-10">
+    <div class="px-3 mt-10">
         <h1 class="text-3xl font-semibold mb-6 " >Servicios</h1>
       <div class="flex flex-col items-center justify-center space-y-2 md:space-y-0 mb-2">
         <div class="flex space-x-2">
@@ -153,12 +153,12 @@ export default {
 </script>
 
 <style>
-.viewport {
+/*.viewport {
     display: flex;
     flex-direction: column;
     justify-content: center;
     max-width: 100%;
-}
+}*/
 
 .table-responsive {
     overflow-x: auto;
