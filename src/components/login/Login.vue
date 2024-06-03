@@ -70,14 +70,17 @@
               />
             </div>
           </div>
+          <div v-if="errorMessage" class="text-red-500 text-center">
+            {{ errorMessage }}
+          </div>
+
 
           <!--Inicio spinner -->
           <div v-if="loading" class="flex justify-center items-center">
-            <div
-              class="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full"
-              role="status"
-            >
-              <span class="visually-hidden">Cargando...</span>
+            <div>
+              <!-- <img src="../../../dist/img/spin.svg" alt="Loading..." class="w-10 h-10 animate-spin"> -->
+
+              <span class="invisible">Cargando...</span>
             </div>
           </div>
           <!--Inicio spinner -->
@@ -115,27 +118,54 @@ export default {
     const loading = ref(false);
     const router = useRouter();
     const cajaAbierta = ref({});
+    const errorMessage = ref(""); 
 
+    // const login = async () => {
+    //   loading.value = true; // Activa el spinner antes de iniciar el proceso de inicio de sesión
+    //   try {
+    //     const response = await authService.login(email.value, password.value);
+    //     if (response.token) {
+    //       // Redireccionar a la página después del inicio de sesión exitoso
+    //       cajaAbierta.value = await cajaService.getCajaAbierta();
+    //       console.log(cajaAbierta.value);
+    //       if (cajaAbierta.value == undefined) {
+    //         router.push("/abrircaja");
+    //       } else {
+    //         router.push("/caja");
+    //       }
+    //     } else {
+    //       console.error("Inicio de sesión fallido");
+    //     }
+    //   } catch (error) {
+    //     console.error("Error de inicio de sesión", error);
+    //   } finally {
+    //     loading.value = false; // Desactiva el spinner una vez que se complete el proceso de inicio de sesión
+    //   }
+    // };
     const login = async () => {
-      loading.value = true; // Activa el spinner antes de iniciar el proceso de inicio de sesión
+      loading.value = true;
+      errorMessage.value = "";
       try {
         const response = await authService.login(email.value, password.value);
         if (response.token) {
-          // Redireccionar a la página después del inicio de sesión exitoso
           cajaAbierta.value = await cajaService.getCajaAbierta();
-          console.log(cajaAbierta.value);
-          if (cajaAbierta.value == undefined) {
+          if (!cajaAbierta.value) {
             router.push("/abrircaja");
           } else {
             router.push("/caja");
           }
-        } else {
-          console.error("Inicio de sesión fallido");
         }
       } catch (error) {
+        if (error.status === 401) {
+          errorMessage.value = "Usuario o contraseña incorrecta";
+        } else {
+          errorMessage.value = "Error de inicio de sesión";
+        }
+
         console.error("Error de inicio de sesión", error);
+        
       } finally {
-        loading.value = false; // Desactiva el spinner una vez que se complete el proceso de inicio de sesión
+        loading.value = false;
       }
     };
 
@@ -164,6 +194,7 @@ export default {
       password,
       loading,
       login,
+      errorMessage,
     };
   } //Quitaste la coma de aca
 };

@@ -24,6 +24,7 @@ import Agenda from './components/agenda/Agenda.vue'
 import FormUsuarios from './components/usuarios/FormUsuarios.vue'
 import Usuarios from './components/usuarios/Usuarios.vue'
 
+
 const routes = [
   {
     path: '/',
@@ -149,7 +150,11 @@ const routes = [
     name: 'Usuarios',
     component: Usuarios,
   },
-
+  {
+    path: '/owner/usuarios',
+    name: 'UsuariosApp',
+    component: Usuarios,
+  },
   // { path: '/editar/:id',  component: FrutaForm, props: true },
 ];
 

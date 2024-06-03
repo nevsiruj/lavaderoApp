@@ -4,7 +4,6 @@
     <router-view />
   </div>-->
 
-
   <!--Header Orinal  
   <div id="app">
     <SideBar v-if="$route.name != 'Login'" />
@@ -12,14 +11,15 @@
   </div>-->
 
   <div>
-    <Panel v-if="$route.name != 'Login'" />   
-       <div>
-        <router-view />
-       </div>
+    <Panel v-if="$route.name != 'Login'" />
+    <div class="p-4 sm:ml-64">
+      <div class="p-4">
+        <div class="flex items-center justify-center">
+          <router-view />
+        </div>
+      </div>
+    </div>
   </div>
-
-
-
 </template>
 
 <script>
@@ -38,9 +38,7 @@ export default {
     //SideBar,
     Panel,
   },
-
 };
-
 </script>
 
 <style>
@@ -55,7 +53,5 @@ export default {
   display: flex;
   min-height: 100vh;
 }*/
-
-
 
 </style>

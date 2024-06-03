@@ -18,7 +18,8 @@ const authService = (() => {
       localStorage.setItem('jwt-token', data.token); 
       return data;
     } else {
-      throw new Error('Login failed');
+      const errorData = await response.json();
+        throw { status: response.status, message: errorData.message || 'Login failed' };
     }
   } catch (error) {
     throw error;

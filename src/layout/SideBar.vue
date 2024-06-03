@@ -81,7 +81,7 @@
 </template>
 
 <script>
-import { useRouter } from 'vue-router';
+/*import { useRouter } from 'vue-router';
 
 export default {
   name: 'SideBar',
@@ -110,11 +110,11 @@ export default {
       navigateTo
     };
   },
-};
+};*/
 </script>
 
 <style scoped>
-.sidebar_menu {
+/*.sidebar_menu {
   height: 100vh;
-}
+}*/
 </style>
