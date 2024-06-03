@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-10">
+  <div class="viewport mt-10">
     <h1 class="text-3xl font-semibold mb-6 " >Ventas</h1>
     <Toast message="Lavado Eliminado" ref="toastComponent" />
     <Modal message="lavado" @confirm="deleteLavado" ref="modalComponent" />
@@ -31,7 +31,7 @@
       class="btn btn-base btn-success mr-4"
       :to="{ path: '/formlavado', query: { isAdmin: true } }"
     >
-      <i class="fas fa-plus-circle mr-2"></i> Agregar Ventas
+      <i class="fas fa-plus-circle mr-2"></i> Agregar Lavado
     </router-link>
     <button class="btn btn-base btn-primary" @click="fetchLavados">
       <i class="fas fa-sync-alt mr-2"></i> Actualizar

@@ -1,25 +1,8 @@
 <template>
-  <!--<div class="bg-stone-200" id="app">
+  <div class="bg-stone-200" id="app">
     <SideBar v-if="$route.name != 'Login'" />
     <router-view />
-  </div>-->
-
-
-  <!--Header Orinal  
-  <div id="app">
-    <SideBar v-if="$route.name != 'Login'" />
-    <router-view />
-  </div>-->
-
-  <div>
-    <Panel v-if="$route.name != 'Login'" />   
-       <div>
-        <router-view />
-       </div>
   </div>
-
-
-
 </template>
 
 <script>
@@ -27,24 +10,20 @@
 // import ListUsuarios from './components/usuarios/views/ListUsuarios.vue';
 // import CajaHome from './components/caja/CajaHome.vue';
 // import AbrirCaja from './components/caja/AbrirCaja.vue';
-//import SideBar from "./layout/SideBar.vue"; //Original
-import Panel from "./layout/panel.vue";
+import SideBar from "./layout/SideBar.vue";
 
 export default {
   name: "App",
   components: {
     // CajaHome,
     // AbrirCaja,
-    //SideBar,
-    Panel,
+    SideBar,
   },
-
 };
-
 </script>
 
 <style>
-/*#app {
+#app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -54,8 +33,5 @@ export default {
 .viewport{
   display: flex;
   min-height: 100vh;
-}*/
-
-
-
+}
 </style>
