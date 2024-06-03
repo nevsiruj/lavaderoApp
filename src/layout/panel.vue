@@ -11,7 +11,7 @@
             </svg>
          </button>
         <a href="#" @click.prevent="navigateTo('/caja')" class="flex ms-2 md:me-24">
-          <img src="../../dist/img/gestoflexdash.png" class="h-8 me-3" alt="GestoFlex Logo" />
+          <!-- <img src="../../dist/img/gestoflexdash.png" class="h-8 me-3" alt="GestoFlex Logo" /> -->
         </a>
       </div>      
     </div>
