@@ -292,7 +292,7 @@
       class="flex flex-row justify-center align-center min-height-auto gap-3 px-2"
     >
     <!--Fechas y flitro-->
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+      <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
         <div>
           <input
             type="date"

@@ -91,7 +91,7 @@
 
             <td class="px-6 py-4">$2999</td>
             <td class="px-6 py-4">Servicio 1</td>
-            <td class="px-6 py-4 text-left">
+            <td class="px-6 py-4 lg:text-left">
               <a
                 href="#"
                 class="font-medium text-gray-800 dark:text-white hover:underline"
@@ -114,7 +114,7 @@
               >
               <a
                 href="#"
-                class="font-medium text-red-500 dark:text-white hover:underline ml-5"
+                class="font-medium text-red-500 dark:text-white hover:underline lg:ml-5"
                 ><svg
                   class="w-4 h-4 inline-block text-gray-800 dark:text-white"
                   aria-hidden="true"

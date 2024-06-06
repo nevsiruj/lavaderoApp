@@ -27,7 +27,7 @@
       Filtro por fecha:
     </span>
     <!--Fechas y flitro-->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
       <div>
         <input
           type="date"
@@ -93,7 +93,7 @@
       </div>
     </div>
     <!--Fechas y flitro-->
-    <div class="flex inline-block">
+    <div class="grid grid-flow-row gap-4 md:flex inline-block lg:flex inline-block">
       <span
         class="bg-green-100 text-green-800 text-md font-medium me-2 px-3.5 py-2 rounded dark:bg-green-900 dark:text-green-300"
         ><svg
@@ -174,7 +174,7 @@
             <td class="px-6 py-4">Apple MacBook Pro 17"</td>
 
             <td class="px-6 py-4">$2999</td>
-            <td class="px-6 py-4 text-left">
+            <td class="px-6 py-4 lg:text-left md:text-center">
               <a
                 href="#"
                 class="font-medium text-gray-800 dark:text-white hover:underline"
@@ -197,7 +197,7 @@
               >
               <a
                 href="#"
-                class="font-medium text-red-500 dark:text-white hover:underline ml-5"
+                class="font-medium text-red-500 dark:text-white hover:underline lg:ml-5"
                 ><svg
                   class="w-4 h-4 inline-block text-gray-800 dark:text-white"
                   aria-hidden="true"

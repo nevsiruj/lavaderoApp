@@ -11,15 +11,13 @@
   </div>-->
 
   <div>
-    <Panel v-if="$route.name != 'Login'" />
-    <div class="p-4 sm:ml-64">
-      <div class="p-4">
-        <div class="flex items-center justify-center">
+    <Panel v-if="$route.name != 'Login'">
+  
           <router-view />
-        </div>
-      </div>
-    </div>
-  </div>
+        
+  </Panel>  
+  <router-view v-else/>
+</div>
 </template>
 
 <script>

@@ -84,7 +84,7 @@
             >
               Servicio 1
             </th>
-            <td class="px-6 py-4 text-left">
+            <td class="px-6 py-4 grid grid-flow-row gap-4 lg:text-left md:flex inline-block">
               <a
                 href="#"
                 class="font-medium text-gray-800 dark:text-white hover:underline"
@@ -107,7 +107,7 @@
               >
               <a
                 href="#"
-                class="font-medium text-red-500 dark:text-white hover:underline ml-5"
+                class="font-medium text-red-500 dark:text-white hover:underline lg:ml-5"
                 ><svg
                   class="w-4 h-4 inline-block text-gray-800 dark:text-white"
                   aria-hidden="true"

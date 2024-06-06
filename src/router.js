@@ -23,6 +23,8 @@ import FormAgenda from './components/agenda/FormAgenda.vue'
 import Agenda from './components/agenda/Agenda.vue'
 import FormUsuarios from './components/usuarios/FormUsuarios.vue'
 import Usuarios from './components/usuarios/Usuarios.vue'
+import FormUsuariosAdmin from './components/owner/usuarios/FormUsuariosAdmin.vue'
+import UsuariosAdmin from './components/owner/usuarios/UsuariosAdmin.vue'
 
 
 const routes = [
@@ -151,9 +153,14 @@ const routes = [
     component: Usuarios,
   },
   {
-    path: '/owner/usuarios',
+    path: '/usuariosAdmin',
     name: 'UsuariosApp',
-    component: Usuarios,
+    component: UsuariosAdmin,
+  },
+  {
+    path: '/formUsuariosAdmin',
+    name: 'FormUsuariosApp',
+    component: FormUsuariosAdmin,
   },
   // { path: '/editar/:id',  component: FrutaForm, props: true },
 ];

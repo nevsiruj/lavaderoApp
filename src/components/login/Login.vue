@@ -78,7 +78,7 @@
           <!--Inicio spinner -->
           <div v-if="loading" class="flex justify-center items-center">
             <div>
-              <!-- <img src="../../../dist/img/spin.svg" alt="Loading..." class="w-10 h-10 animate-spin"> -->
+              <img src="../../Img/spin.svg" alt="Loading..." class="w-10 h-10 animate-spin">
 
               <span class="invisible">Cargando...</span>
             </div>
