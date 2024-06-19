@@ -58,13 +58,13 @@
     <div class="flex justify-center min-height-auto">
       <h1
         class="text-3xl text-center font-bold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
-        Usuarios
+        Empresas
       </h1>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
       <div class="flex justify-center min-height-auto">
-        <router-link :to="{ path: '/formUsuariosAdmin' }"
+        <router-link :to="{ path: '/formEmpresasAdmin' }"
           class="focus:outline-none mr-5 text-white bg-[#3edfa9] hover:bg-[#ffe068] focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-2 md:px-5 py-2.5 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
           <svg class="w-6 h-6 inline-block text-white dark:text-white" aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -81,17 +81,15 @@
       <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-[#96ffdf] dark:bg-gray-700 dark:text-gray-400">
           <tr>
-            <th scope="col" class="px-6 py-3">User</th>
-            <th scope="col" class="px-6 py-3">Empresa</th>
+            <th scope="col" class="px-6 py-3">Nombre</th>            
             <th scope="col" class="px-6 py-3">Accion</th>
           </tr>
         </thead>
         <tbody>
           <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-              Usuario 1
-            </th>
-            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">Vylaris</td>
+              Usuario Prueba
+            </th>            
             <td class="px-6 py-4 lg:text-left">
               <a href="#" class="font-medium text-gray-800 dark:text-white hover:underline"><svg
                   class="w-4 h-4 inline-block text-gray-800 dark:text-white" aria-hidden="true"
@@ -111,9 +109,8 @@
           </tr>
           <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-              Usuario 2
-            </th>
-            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">Amazon</td>
+              Usuario Prueba numero 2
+            </th>            
             <td class="px-6 py-4 lg:text-left">
               <a href="#" class="font-medium text-gray-800 dark:text-white hover:underline"><svg
                   class="w-4 h-4 inline-block text-gray-800 dark:text-white" aria-hidden="true"
@@ -133,9 +130,8 @@
           </tr>
           <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-              Usuario 3
-            </th>
-            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">Microsoft</td>
+              Usuario Prueba numero 3
+            </th>            
             <td class="px-6 py-4 lg:text-left">
               <a href="#" class="font-medium text-gray-800 dark:text-white hover:underline"><svg
                   class="w-4 h-4 inline-block text-gray-800 dark:text-white" aria-hidden="true"
@@ -157,62 +153,6 @@
       </table>
     </div>
   </div>
-  <!-- <template>
-    <div class="viewport">
-      <h1
-        class="text-3xl text-center font-bold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white">
-        Usuarios
-      </h1>
-        <Modal message="usuario" @confirm="deleteUsuario" ref="modalComponent" />
-        <div class="m-auto rounded-lg py-2 px-2">
-            <div class="flex justify-end">
-                <div class="flex items-center space-x-2">
-                    
-                    <router-link :to="{ path: '/formusuariosadmin' }" class="focus:outline-none mr-5 text-white bg-[#3edfa9] hover:bg-[#ffe068] focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-2 md:px-5 py-2.5 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
-                        <i class="fas fa-plus-circle mr-1"></i> Agregar Nuevo
-                    </router-link>
-                    
-                </div>
-                <div v-if="showMessage" class="bg-green-100 text-green-800 px-4 py-2 rounded-md mt-2">
-                    <i class="fas fa-check-circle mr-1"></i> Actualizados
-                </div>
-            </div>
-            <div class="bg-emerald-300 rounded-lg overflow-hidden shadow-lg mx-auto mt-4 w-fit">
-  <table class="divide-y divide-gray-300">
-    <thead class="bg-emerald-300">
-      <tr>
-        <th class="px-6 py-3 text-sm text-gray-700 uppercase tracking-wider whitespace-nowrap">
-          User
-        </th>
-        <th class="px-6 py-3 text-sm text-gray-700 uppercase tracking-wider">
-          Empresa
-        </th>
-        
-        <th class="px-6 py-3 text-sm text-gray-700 uppercase tracking-wider"></th>
-      </tr>
-    </thead>
-    <tbody class="bg-white divide-y divide-gray-200 text-left">
-      <tr v-for="usuario in usuarios" :key="usuario.id">
-        <td class="px-6 py-3 whitespace-nowrap text-lg">{{ usuario.user }}</td>
-        <td class="px-6 py-3 whitespace-nowrap text-lg">{{ usuario.empresa }}</td>        
-        <td class="px-6 py-3 whitespace-nowrap text-lg">
-          <div class="flex space-x-4">
-            <button class="text-blue-600 hover:text-blue-800 focus:outline-none text-xl" @click="editarUsuario(usuario)">
-              <i class="fas fa-edit"></i>
-            </button>
-            <button class="text-red-600 hover:text-red-800 focus:outline-none text-xl" @click="deleteUsuario(usuario.id)">
-              <i class="fas fa-trash-alt"></i>
-            </button>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-        </div>
-    </div> -->
-</template>
 
 
 
@@ -272,7 +212,7 @@
         </table>
       </div>
     </div>-->
-
+</template>
 <script>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";

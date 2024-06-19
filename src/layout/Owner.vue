@@ -1,7 +1,7 @@
-<template>
+<!--<template>
     <nav v-if="!isLoggedIn" class="bg-yellow-50 border-gray-200 px-2 lg:px-2 py-1  dark:bg-gray-800">
       <div class="flex justify-between py-2 px-3">
-        <!-- <router-link to="/caja">Lavadero</router-link> -->
+        <!-- <router-link to="/caja">Lavadero</router-link> 
         <router-link to="/owner/usuarios">
               <img src="../../src/Img/gestoflex.png" alt="Logo del Lavadero" class="h-24">
           </router-link>
@@ -35,11 +35,11 @@
         <ul class="navbar-nav justify-content-end flex-grow-1 mt-2 pe-3">
           <li class="my-1">
             <a class="text-black hover:text-black" aria-current="page" href="#"
-              @click.prevent="navigateTo('/owner/usuarios'), toggleSidebar()"><i class="fas fa-cash-register mr-1"></i> Usuarios</a>
+              @click.prevent="navigateTo('usuariosadmin'), toggleSidebar()"><i class="fas fa-cash-register mr-1"></i> Usuarios</a>
           </li>
           <li class="my-1">
             <a class="text-black hover:text-black" aria-current="page" href="#"
-              @click.prevent="navigateTo('/owner/empresas'), toggleSidebar()"><i class="fas fa-chart-line mr-1"></i> Empresa</a>
+              @click.prevent="navigateTo('empresasadmin'), toggleSidebar()"><i class="fas fa-chart-line mr-1"></i> Empresa</a>
           </li>
           
           <li class="my-1">
@@ -57,7 +57,7 @@
    </div>
 </div>
 
-  </template>
+  </template>-->
   
   <script>
   

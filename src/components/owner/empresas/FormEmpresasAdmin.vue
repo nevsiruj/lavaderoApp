@@ -11,21 +11,21 @@
             <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
               <div class="sm:flex sm:items-start">
                 <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
-                  <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">Usuarios</h3>
+                  <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">Empresas</h3>
                   <div class="mb-3 flex justify-center">
-                    <router-link :to="'usuariosadmin'" class="text-emerald-300 hover:text-emerald-600">&lt; Volver atrás
+                    <router-link :to="'empresasadmin'" class="text-emerald-300 hover:text-emerald-600">&lt; Volver atrás
                     </router-link>
                   </div>
 
                   <div class="mt-2">
                     <form @submit.prevent="submitForm">
                       <div class="form-group flex items-center mb-4">
-                        <label for="nombre" class="text-black w-1/4">User</label>
+                        <label for="nombre" class="text-black w-1/4">Nombre</label>
                         <input type="text"
                           class="form-input mt-1 block w-3/4 rounded-md border-gray-300 shadow-sm focus:border-emerald-300 focus:ring focus:ring-blue-200"
                           id="nombre" v-model="form.nombre" />
                       </div>
-                      <div class="form-group flex items-center mb-4">
+                      <!-- <div class="form-group flex items-center mb-4">
                         <label for="empresa" class="text-black w-1/4">Empresa</label>
                         <input type="text"
                           class="form-input mt-1 block w-3/4 rounded-md border-gray-300 shadow-sm focus:border-emerald-300 focus:ring focus:ring-blue-200"
@@ -45,7 +45,7 @@
                       </div>
                       <div v-if="passwordError" class="text-red-600 mt-2">{{ passwordError }}</div>
                       <div class="text-gray-500 mt-2">La contraseña debe contener al menos una mayúscula, un punto y un
-                        número.</div>
+                        número.</div> -->
                       <div class="flex justify-end mt-5">
                         <button type="submit"
                           class="mr-2 bg-emerald-300 hover:bg-emerald-500 text-white font-bold py-2 px-4 rounded">

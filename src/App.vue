@@ -18,6 +18,15 @@
   </Panel>  
   <router-view v-else/>
 </div>
+<!-- <div>
+    <Owner v-if="$route.name != 'Login'">
+  
+          <router-view />
+        
+    </Owner>  
+  <router-view v-else/>
+</div> -->
+
 </template>
 
 <script>
@@ -27,6 +36,7 @@
 // import AbrirCaja from './components/caja/AbrirCaja.vue';
 //import SideBar from "./layout/SideBar.vue"; //Original
 import Panel from "./layout/panel.vue";
+// import Owner from "./layout/owner.vue";
 
 export default {
   name: "App",
@@ -35,6 +45,7 @@ export default {
     // AbrirCaja,
     //SideBar,
     Panel,
+    // Owner,
   },
 };
 </script>
