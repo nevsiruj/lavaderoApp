@@ -120,7 +120,7 @@ export default {
     const password = ref("");
     const loading = ref(false);
     const router = useRouter();
-    const cajaAbierta = ref({});
+    const cajaAbierta = ref(null);
     const errorMessage = ref(""); 
 
     // const login = async () => {
@@ -156,8 +156,8 @@ export default {
 
           if(store.role == 'owner')
           {
-            router.push("/owner/usuariosadmin")
-            return
+            router.push("/owner/usuariosadmin");
+            return;
           }
 
           cajaAbierta.value = await cajaService.getCajaAbierta();

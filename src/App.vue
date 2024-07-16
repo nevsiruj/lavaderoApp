@@ -40,7 +40,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import Panel from './layout/panel.vue';
-import Owner from './layout/owner.vue';
+// import Owner from './layout/owner.vue';
 import authService from './composables/api/authService.js';
 
 const user = ref({});

@@ -126,15 +126,15 @@ export default {
     //   });
     // };
 
-    // const deleteUsuario = async (UsuarioId) => {
-    //   try {
-    //     await usuariosService.removeUsuario(UsuarioId);
-    //     usuarios.value = await usuariosService.getAllUsuario();
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
-    //   fetchUsuarios();
-    // };
+    const deleteUsuario = async (UsuarioId) => {
+      try {
+        await usuariosService.removeUsuario(UsuarioId);
+        usuarios.value = await usuariosService.getAllUsuario();
+      } catch (error) {
+        console.error(error);
+      }
+      fetchUsuarios();
+    };
 
     const fetchUsuarios = async () => {
       try {
@@ -154,7 +154,7 @@ export default {
       fetchUsuarios,
       // addUsuario,
       // editarUsuario,
-      // deleteUsuario
+      deleteUsuario
     };
   },
 };
