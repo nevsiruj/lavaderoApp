@@ -88,7 +88,7 @@
           </tr>
           <tr>
             <td class="border-r border-gray-400 px-2 py-1 font-bold">
-              Importe:
+              Efectivo en Caja:
             </td>
             <td class="px-2 py-1">
               ${{ cajaAbierta.totalImporteLavados ?? 0 }}
