@@ -1,27 +1,41 @@
 <template>
-  <div class="viewport">
-    <div class="container mx-auto px-4 py-8">
-      <div class="mb-6">
-        <router-link :to="'/caja'" class="text-base text-emerald-300 font-bold hover:text-emerald-600">&lt; Volver atrás</router-link>
-      </div>
-      <h2 class="text-2xl font-bold mb-6 text-black">Cerrar caja</h2>
+<div class="grid grid-flow-row gap-4">
+    <div
+      class="max-w-md p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+    >
+      <h5
+        class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+      >
+      Cerrar caja
+      </h5>
 
-      <div class="mb-6 flex flex-col items-center">
-  <label for="monto" class="text-gray-700 text-base font-bold mb-2">Declarar Efectivo:</label>
-  <div class="w-1/4">
-    <input
-      type="number"
-      class="w-full border border-gray-300 rounded-md py-2 px-3 leading-tight focus:outline-none focus:border-emerald-500"
-      id="efectivoDeclarado"
-      v-model="formData.efectivoDeclarado"
-      required
-    />
-  </div>
-</div>
-      <button @click="CerrarCaja" type="submit"
-        class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 px-4 rounded">
+      <form class="max-w-sm mx-auto">
+        <div class="mb-5">
+          <div class="form-group">
+            <label for="nomto">Declarar Efectivo:</label>
+            <input
+              type="number"
+              class="form-control mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-300 focus:ring focus:ring-blue-200"
+              id="efectivoDeclarado"
+              v-model="formData.efectivoDeclarado"
+              required
+            />
+          </div>
+        </div>
+        <button
+          type="submit"
+          @click="CerrarCaja"
+          class="text-black bg-green-300 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        >
         Cerrar caja
-      </button>
+        </button>
+
+        <router-link
+          :to="'/caja'"
+          class="ml-5 font-medium text-green-500 dark:text-blue-500 hover:underline"
+          >Cancelar</router-link
+        >
+      </form>
     </div>
   </div>
 </template>

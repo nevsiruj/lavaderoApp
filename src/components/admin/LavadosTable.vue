@@ -1,78 +1,88 @@
-<!--<template>
-  <div class="viewport w-fit mx-auto">
-    <h1 class="text-3xl font-semibold mb-6">Dashboard de Ventas</h1>
-    <form>
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+<template>
+  <div class="grid grid-flow-row gap-4">
+    <div class="flex justify-center min-height-auto">
+      <h1
+        class="text-3xl text-center font-bold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl "
+      >
+        Dashboard de Ventas
+      </h1>
+    </div>
+    <div
+      class="flex flex-row justify-center align-center min-height-auto gap-3 px-2"
+    >
+      <!--Fechas y flitro-->
+      <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
         <div>
-          <label class="block mb-2">Fecha inicio:</label>
           <input
             type="date"
-            class="form-control border-emerald-300"
             v-model="fechaInicio"
+            class="form-control block px-3 py-2 border border-gray-300 rounded-md text-gray-700 bg-white appearance-none cursor-pointer focus:outline-none focus:ring-1 focus:ring-blue-500"
           />
         </div>
         <div>
-          <label class="block mb-2">Fecha fin:</label>
           <input
             type="date"
-            class="form-control border-emerald-300 px-4"
             v-model="fechaFin"
+            class="form-control block px-3 py-2 border border-gray-300 rounded-md text-gray-700 bg-white appearance-none cursor-pointer focus:outline-none focus:ring-1 focus:ring-blue-500"
           />
         </div>
-        <div class="flex items-end">
+        <div>
           <button
             type="button"
-            class="mt-4 bg-emerald-300 hover:bg-emerald-500 text-white font-bold py-2 px-4 rounded"
             @click="filtrar"
+            class="focus:outline-none text-white bg-[#3edfa9] hover:bg-[#ffe068] focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5"
           >
             Filtrar
           </button>
         </div>
       </div>
-      <ul class="nav nav-tabs mb-2 border-none" id="myTab" role="tablist">
-        <li class="nav-item" role="presentation">
+      <!--Fechas y flitro-->
+    </div>
+    <!--Tabs-->
+    <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+      <ul
+        class="flex flex-wrap -mb-px text-sm font-medium text-center"
+        id="default-tab"
+        data-tabs-toggle="#default-tab-content"
+        role="tablist"
+      >
+        <li class="me-2" role="presentation">
           <button
-            class="nav-link rounded-md active text-black hover:bg-emerald-400"
-            id="home-tab"
-            data-bs-toggle="tab"
-            data-bs-target="#home"
-            type="button"
-            role="tab"
-            aria-controls="home"
-            aria-selected="true"
-          >
-            Home
-          </button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button
-            class="nav-link rounded-md text-black hover:bg-emerald-400"
+            class="inline-block p-4 text-[#3edfa9] border-b-2 rounded-t-lg"
             id="profile-tab"
-            data-bs-toggle="tab"
-            data-bs-target="#profile"
+            data-tabs-target="#profile"
             type="button"
             role="tab"
             aria-controls="profile"
             aria-selected="false"
           >
-            E/R
+            Home 
           </button>
         </li>
+        <li class="me-2" role="presentation">
+          <button
+            class="inline-block p-4 border-b-2 text-[#3edfa9] hover:text-green-600 rounded-t-lg hover:text-gray-600 hover:border-gray-300"
+            id="dashboard-tab"
+            data-tabs-target="#dashboard"
+            type="button"
+            role="tab"
+            aria-controls="dashboard"
+            aria-selected="false"
+          >
+            ER
+          </button>
+        </li>
+        
       </ul>
-    </form>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"></div> //Esta linea Comentada
-
-
-    <div class="tab-content">
+    </div>
+    <div id="default-tab-content">
       <div
-        class="tab-pane fade show active"
-        id="home"
+        class="hidden p-4 rounded-lg"
+        id="profile"
         role="tabpanel"
-        aria-labelledby="home-tab"
-        tabindex="0"
+        aria-labelledby="profile-tab"
       >
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div
             class="bg-white rounded-lg p-4 shadow"
             id="boxSelect"
@@ -99,13 +109,12 @@
         </div>
       </div>
       <div
-        class="tab-pane fade"
-        id="profile"
+        class="hidden p-4 rounded-lg"
+        id="dashboard"
         role="tabpanel"
-        aria-labelledby="profile-tab"
-        tabindex="0"
+        aria-labelledby="dashboard-tab"
       >
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div
             class="bg-white rounded-lg p-4 shadow"
             @click="mostrarTotalFacturado()"
@@ -127,8 +136,9 @@
         </div>
       </div>
     </div>
+    <!--Tabs-->
   </div>
-  
+
   <div
     class="fixed z-10 inset-0 overflow-y-auto"
     :class="{ hidden: !mostrarVentanaDetalle }"
@@ -159,7 +169,7 @@
         <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
           <button
             type="button"
-            class="mt-3 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+            class="mt-3 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#3edfa9] text-base font-medium text-white hover:bg-[#ffe068] sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
             @click="mostrarVentanaDetalle = false"
           >
             Cerrar
@@ -168,7 +178,7 @@
       </div>
     </div>
   </div>
-  Ventana emergente para el detalle del KPI //Comentario
+  <!--Ventana emergente para el detalle del KPI //Comentario-->
   <div
     class="fixed z-10 inset-0 overflow-y-auto"
     :class="{ hidden: !mostrarImportesTotales }"
@@ -215,7 +225,7 @@
           <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
             <button
               type="button"
-              class="mt-3 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+              class="mt-3 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#3edfa9] text-base font-medium text-white hover:bg-[#ffe068] "
               @click="mostrarImportesTotales = false"
             >
               Cerrar
@@ -267,7 +277,7 @@
           <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
             <button
               type="button"
-              class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:w-auto sm:text-sm"
+              class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#3edfa9] text-base font-medium text-white hover:bg-[#ffe068] "
               @click="mostrarGastos = false"
             >
               Cerrar
@@ -276,96 +286,6 @@
         </div>
       </div>
     </div>
-  </div>
-</template>-->
-
-<template>
-  <div class="grid grid-flow-row gap-4">
-    <div class="flex justify-center min-height-auto">
-      <h1
-        class="text-3xl text-center font-bold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white"
-      >
-        Dashboard de Ventas
-      </h1>
-    </div>
-    <div
-      class="flex flex-row justify-center align-center min-height-auto gap-3 px-2"
-    >
-    <!--Fechas y flitro-->
-      <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
-        <div>
-          <input
-            type="date"
-            class="form-control block px-3 py-2 border border-gray-300 rounded-md text-gray-700 bg-white appearance-none cursor-pointer focus:outline-none focus:ring-1 focus:ring-blue-500"
-          />
-        </div>
-        <div>
-          <input
-            type="date"
-            class="form-control block px-3 py-2 border border-gray-300 rounded-md text-gray-700 bg-white appearance-none cursor-pointer focus:outline-none focus:ring-1 focus:ring-blue-500"
-          />
-        </div>
-        <div>
-          <button
-            type="button"
-            class="focus:outline-none text-white bg-[#3edfa9] hover:bg-[#ffe068] focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
-          >
-            Filtrar
-          </button>
-        </div>
-      </div>
-      <!--Fechas y flitro-->
-    </div>
-    <!--Tabs-->
-    <div
-      class="flex flex-row justify-center align-center min-height-auto gap-3 px-2"
-    ><div class="border-b border-gray-200 dark:border-gray-700">
-      <ul
-        class="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500 dark:text-gray-400"
-      >
-        <li class="me-2">
-          <a
-            href="#"
-            class="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group"
-          >
-            <svg
-              class="w-4 h-4 me-2 text-gray-400 group-hover:text-gray-600 dark:text-gray-500 dark:group-hover:text-gray-300"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="m4 12 8-8 8 8M6 10.5V19a1 1 0 0 0 1 1h3v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h3a1 1 0 0 0 1-1v-8.5"
-              /></svg
-            >Home
-          </a>
-        </li>
-        <li class="me-2">
-          <a
-            href="#"
-            class="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group"
-          >
-            <svg
-              class="w-4 h-4 me-2 text-gray-400 group-hover:text-gray-500 dark:text-gray-500 dark:group-hover:text-gray-300"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path
-                d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z"
-              /></svg
-            >ER
-          </a>
-        </li>
-      </ul>
-    </div></div>
-    <!--Tabs-->    
   </div>
 </template>
 

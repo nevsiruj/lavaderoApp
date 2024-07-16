@@ -157,23 +157,28 @@ const routes = [
     name: 'Usuarios',
     component: Usuarios,
   },
+  // {
+  //   path: '/owner',
+  //   name: 'OwnerIndex',
+  //   component: OwnerIndex,
+  // },
   {
-    path: '/usuariosAdmin',
+    path: '/owner/usuariosAdmin',
     name: 'UsuariosApp',
     component: UsuariosAdmin,
   },
   {
-    path: '/formUsuariosAdmin',
+    path: '/owner/formUsuariosAdmin',
     name: 'FormUsuariosApp',
     component: FormUsuariosAdmin,
   },
   {
-    path: '/empresasAdmin',
+    path: '/owner/empresasAdmin',
     name: 'EmpresasApp',
     component: EmpresasAdmin,
   },
   {
-    path: '/formEmpresasAdmin',
+    path: '/owner/formEmpresasAdmin',
     name: 'FormEmpresasApp',
     component: FormEmpresasAdmin,
   },

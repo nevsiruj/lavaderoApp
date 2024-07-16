@@ -69,10 +69,11 @@
 
 
 
-
 <script>
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import  authService from "../../../composables/api/authService";
+
 // import usuariosService from "../../composables/api/usuariosService";
 
 export default {
@@ -83,12 +84,9 @@ export default {
     let isNegativeImport = ref(false);
 
 
-    let form = ref({
-      id: 0,
-      apellido: '',
-      dni: '',
-      username: '',
-      rol: '',
+    let form = ref({      
+      nombre: '',
+      
     });
 
 

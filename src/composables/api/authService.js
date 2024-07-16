@@ -29,7 +29,7 @@ const authService = (() => {
 
   async function getCurrentUser() {
     try {
-      const response = await fetchWithToken(`${API_URL}/auth/GetLoggedDUser`, {
+      const response = await fetchWithToken(`${API_URL}/auth/GetLoggedUser`, {
         headers: {
         },
       });
@@ -38,7 +38,8 @@ const authService = (() => {
         const user = await response.json();
         return user;
       } else {
-        throw new Error('Failed to retrieve current user');
+        console.log('Not user logged.')
+        // throw new Error('Failed to retrieve current user');
       }
     } catch (error) {
       throw error;
@@ -103,7 +104,7 @@ const authService = (() => {
 
   async function getUsers() {
     try {
-      const response = await fetchWithToken(`${API_URL}/auth/users`);
+      const response = await fetchWithToken(`${API_URL}/user`);
 
       if (response.ok) {
         const users = await response.json();

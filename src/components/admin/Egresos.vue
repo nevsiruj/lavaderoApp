@@ -1,15 +1,16 @@
 <template>
   <div class="grid grid-flow-row gap-4">
+    
     <div class="flex justify-center min-height-auto">
       <h1
-        class="text-3xl text-center font-bold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white"
+        class="text-3xl text-center font-bold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl "
       >
         Egresos
       </h1>
     </div>
     <span>
       <svg
-        class="w-5 h-5 inline-block text-gray-800 dark:text-white"
+        class="w-5 h-5 inline-block text-gray-800"
         aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -29,47 +30,54 @@
       <div>
         <input
           type="date"
+          v-model="startDate"
+          @change="filterEgresos"
           class="form-control block px-3 py-2 border border-gray-300 rounded-md text-gray-700 bg-white appearance-none cursor-pointer focus:outline-none focus:ring-1 focus:ring-blue-500"
         />
       </div>
       <div>
         <input
           type="date"
+          v-model="endDate"
+          @change="filterEgresos"
           class="form-control block px-3 py-2 border border-gray-300 rounded-md text-gray-700 bg-white appearance-none cursor-pointer focus:outline-none focus:ring-1 focus:ring-blue-500"
         />
       </div>
       <div>
-        <button
-          type="button"
-          class="focus:outline-none text-white bg-[#3edfa9] hover:bg-[#ffe068] focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-2 md:px-5 py-2.5 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
-        >
-          <svg
-            class="w-6 h-6 inline-block text-white dark:text-white"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            fill="none"
-            viewBox="0 0 24 24"
+        <router-link :to="{ path: '/formEgreso', query: { isAdmin: true } }">
+          <button
+            type="button"
+            class="focus:outline-none text-white bg-[#3edfa9] hover:bg-[#ffe068] focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-2 md:px-5 py-2.5"
           >
-            <path
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M12 7.757v8.486M7.757 12h8.486M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-            />
-          </svg>
-          Agregar Egreso
-        </button>
+            <svg
+              class="w-6 h-6 inline-block text-white"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 7.757v8.486M7.757 12h8.486M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+              />
+            </svg>
+            Agregar Egreso
+          </button>
+        </router-link>
       </div>
       <div>
         <button
           type="button"
-          class="focus:outline-none text-white bg-[#3edfa9] hover:bg-[#ffe068] focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-2 md:px-5 py-2.5 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
+          @click="fetchEgresos"
+          class="focus:outline-none text-white bg-[#3edfa9] hover:bg-[#ffe068] focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-2 md:px-5 py-2.5 "
         >
           <svg
-            class="w-6 h-6 inline-block text-white dark:text-white"
+            class="w-6 h-6 inline-block text-white"
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -90,12 +98,20 @@
         </button>
       </div>
     </div>
+
+    <div
+      v-if="showMessage"
+      class="bg-green-100 text-green-800 px-4 py-2 rounded-md mt-4 text-base"
+    >
+      <i class="fas fa-check-circle mr-2"></i> Actualizados
+    </div>
+    
     <!--Fechas y flitro-->
     <div class="grid grid-flow-row gap-4 lg:flex inline-block">
       <span
-        class="bg-green-100 text-green-800 text-md font-medium me-2 px-3.5 py-2 rounded dark:bg-green-900 dark:text-green-300"
+        class="bg-green-100 text-green-800 text-md font-medium me-2 px-3.5 py-2 rounded "
         ><svg
-          class="w-6 h-6 inline-block text-gray-800 dark:text-white"
+          class="w-6 h-6 inline-block text-gray-800 "
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -109,13 +125,13 @@
             d="M10 3v4a1 1 0 0 1-1 1H5m8-2h3m-3 3h3m-4 3v6m4-3H8M19 4v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7.914a1 1 0 0 1 .293-.707l3.914-3.914A1 1 0 0 1 9.914 3H18a1 1 0 0 1 1 1ZM8 12v6h8v-6H8Z"
           />
         </svg>
-        Egresos: Valor</span
+        Egresos: {{ filteredEgresos.length }}</span
       >
 
       <span
-        class="bg-green-100 text-green-800 text-md font-medium me-2 px-3.5 py-2 rounded dark:bg-green-900 dark:text-green-300"
+        class="bg-green-100 text-green-800 text-md font-medium me-2 px-3.5 py-2 rounded"
         ><svg
-          class="w-6 h-6 inline-block text-gray-800 dark:text-white"
+          class="w-6 h-6 inline-block text-gray-800 "
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -129,31 +145,30 @@
             d="M8 17.345a4.76 4.76 0 0 0 2.558 1.618c2.274.589 4.512-.446 4.999-2.31.487-1.866-1.273-3.9-3.546-4.49-2.273-.59-4.034-2.623-3.547-4.488.486-1.865 2.724-2.899 4.998-2.31.982.236 1.87.793 2.538 1.592m-3.879 12.171V21m0-18v2.2"
           />
         </svg>
-        Total: Valor</span
+        Total: ${{ calculateTotalImporte() }}</span
       >
 
       <span
-        class="bg-green-100 text-green-800 text-md font-medium me-2 px-3.5 py-2 rounded dark:bg-green-900 dark:text-green-300"
+        class="bg-green-100 text-green-800 text-md font-medium me-2 px-3.5 py-2 rounded"
       >
         <input
           id="default-checkbox"
           type="checkbox"
-          value=""
-          class="w-4 h-4 text-green-800 bg-gray-100 border-gray-300 rounded dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+           v-model="esUnGasto"
+            @change="filterEgresos"
+          class="w-4 h-4 text-green-800 bg-gray-100 border-gray-300 rounded "
         />
-        <label
-          for="default-checkbox"
-          class="ms-2"
-          >Es un gasto</label
-        >
+        <label for="default-checkbox" class="ms-2">Es un gasto</label>
       </span>
     </div>
     <hr class="divide-y divide-gray-100" />
     <div class="flex justify-start min-height-auto">
       <form>
         <select
-          id="resultados"
-          class="bg-gray-50 border border-[#3edfa9] text-gray-900 text-sm rounded-lg focus:ring-[#3edfa9] focus:border-[#3edfa9] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        v-model="results"
+        name="results"
+        id="results"
+          class="bg-gray-50 border border-[#3edfa9] text-gray-900 text-sm rounded-lg focus:ring-[#3edfa9] focus:border-[#3edfa9] block w-full p-2.5 "
         >
           <option selected>Mostrar resultados</option>
           <option value="20">20 Resultados</option>
@@ -165,10 +180,10 @@
 
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
       <table
-        class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+        class="w-full text-sm text-left rtl:text-right text-gray-500"
       >
         <thead
-          class="text-xs text-gray-700 uppercase bg-[#96ffdf] dark:bg-gray-700 dark:text-gray-400"
+          class="text-xs text-gray-700 uppercase bg-[#96ffdf] "
         >
           <tr>
             <th scope="col" class="px-6 py-3">Fecha</th>
@@ -179,23 +194,36 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+          <tr class="bg-white border-b dark:bg-gray-800"
+          v-for="(egreso, index) in filteredEgresos"
+            v-show="(pag - 1) * results <= index && pag * results > index"
+            :key="egreso.id"
+          >
             <th
               scope="row"
-              class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+              class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
             >
-              02/06/2024
+            {{ formatDate(egreso.fechaRegistro) }}
             </th>
-            <td class="px-6 py-4">Apple MacBook Pro 17"</td>
+            <td class="px-6 py-4">{{ egreso.descripcion }}</td>
 
-            <td class="px-6 py-4">$2999</td>
-            <td class="px-6 py-4">$199</td>
+            <td class="px-6 py-4">${{ egreso.importe }}</td>
+            <td class="px-6 py-4"><span
+        class=" text-green-800 text-md font-medium me-2 px-3.5 py-2 rounded "
+      >
+        <input
+          id="default-checkbox"
+          type="checkbox"
+          :checked="egreso.isGasto" disabled
+          class="w-4 h-4 text-green-800 bg-gray-100 border-gray-300 rounded "
+        />        
+      </span></td>
             <td class="px-6 py-4 lg:text-left md:text-center">
-              <a
+              <a @click="editEgreso(egreso)"
                 href="#"
-                class="font-medium text-gray-800 dark:text-white hover:underline"
+                class="font-medium text-gray-800  hover:underline"
                 ><svg
-                  class="w-4 h-4 inline-block text-gray-800 dark:text-white"
+                  class="w-4 h-4 inline-block text-gray-800 "
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -211,11 +239,11 @@
                 </svg>
                 Editar</a
               >
-              <a
+              <a @click="deleteModal(egreso.id)"
                 href="#"
-                class="font-medium text-red-500 dark:text-white hover:underline lg:ml-5"
+                class="font-medium text-red-500  hover:underline lg:ml-5"
                 ><svg
-                  class="w-4 h-4 inline-block text-gray-800 dark:text-white"
+                  class="w-4 h-4 inline-block text-gray-800 "
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -237,167 +265,7 @@
       </table>
     </div>
   </div>
-
-  <!--<div class="viewport px-3 mt-10">
-    <h1 class="text-3xl font-semibold mb-6 " >Egresos</h1>
-    <Toast message="Egreso Eliminado" ref="toastComponent" />
-    <Modal message="egreso" @confirm="deleteEgreso" ref="modalComponent" />
-    <div class="bg-white self-center w-fit rounded-lg p-6 shadow-md mx-3 mt-6">
-      <div class="flex items-center mb-4">
-        <i class="fas fa-filter text-gray-600 mr-4"></i>
-        <label class="text-gray-600 text-base">Filtrar por fecha:</label>
-      </div>
-      <div class="flex flex-col md:flex-row md:gap-5 md:items-center mb-4">
-  <div class="flex flex-col md:flex-row md:items-center p-2 md:mb-0 w-full md:w-auto">
-    <input
-      type="date"
-      class="border-gray-300 rounded-md p-2 flex-grow text-base w-full md:w-auto mb-2 md:mb-0 md:mr-4"
-      v-model="startDate"
-      @change="filterEgresos"
-    />
-    <span class="mx-4 text-gray-600 text-base hidden md:inline-block">-</span>
-    <input
-      type="date"
-      class="border-gray-300 rounded-md p-2 flex-grow text-base w-full md:w-auto"
-      v-model="endDate"
-      @change="filterEgresos"
-    />
-  </div>
-  <div class="flex items-center">
-    <router-link
-      class="btn btn-base btn-success mr-4"
-      :to="{ path: '/formEgreso', query: { isAdmin: true } }"
-    >
-      <i class="fas fa-plus-circle mr-2"></i> Agregar Egreso
-    </router-link>
-    <button class="btn btn-base btn-primary" @click="fetchEgresos">
-      <i class="fas fa-sync-alt mr-2"></i> Actualizar
-    </button>
-  </div>
-</div>
-
-      <div
-        v-if="showMessage"
-        class="bg-green-100 text-green-800 px-4 py-2 rounded-md mt-4 text-base"
-      >
-        <i class="fas fa-check-circle mr-2"></i> Actualizados
-      </div>
-      Visor de cantidad de egresos mostrados //Esta linea comentada
-      <div class="mt-6 flex justify-evenly items-center">
-        <div class="flex items-center text-gray-600 text-base">
-          <i class="fas fa-clipboard-list mr-2"></i>
-          <span>Egresos: {{ filteredEgresos.length }}</span>
-        </div>
-        <div class="flex items-center text-gray-600 text-base">
-          <i class="fas fa-dollar-sign mr-2"></i>
-          <span>Total: ${{ calculateTotalImporte() }}</span>
-        </div>
-        <div class="flex items-center text-gray-600 text-base">
-          <input
-            type="checkbox"
-            class="mr-2"
-            v-model="esUnGasto"
-            @change="filterEgresos"
-          />
-          <span>Es un Gasto</span>
-        </div>
-      </div>
-    </div>
-
-    <div>
-      <select
-        class="rounded-md mt-2"
-        v-model="results"
-        name="results"
-        id="results"
-      >
-        <option value="20">20 Resultados</option>
-        <option value="30">30 Resultados</option>
-        <option value="50">50 Resultados</option>
-      </select>
-    </div>
-
-    
-    <div class="md:w-fit w-full overflow-x-auto bg-white rounded-lg p-2 shadow-md mx-auto mt-2">
-      <table class="min-w-full divide-y divide-gray-300 mt-4">
-        Table headers //Esta linea comentada
-        <thead class="bg-emerald-300">
-          <tr>
-            <th class="px-4 py-2 text-xs text-gray-700 uppercase tracking-wider">
-              Fecha
-            </th>
-            <th class="px-4 py-2 text-xs text-gray-700 uppercase tracking-wider">
-              Descripción
-            </th>
-            <th class="px-4 py-2 text-xs text-gray-700 uppercase tracking-wider">
-              Importe
-            </th>
-            <th class="px-4 py-2 text-xs text-gray-700 uppercase tracking-wider">
-              Gasto
-            </th>
-            <th class="px-4 py-2 text-xs text-gray-700 uppercase tracking-wider"></th>
-          </tr>
-        </thead>
-        <tbody class="bg-white divide-y divide-gray-200">
-          <tr
-            v-for="(egreso, index) in filteredEgresos"
-            v-show="(pag - 1) * results <= index && pag * results > index"
-            :key="egreso.id"
-          >
-            <td class="px-4 py-2 whitespace-nowrap">
-              {{ formatDate(egreso.fechaRegistro) }}
-            </td>
-            <td class="px-4 py-2 whitespace-nowrap">
-              {{ egreso.descripcion }}
-            </td>
-            <td class="px-4 py-2 whitespace-nowrap">${{ egreso.importe }}</td>
-            <td class="px-4 py-2 whitespace-nowrap">
-              <input type="checkbox" :checked="egreso.isGasto" disabled />
-            </td>
-            <td class="px-4 py-2 whitespace-nowrap">
-              <div class="flex space-x-2">
-                <button
-                  class="text-blue-600 hover:text-blue-800 focus:outline-none"
-                  @click="editEgreso(egreso)"
-                >
-                  <i class="fas fa-edit"></i>
-                </button>
-                <button
-                  class="text-red-600 hover:text-red-800 focus:outline-none"
-                  @click="deleteModal(egreso.id)"
-                >
-                  <i class="fas fa-trash-alt"></i>
-                </button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <nav aria-label="Page navigation example">
-      <ul class="flex justify-center">
-        <li
-          class="page-item bg-emerald-300 text-white font-semibold px-6 py-3 sm:w-auto rounded-md m-2"
-          v-show="pag != 1"
-          @click.prevent="pag -= 1"
-        >
-          <a href="#" aria-label="Previous">
-            <span class="hover:text-white" aria-hidden="true">Anterior</span>
-          </a>
-        </li>
-        <li
-          class="page-item bg-emerald-300 text-white font-semibold px-6 py-3 sm:w-auto rounded-md m-2"
-          v-show="(pag * results) / egresos.length < 1"
-          @click.prevent="pag += 1"
-        >
-          <a href="#" aria-label="Next">
-            <span class="hover:text-white" aria-hidden="true">Siguiente</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
-  </div>-->
+  <Modal message="Registro" @confirm="deleteEgreso" ref="modalComponent" />
 </template>
 
 <script>
@@ -544,19 +412,16 @@ export default {
     const deleteEgreso = async (egresoId) => {
       try {
         await egresoService.deleteEgreso(egresoId);
-        modal.value.hide();
-        let toast = toastComponent.value.getToast();
-        toast[0].show();
+        //modal.value.hidde();
         fetchEgresos();
-
-        // Realiza alguna lógica adicional si es necesario
+        
       } catch (error) {
         console.error(error);
       }
     };
     const deleteModal = async (egresoId) => {
       modal.value = await modalComponent.value.getModal(egresoId);
-      modal.value.show();
+      //modal.value.show();
     };
 
     onMounted(async () => {

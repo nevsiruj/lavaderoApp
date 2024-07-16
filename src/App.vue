@@ -10,15 +10,23 @@
     <router-view />
   </div>-->
 
-  <div>
-    <Panel v-if="$route.name != 'Login'">
+  <!-- <div>
   
-          <router-view />
-        
-  </Panel>  
   <router-view v-else/>
-</div>
-<!-- <div>
+</div> -->
+
+  <div>
+    <Panel v-if="role  && $route.name != 'Login'" :role="role">
+
+      <router-view />
+
+    </Panel>
+
+
+    <router-view v-else />
+  </div>
+
+  <!-- <div>
     <Owner v-if="$route.name != 'Login'">
   
           <router-view />
@@ -29,25 +37,32 @@
 
 </template>
 
-<script>
-// import HelloWorld from './components/HelloWorld.vue';
-// import ListUsuarios from './components/usuarios/views/ListUsuarios.vue';
-// import CajaHome from './components/caja/CajaHome.vue';
-// import AbrirCaja from './components/caja/AbrirCaja.vue';
-//import SideBar from "./layout/SideBar.vue"; //Original
-import Panel from "./layout/panel.vue";
-// import Owner from "./layout/owner.vue";
+<script setup>
+import { ref, onMounted } from 'vue';
+import Panel from './layout/panel.vue';
+import Owner from './layout/owner.vue';
+import authService from './composables/api/authService.js';
 
-export default {
-  name: "App",
-  components: {
-    // CajaHome,
-    // AbrirCaja,
-    //SideBar,
-    Panel,
-    // Owner,
-  },
+const user = ref({});
+const role = ref('admin'); // Asumiendo que admin es el rol por defecto
+
+const checkUser = async () => {
+  try {
+    const currentUser = await authService.getCurrentUser();
+    user.value = currentUser;
+
+    // role.value = currentUser.roles[0].toLowerCase() || 'guest'; // Ajustar el rol según la respuesta del servicio
+  } catch (error) {
+    console.error('Error al obtener el usuario actual:', error);
+    // Si hay un error (ej., no hay un usuario logeado), asignar 'guest'
+    // role.value = 'guest';
+  }
 };
+
+onMounted(async () => {
+  await checkUser();
+  // console.log(role.value)
+});
 </script>
 
 <style>
@@ -62,5 +77,7 @@ export default {
   display: flex;
   min-height: 100vh;
 }*/
-
 </style>
+
+
+

@@ -1,5 +1,73 @@
 <template>
-  <div class="viewport">
+
+<div class="grid grid-flow-row gap-4">
+    <div
+      class="max-w-md p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+    >
+      <h5
+        class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+      >
+        Servicios
+      </h5>
+
+      <form class="max-w-sm mx-auto">
+        <div class="mb-5">
+          <div class="form-group">
+          <label for="nombre" class="text-black">Nombre</label>
+          <input type="text"
+            class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-300 focus:ring focus:ring-blue-200"
+            id="descripcion" v-model="form.nombre" />
+        </div>
+          <div class="form-group">
+            <label for="descripcion">Descripción</label>
+            <input
+              type="text"
+              class="form-control mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-300 focus:ring focus:ring-blue-200"
+              id="descripcion"
+              v-model="form.descripcion"
+              required
+            />
+          </div>
+          <div class="form-group">
+          <label for="Precio" class="text-black">Precio</label>
+          <input type="number"
+            class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-300 focus:ring focus:ring-blue-200"
+            id="importe" v-model="form.precio" />
+        </div>
+          <div v-if="isNegativeImport">
+            <p class="text-red-600">No ingresar valores negativos</p>
+          </div>
+          <div class="form-group">
+          <label for="tipoServicio" class="text-black">Tipo Servicio</label>
+          <select
+            class="form-select mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-300 focus:ring focus:ring-blue-200"
+            id="tipoServicio" v-model="tipoServicioSeleccionado">
+            <option value="" disabled>Selecciona un tipo de servicio</option>
+            <option v-for="tipoServicio in tiposDeServicio" :value="tipoServicio" :key="tipoServicio.id">
+              {{ tipoServicio.nombre }}
+            </option>
+          </select>
+        </div>
+        </div>
+        <button
+          type="submit"
+          @click.prevent="submitForm"
+          class="text-black bg-green-300 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        >
+          Guardar
+        </button>
+
+        <router-link
+          :to="'/servicios'"
+          class="ml-5 font-medium text-green-500 dark:text-blue-500 hover:underline"
+          >Cancelar</router-link
+        >
+      </form>
+    </div>
+  </div>
+
+
+<!--  <div class="viewport">
     <div class="card w-max m-auto p-4">
       <div class="mb-3">
         <router-link :to="'/servicios'" class="text-emerald-300 hover:text-emerald-600">&lt; Volver atrás
@@ -35,7 +103,6 @@
               {{ tipoServicio.nombre }}
             </option>
           </select>
-
         </div>
 
         <div v-if="isNegativeImport">
@@ -47,7 +114,7 @@
         </button>
       </form>
     </div>
-  </div>
+  </div>-->
 </template>
 
 <script>

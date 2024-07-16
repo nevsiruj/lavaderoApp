@@ -11,7 +11,7 @@
     
     <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
       
-      <div class="flex justify-center min-height-auto">
+      <div class="flex justify-center min-height-auto"><router-link :to="{ path: '/formTipoServicio' }">
         <button
           type="button"
           class="focus:outline-none mr-5 text-white bg-[#3edfa9] hover:bg-[#ffe068] focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-2 md:px-5 py-2.5 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
@@ -35,7 +35,7 @@
           </svg>
           Agregar Servicio
         </button>
-      
+      </router-link>
         <button
           type="button"
           class="focus:outline-none text-white bg-[#3edfa9] hover:bg-[#ffe068] focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-2 md:px-5 py-2.5 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
@@ -72,20 +72,22 @@
           class="text-xs text-gray-700 uppercase bg-[#96ffdf] dark:bg-gray-700 dark:text-gray-400"
         >
           <tr>
-            <th scope="col" class="px-6 py-3">Tipo de servicio</th>
+            <th scope="col" class="px-6 py-3">Nombre</th>
+            <th scope="col" class="px-6 py-3">Descripción</th>
             <th scope="col" class="px-6 py-3">Accion</th>
           </tr>
         </thead>
         <tbody>
-          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-            <th
+          <tr v-for="item in tipoServicios" :key="item.id" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+            <th 
               scope="row"
               class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
             >
-              Servicio 1
+            {{ item.nombre }}
             </th>
-            <td class="px-6 py-4 grid grid-flow-row gap-4 lg:text-left md:flex inline-block">
-              <a
+            <td class="px-6 py-4">{{ item.descripcion }}</td>
+            <td class="px-6 py-4 lg:text-left">
+              <a @click="edit(item)"
                 href="#"
                 class="font-medium text-gray-800 dark:text-white hover:underline"
                 ><svg
@@ -105,7 +107,7 @@
                 </svg>
                 Editar</a
               >
-              <a
+              <a @click="remove(servicio.id)"
                 href="#"
                 class="font-medium text-red-500 dark:text-white hover:underline lg:ml-5"
                 ><svg
@@ -210,19 +212,19 @@ export default {
 
 
 
-    const editarTipoServicio = (servicio) => {
+    const edit = (_item) => {
       router.push({
         path: 'formTipoServicio',
-        query: { isAdmin: false, id: servicio.id },
+        query: { isAdmin: false, id: _item.id },
       });
 
     };
 
 
-    const deleteTipoServicio = async (tipoServicioId) => {
+    const remove = async (_id) => {
       try {
 
-        await tipoServicioService.removeTipoServicio(tipoServicioId);
+        await tipoServicioService.removeTipoServicio(_id);
         tipoServicios.value = await tipoServicioService.getAllTipoServicio();
       } catch (error) {
         console.error(error);
@@ -258,12 +260,12 @@ export default {
     return {
       showMessage,
       modal,
-      editarTipoServicio,
+      edit,
       openModal,
       tipoServicios,
       // agregarTipoServicio,
       fetchServicios,
-      deleteTipoServicio,
+      remove,
       router
     };
   },

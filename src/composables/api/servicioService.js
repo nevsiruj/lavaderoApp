@@ -24,7 +24,7 @@ const servicioService = (() => {
   
   const addServicio = async (Servicio) => {
     try {
-      const response = await instance.post('/api/Servicio', Servicio);
+      const response = await instance.post('/Servicio', Servicio);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -35,7 +35,7 @@ const servicioService = (() => {
 
   const getAllServicio = async () => {
     try {
-      const response = await instance.get('/api/Servicio');
+      const response = await instance.get('/Servicio');
       return response.data;
     } catch (error) {
       console.log(error);

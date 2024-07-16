@@ -110,9 +110,12 @@ import authService from "../../composables/api/authService.js";
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import cajaService from "../../composables/api/cajaService.js";
+import { store } from '../../store.js'; // Importa el store
 
 export default {
   setup() {
+
+    console.log("Open");
     const email = ref("");
     const password = ref("");
     const loading = ref(false);
@@ -148,7 +151,17 @@ export default {
       try {
         const response = await authService.login(email.value, password.value);
         if (response.token) {
+          const currentUser = await authService.getCurrentUser();
+          store.role = currentUser.roles[0].toLowerCase()
+
+          if(store.role == 'owner')
+          {
+            router.push("/owner/usuariosadmin")
+            return
+          }
+
           cajaAbierta.value = await cajaService.getCajaAbierta();
+        
           if (!cajaAbierta.value) {
             router.push("/abrircaja");
           } else {
@@ -171,9 +184,18 @@ export default {
 
     const checkUserSession = async () => {
       try {
-        const currentUser = await authService.getCurrentUser();
+        const currentUser = await authService.getCurrentUser();    
+        
         if (currentUser) {
           cajaAbierta.value = await cajaService.getCajaAbierta();
+          store.role = currentUser.roles[0].toLowerCase()
+
+          if(store.role == 'owner')
+          {
+            router.push("/owner/usuariosadmin")
+            return
+          }
+
           if (cajaAbierta.value == undefined) {
             router.push("/abrircaja");
           } else {
