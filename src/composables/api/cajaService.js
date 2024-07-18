@@ -113,6 +113,7 @@ const cajaService = (() => {
     retirar,
     getCajas,
     getLavadosByCaja,
+    fetchWithToken
   };
 })();
 

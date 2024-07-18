@@ -1,5 +1,5 @@
 <template>
-  <div v-if="cajaAbierta.isOpen" class="grid grid-flow-row gap-4">
+  <div v-if="cajaAbierta?.isOpen" class="grid grid-flow-row gap-4">
     <div class="flex justify-center min-height-auto">
       <h1 class="text-3xl text-center font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl">
         Bienvenido
@@ -92,6 +92,14 @@
             </td>
             <td class="px-2 py-1">
               ${{ cajaAbierta.totalImporteLavados ?? 0 }}
+            </td>
+          </tr>
+          <tr>
+            <td class="border-r border-gray-400 px-2 py-1 font-bold">
+              Transferencias y tarjeta:
+            </td>
+            <td class="px-2 py-1">
+              ${{ cajaAbierta.totalOtrosPagos ?? 0 }}
             </td>
           </tr>
           <tr class="bg-[#3edfa920]">

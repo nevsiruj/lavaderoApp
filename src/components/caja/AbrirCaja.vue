@@ -1,4 +1,6 @@
 <template>
+
+  
   <div class="grid grid-flow-row gap-4">
     <div
       class="max-w-md p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
@@ -9,7 +11,7 @@
         Abrir caja
       </h5>
 
-      <form class="max-w-sm mx-auto" @submit="abrirCaja">
+      <form class="max-w-sm mx-auto" @submit.prevent="abrirCaja">
         <div class="mb-5">
           <div class="form-group">
             <label for="descripcion">Responsable</label>

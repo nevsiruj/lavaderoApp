@@ -232,6 +232,7 @@ onMounted(async () => {
   const currentUser = await authService.getCurrentUser();
 
   store.user = currentUser;
+  
   // role.value = 
 
   // Verifica si currentUser y currentUser.roles están definidos

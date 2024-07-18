@@ -108,6 +108,11 @@
                       Cantidad de Lavados:
                       {{ cajaSeleccionada.cantidadLavados }}
                     </li>
+             
+                    <li>
+                      Efectivo en Terminal:
+                      {{ cajaSeleccionada.totalOtrosPagos }}
+                    </li>
                     <li>
                       Efectivo en Terminal:
                       {{ cajaSeleccionada.efectivoEnCaja }}

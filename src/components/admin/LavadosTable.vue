@@ -38,6 +38,7 @@
       </div>
       <!--Fechas y flitro-->
     </div>
+
     <!--Tabs-->
     <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
       <ul
@@ -138,7 +139,6 @@
     </div>
     <!--Tabs-->
   </div>
-
   <div
     class="fixed z-10 inset-0 overflow-y-auto"
     :class="{ hidden: !mostrarVentanaDetalle }"
@@ -330,6 +330,7 @@ import Chart from "chart.js/auto";
 import { reactive, onMounted, ref } from "vue";
 import adminService from "../../composables/api/adminService.js";
 
+
 export default {
   setup() {
     let mostrarVentanaDetalle = ref(false);
@@ -516,3 +517,5 @@ export default {
   methods: {},
 };
 </script>
+
+
