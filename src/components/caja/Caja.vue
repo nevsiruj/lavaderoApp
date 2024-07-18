@@ -88,18 +88,26 @@
           </tr>
           <tr>
             <td class="border-r border-gray-400 px-2 py-1 font-bold">
-              Efectivo en Caja:
+              Ventas en Efectivo:
             </td>
             <td class="px-2 py-1">
               ${{ cajaAbierta.totalImporteLavados ?? 0 }}
             </td>
           </tr>
-          <tr>
+          <tr class="bg-[#3edfa920]">
             <td class="border-r border-gray-400 px-2 py-1 font-bold">
               Transferencias y tarjeta:
             </td>
             <td class="px-2 py-1">
               ${{ cajaAbierta.totalOtrosPagos ?? 0 }}
+            </td>
+          </tr>
+          <tr>
+            <td class="border-r border-gray-400 px-2 py-1 font-bold">
+              Total Ventas:
+            </td>
+            <td class="px-2 py-1">
+              ${{ cajaAbierta.totalVentas ?? "0.00" }}
             </td>
           </tr>
           <tr class="bg-[#3edfa920]">
