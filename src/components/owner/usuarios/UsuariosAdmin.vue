@@ -62,7 +62,7 @@
                 </svg>
                 Editar</a
               >
-              <a @click="deleteUsuario(usuario.id)"
+              <a @click="deleteModal(usuario.id)"
                 href="#"
                 class="font-medium text-red-500 dark:text-white hover:underline lg:ml-5"
                 ><svg
@@ -87,6 +87,7 @@
           </tbody>
         </table>      
     </div>
+    <Modal message="Usuario" @confirm="deleteUsuario" ref="modalComponent" />
   </div>   
 </template>
 
@@ -99,42 +100,36 @@
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import  authService from "../../../composables/api/authService";
+import Modal from "../../modalConfirmar/ModalConfirmar.vue";
 
 export default {
   name: 'usuarios',
   setup() {
-    const usuarios = ref([]);
-    const showMessage = ref(false);
+    const usuarios = ref([]);    
     const router = useRouter();
-    // const newUsuario = ref({ name: "", email: "", password: "" }); // Nuevo usuario
+    const modalComponent = ref(null);
+    const modal = ref();
 
+    const editarUsuario = (Tenant) => {
+          router.push({
+              path: 'formUsuariosAdmin',
+              query: { isAdmin: false, id: Tenant.id },
+          });
+      };
+    
+      const deleteUsuario = async (TenantId) => {
+          try {
+              await empresaService.removeEmpresa(TenantId);
+              // modal.value.closeModal();
+          } catch (error) {
+              console.error(error);
+          }
+          fetchUsuarios();
+      };
 
-    // const addUsuario = async () => {
-    //   try {
-    //     await authService.register(newUsuario.value);
-    //     newUsuario.value = { name: "", email: "", password: "" }; // Resetear el formulario
-    //     fetchUsuarios();
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
-    // };
-
-    // const editarUsuario = (usuario) => {
-    //   router.push({
-    //     path: 'formUsuarios',
-    //     query: { isAdmin: false, id: usuario.id },
-    //   });
-    // };
-
-    const deleteUsuario = async (UsuarioId) => {
-      try {
-        await usuariosService.removeUsuario(UsuarioId);
-        usuarios.value = await usuariosService.getAllUsuario();
-      } catch (error) {
-        console.error(error);
-      }
-      fetchUsuarios();
-    };
+      const deleteModal = async (TenantId) => {
+          modal.value = await modalComponent.value.getModal(TenantId);
+      };
 
     const fetchUsuarios = async () => {
       try {
@@ -149,12 +144,12 @@ export default {
     });
 
     return {
-      usuarios,
-      showMessage,
+      usuarios,      
       fetchUsuarios,
-      // addUsuario,
-      // editarUsuario,
-      deleteUsuario
+      editarUsuario,
+      deleteUsuario,
+      deleteModal
+      
     };
   },
 };

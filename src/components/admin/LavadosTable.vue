@@ -2,7 +2,7 @@
   <div class="grid grid-flow-row gap-4">
     <div class="flex justify-center min-height-auto">
       <h1
-        class="text-3xl text-center font-bold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl "
+        class="text-3xl text-center font-bold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl"
       >
         Dashboard de Ventas
       </h1>
@@ -11,6 +11,7 @@
       class="flex flex-row justify-center align-center min-height-auto gap-3 px-2"
     >
       <!--Fechas y flitro-->
+      
       <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
         <div>
           <input
@@ -39,105 +40,66 @@
       <!--Fechas y flitro-->
     </div>
 
-    <!--Tabs-->
-    <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
-      <ul
-        class="flex flex-wrap -mb-px text-sm font-medium text-center"
-        id="default-tab"
-        data-tabs-toggle="#default-tab-content"
-        role="tablist"
-      >
-        <li class="me-2" role="presentation">
-          <button
-            class="inline-block p-4 text-[#3edfa9] border-b-2 rounded-t-lg"
-            id="profile-tab"
-            data-tabs-target="#profile"
-            type="button"
-            role="tab"
-            aria-controls="profile"
-            aria-selected="false"
-          >
-            Home 
-          </button>
-        </li>
-        <li class="me-2" role="presentation">
-          <button
-            class="inline-block p-4 border-b-2 text-[#3edfa9] hover:text-green-600 rounded-t-lg hover:text-gray-600 hover:border-gray-300"
-            id="dashboard-tab"
-            data-tabs-target="#dashboard"
-            type="button"
-            role="tab"
-            aria-controls="dashboard"
-            aria-selected="false"
-          >
-            ER
-          </button>
-        </li>
-        
-      </ul>
-    </div>
-    <div id="default-tab-content">
-      <div
-        class="hidden p-4 rounded-lg"
-        id="profile"
-        role="tabpanel"
-        aria-labelledby="profile-tab"
-      >
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div
-            class="bg-white rounded-lg p-4 shadow"
+    <!--TabNueva-->
+    <div class="container">
+      <div class="lbl-menu border-b border-gray-300 ">
+        <label class="hover:border-t hover:py-3" for="radio1">Home</label>
+        <label class="hover:border-t hover:py-3" for="radio2">General</label>
+      </div>
+
+      <div class="mb-4 dark:border-gray-700 content">
+        <input type="radio" name="radio" id="radio1" checked />
+        <div class="tab1 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <spam
+            class="bg-white border border-gray-200 rounded-lg  p-4 shadow-md"
             id="boxSelect"
             @click="mostrarDetalle('totalLavados')"
           >
-            <h2 class="text-xl font-semibold">Cantidad Ventas</h2>
+            <h2 class="text-lg font-semibold">Cantidad Ventas</h2>
             <p class="text-3xl">{{ totalLavados }}</p>
-          </div>
-          <div
-            class="bg-white rounded-lg p-4 shadow"
+          </spam>
+          <spam
+            class="bg-white border border-gray-200 rounded-lg  p-4 shadow-md"
             @click="mostrarTotalFacturado()"
           >
-            <h2 class="text-xl font-semibold">Total Facturado</h2>
+            <h2 class="text-lg font-semibold">Total Facturado</h2>
             <p class="text-3xl">{{ totalFacturado }}</p>
-          </div>
-          <div class="bg-white rounded-lg p-4 shadow">
-            <h2 class="text-xl font-semibold">Ingresos</h2>
+          </spam>
+
+          <spam class="bg-white border border-gray-200 rounded-lg  p-4 shadow-md">
+            <h2 class="text-lg font-semibold">Ingresos</h2>
             <p class="text-3xl">{{ totalIngresos }}</p>
-          </div>
-          <div class="bg-white rounded-lg p-4 shadow">
-            <h2 class="text-xl font-semibold">Egresos</h2>
+          </spam>
+          <spam class="bg-white border border-gray-200 rounded-lg  p-4 shadow-md">
+            <h2 class="text-lg font-semibold">Egresos</h2>
             <p class="text-3xl">{{ totalEgresos }}</p>
-          </div>
+          </spam>
         </div>
-      </div>
-      <div
-        class="hidden p-4 rounded-lg"
-        id="dashboard"
-        role="tabpanel"
-        aria-labelledby="dashboard-tab"
-      >
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div
-            class="bg-white rounded-lg p-4 shadow"
+
+        <input type="radio" name="radio" id="radio2" />
+        <div class="tab2 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <spam
+            class="bg-white border border-gray-200 rounded-lg  p-4 shadow-md"
             @click="mostrarTotalFacturado()"
           >
-            <h2 class="text-xl font-semibold">Total Facturado</h2>
+            <h2 class="text-lg font-semibold">Total Facturado</h2>
             <p class="text-3xl">{{ totalFacturado }}</p>
-          </div>
-          <div
-            class="bg-white rounded-lg p-4 shadow"
+          </spam>
+          <spam
+            class="bg-white border border-gray-200 rounded-lg  p-4 shadow-md"
             @click="mostrarTotalGastos()"
           >
-            <h2 class="text-xl font-semibold">Gastos</h2>
+            <h2 class="text-lg font-semibold">Gastos</h2>
             <p class="text-3xl">{{ totalGastos }}</p>
-          </div>
-          <div class="bg-white rounded-lg p-4 shadow">
-            <h2 class="text-xl font-semibold">Beneficio Neto</h2>
+          </spam>
+          <spam class="bg-white border border-gray-200 rounded-lg  p-4 shadow-md">
+            <h2 class="text-lg font-semibold">Beneficio Neto</h2>
             <p class="text-3xl">{{ beneficioNeto }}</p>
-          </div>
+          </spam>
         </div>
       </div>
     </div>
-    <!--Tabs-->
+    <!--TabNueva-->
   </div>
   <div
     class="fixed z-10 inset-0 overflow-y-auto"
@@ -160,11 +122,9 @@
             <p class="text-gray-700">{{ detalleKPI }}</p>
           </div>
 
-          
           <div class="bg-white shadow-md rounded-md p-6">
             <canvas id="chart"></canvas>
           </div>
-          
         </div>
         <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
           <button
@@ -225,7 +185,7 @@
           <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
             <button
               type="button"
-              class="mt-3 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#3edfa9] text-base font-medium text-white hover:bg-[#ffe068] "
+              class="mt-3 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#3edfa9] text-base font-medium text-white hover:bg-[#ffe068]"
               @click="mostrarImportesTotales = false"
             >
               Cerrar
@@ -277,7 +237,7 @@
           <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
             <button
               type="button"
-              class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#3edfa9] text-base font-medium text-white hover:bg-[#ffe068] "
+              class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#3edfa9] text-base font-medium text-white hover:bg-[#ffe068]"
               @click="mostrarGastos = false"
             >
               Cerrar
@@ -290,46 +250,94 @@
 </template>
 
 <style>
-/*.boxs {
-  box-shadow: 0px 0px 5px 5px rgba(64, 132, 244, 0.5) !important;
-  -webkit-box-shadow: 0px 0px 5px 5px rgba(64, 132, 244, 0.5) !important;
-  -moz-box-shadow: 0px 0px 5px 5px rgba(64, 132, 244, 0.5) !important;
+.container {
+  width: 800px;  
+  margin: auto;
+  margin-top: 20px;
 }
-
-.kpi-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  margin-bottom: 20px;
-}
-
-.kpi-box {
-  background-color: #f8f9fa;
-  border: 1px solid #dee2e6;
-  border-radius: 4px;
+.lbl-menu label {
+  display: inline-block;
   padding: 20px;
-  width: 180px;
-  margin: 10px;
-  text-align: center;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  color: #000000;
+  cursor: pointer;
+  /*transition: all 400ms ease;*/
+}
+.lbl-menu label:hover {
+  color: #3edfa9;
+}
+.content {
+  margin-bottom: 200px;
+  position: relative;
+}
+.content div {
+  position: absolute;
+  line-height: 1.8;
+  /*transition: all 600ms ease;*/
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.9);
+  padding: 30px;
+  background: #fff;
+  padding-bottom: 40px;
+}
+#radio1,
+#radio2 {
+  display: none;
+}
+#radio1:checked ~ .tab1,
+#radio2:checked ~ .tab2 {
+  margin-top: 10px;
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+ 
+ 
+}
+.content div:after {
+  position: absolute;
+  content: "";
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid #fff;
+  bottom: 100%;
+  left: 28px;
+}
+.content .tab2:after {
+  left: 122px;
 }
 
-.kpi-box h3 {
-  font-size: 16px;
-  margin-bottom: 10px;
-}
 
-.kpi-box p {
-  font-size: 24px;
-  font-weight: bold;
-}*/
+@media only screen and (max-width: 1380px) {
+  .container{
+    max-width: 800px;
+    }
+  }
+
+  @media only screen and (max-width: 980px){
+    .container{
+      width: 400px;
+      max-width: 400px;
+  margin: auto;
+  margin-top: 20px;
+    }
+  }
+
+  @media only screen and (max-width: 360px){
+    .container{
+      width: 300px;
+      max-width: 300px;
+  margin: auto;
+  margin-top: 20px;
+    }
+  }
+
 </style>
 
 <script>
 import Chart from "chart.js/auto";
 import { reactive, onMounted, ref } from "vue";
 import adminService from "../../composables/api/adminService.js";
-
 
 export default {
   setup() {
@@ -350,6 +358,7 @@ export default {
     let totalFacturado = ref(0);
     let mostrarImportesTotales = ref(false);
     let mostrarGastos = ref(false);
+   
 
     const filtrar = async () => {
       let datos = await adminService.getDatosPorFecha(
@@ -517,5 +526,3 @@ export default {
   methods: {},
 };
 </script>
-
-
