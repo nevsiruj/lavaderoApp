@@ -27,11 +27,11 @@
   </div>-->
 
 
-  <Panelp v-if="role  && $route.name != 'Login'" :role="role">
+  <Panel v-if="role  && $route.name != 'Login'" :role="role">
 
 <router-view />
 
-</Panelp>
+</Panel>
 
 
 <router-view v-else />
@@ -49,7 +49,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import Panelp from './layout/panelp.vue';
+import Panel from './layout/panel.vue';
 // import Owner from './layout/owner.vue';
 import authService from './composables/api/authService.js';
 import { initFlowbite } from "flowbite";
