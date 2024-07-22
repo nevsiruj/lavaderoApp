@@ -10,7 +10,7 @@
     <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
        <a href="https://flowbite.com/" class="flex items-center ps-2.5 mb-5">
           <img src="https://flowbite.com/docs/images/logo.svg" class="h-6 me-3 sm:h-7" alt="Flowbite Logo" />
-          <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Flowbite</span>
+          <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">GestoFlex</span> 
        </a>
        <ul class="space-y-2 font-medium">
           <li>
@@ -19,7 +19,7 @@
                    <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z"/>
                    <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z"/>
                 </svg>
-                <span class="ms-3">Dashboard</span>
+                <span class="ms-3">Inicio</span>
              </a>
           </li>
           <li>
