@@ -240,7 +240,7 @@ onMounted(async () => {
     store.role = 'guest';
   }
 
-  initFlowbite(); // Inicializa componente de Flowbite
+  initFlowbite(); // Inicializa el componente de Flowbite
 
 });
 </script>
