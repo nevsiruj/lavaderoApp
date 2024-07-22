@@ -27,11 +27,11 @@
   </div>-->
 
 
-  <Panel v-if="role  && $route.name != 'Login'" :role="role">
+  <Panelp v-if="role  && $route.name != 'Login'" :role="role">
 
 <router-view />
 
-</Panel>
+</Panelp>
 
 
 <router-view v-else />
@@ -49,9 +49,10 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import Panel from './layout/panel.vue';
+import Panelp from './layout/panelp.vue';
 // import Owner from './layout/owner.vue';
 import authService from './composables/api/authService.js';
+import { initFlowbite } from "flowbite";
 
 const user = ref({});
 const role = ref('admin'); // Asumiendo que admin es el rol por defecto
@@ -72,6 +73,7 @@ const checkUser = async () => {
 onMounted(async () => {
   await checkUser();
   // console.log(role.value)
+  initFlowbite();
 });
 </script>
 
