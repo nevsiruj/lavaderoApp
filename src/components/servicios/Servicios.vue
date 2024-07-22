@@ -91,7 +91,7 @@
             <td class="px-6 py-4">{{ servicio.descripcion }}</td>
             <td class="px-6 py-4">{{ servicio.precio }}</td>
             <td class="px-6 py-4">{{ servicio.tipoServicio.nombre }}</td>
-            <td class="px-6 py-4 lg:text-left">
+            <td class="grid lg:flex md:flex px-2 md:px-6 py-4 lg:text-left md:text-center">
               <a @click="editarServicio(servicio)"
                 href="#"
                 class="font-medium text-gray-800 dark:text-white hover:underline"

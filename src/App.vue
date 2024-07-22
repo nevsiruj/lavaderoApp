@@ -15,7 +15,7 @@
   <router-view v-else/>
 </div> -->
 
-  <div>
+  <!--<div>
     <Panel v-if="role  && $route.name != 'Login'" :role="role">
 
       <router-view />
@@ -24,7 +24,17 @@
 
 
     <router-view v-else />
-  </div>
+  </div>-->
+
+
+  <Panel v-if="role  && $route.name != 'Login'" :role="role">
+
+<router-view />
+
+</Panel>
+
+
+<router-view v-else />
 
   <!-- <div>
     <Owner v-if="$route.name != 'Login'">

@@ -544,6 +544,7 @@ import { reactive, onMounted, ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { store } from '../../store.js'; // Importa el store
 import authService from "../../composables/api/authService.js";
+import {initFlowbite} from "flowbite";
 
 export default {
   name: "caja",
@@ -564,6 +565,8 @@ export default {
         router.push("/abrircaja");
       }
       cajaService.getCajas();
+
+      initFlowbite(); // Inicializa componente de Flowbite
     });
 
     return {

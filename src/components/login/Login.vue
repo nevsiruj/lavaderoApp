@@ -218,7 +218,7 @@ export default {
       login,
       errorMessage,
     };
-  } //Quitaste la coma de aca
+  }, //Quitaste la coma de aca
 };
 </script>
 

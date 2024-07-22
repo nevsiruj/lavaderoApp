@@ -218,7 +218,8 @@
           class="w-4 h-4 text-green-800 bg-gray-100 border-gray-300 rounded "
         />        
       </span></td>
-            <td class="px-6 py-4 lg:text-left md:text-center">
+      <td class="grid lg:flex md:flex px-2 md:px-6 py-4 lg:text-left md:text-center">
+
               <a @click="editEgreso(egreso)"
                 href="#"
                 class="font-medium text-gray-800  hover:underline"

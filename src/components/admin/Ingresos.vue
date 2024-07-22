@@ -197,10 +197,10 @@
             <td class="px-6 py-4">{{ ingreso.descripcion }}</td>
 
             <td class="px-6 py-4">${{ ingreso.importe }}</td>
-            <td class="px-6 py-4 lg:text-left md:text-center">
+            <td class="grid lg:flex md:flex px-2 md:px-6 py-4 lg:text-left md:text-center">
               <a
                 href="#" @click="editIngreso(ingreso)"
-                class="font-medium text-gray-800 dark:text-white hover:underline"
+                class="font-sm text-xs md:text-sm text-gray-800 dark:text-white hover:underline"
                 ><svg
                   class="w-4 h-4 inline-block text-gray-800 dark:text-white"
                   aria-hidden="true"
@@ -220,7 +220,7 @@
               >
               <a
                 href="#" @click="deleteModal(ingreso.id)"
-                class="font-medium text-red-500 dark:text-white hover:underline lg:ml-5"
+                class="font-sm text-xs md:text-sm text-red-500 dark:text-white hover:underline lg:ml-5"
                 ><svg
                   class="w-4 h-4 inline-block text-gray-800 dark:text-white"
                   aria-hidden="true"

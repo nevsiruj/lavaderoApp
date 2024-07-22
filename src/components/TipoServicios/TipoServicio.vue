@@ -86,7 +86,7 @@
             {{ item.nombre }}
             </th>
             <td class="px-6 py-4">{{ item.descripcion }}</td>
-            <td class="px-6 py-4 lg:text-left">
+            <td class="grid lg:flex md:flex px-2 md:px-6 py-4 lg:text-left md:text-center">
               <a @click="edit(item)"
                 href="#"
                 class="font-medium text-gray-800 dark:text-white hover:underline"

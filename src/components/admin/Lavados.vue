@@ -190,7 +190,7 @@
 
             <td class="px-6 py-4">${{ lavado.metodoPago }}</td>
             <td class="px-6 py-4">${{ lavado.importe }}</td>
-            <td class="px-6 py-4 lg:text-left md:text-center">
+            <td class="grid lg:flex md:flex px-2 md:px-6 py-4 lg:text-left md:text-center">
               <a
                 href="#"
                 @click="editLavado(lavado)"

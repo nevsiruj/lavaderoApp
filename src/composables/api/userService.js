@@ -53,7 +53,7 @@ const usuarioService = (() => {
 
   const editUsuario = async (id, usuario) => {
     try {
-      const response = await instance.put(`/api/Usuarios/${id}`, usuario);
+      const response = await instance.put(`/api/User/${id}`, usuario);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -63,7 +63,7 @@ const usuarioService = (() => {
 
   const removeUsuario = async (id) => {
     try {
-      const response = await instance.delete(`/api/Usuarios/${id}`);
+      const response = await instance.delete(`/api/User/${id}`);
       return response.data;
     } catch (error) {
       console.log(error);
