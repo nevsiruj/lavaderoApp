@@ -110,6 +110,7 @@ export default {
         console.error(error);
       }
     };
+    
     const deleteModal = async (egresoId) => {
       modal.value = await modalComponent.value.getModal(egresoId);
       modal.value.show();

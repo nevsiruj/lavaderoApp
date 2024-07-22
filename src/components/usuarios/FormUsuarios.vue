@@ -2,7 +2,7 @@
     <div class="viewport">
       <div class="card w-max m-auto p-4">
         <div class="mb-3">
-          <router-link :to="'/usuarios'" class="text-emerald-300 hover:text-emerald-600">&lt; Volver atrás
+          <router-link :to="'usuarios'" class="text-emerald-300 hover:text-emerald-600">&lt; Volver atrás
           </router-link>
         </div>
         <h1 class="font-bold">Usuarios</h1>

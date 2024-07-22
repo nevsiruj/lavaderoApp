@@ -4,7 +4,7 @@
             <div class="flex justify-end">
                 <div class="flex items-center space-x-2">
                     <!--, query: { isAdmin: true } }"> -->
-                    <router-link :to="{ path: '/formusuarios' }" class="btn btn-base btn-success my-2 mr-1">
+                    <router-link :to="{ path: 'usuarios' }" class="btn btn-base btn-success my-2 mr-1">
                         <i class="fas fa-plus-circle mr-1"></i> Agregar Usuarios
                     </router-link>
                     <button class="btn btn-base btn-primary my-2">
@@ -20,12 +20,12 @@
     <thead class="bg-emerald-300">
       <tr>
         <th class="px-6 py-3 text-sm text-gray-700 uppercase tracking-wider whitespace-nowrap">
-          Nombre
+          User
         </th>
         <th class="px-6 py-3 text-sm text-gray-700 uppercase tracking-wider">
-          Apellido
+          Empresa
         </th>
-        <th class="px-6 py-3 text-sm text-gray-700 uppercase tracking-wider">
+        <!-- <th class="px-6 py-3 text-sm text-gray-700 uppercase tracking-wider">
           Dni
         </th>
         <th class="px-6 py-3 text-sm text-gray-700 uppercase tracking-wider">
@@ -33,17 +33,17 @@
         </th>
         <th class="px-6 py-3 text-sm text-gray-700 uppercase tracking-wider">
           Rol
-        </th>
+        </th> -->
         <th class="px-6 py-3 text-sm text-gray-700 uppercase tracking-wider"></th>
       </tr>
     </thead>
     <tbody class="bg-white divide-y divide-gray-200 text-left">
       <tr v-for="usuario in usuarios" :key="usuario.id">
-        <td class="px-6 py-3 whitespace-nowrap text-lg">{{ usuario.nombre }}</td>
-        <td class="px-6 py-3 whitespace-nowrap text-lg">{{ usuario.apellido }}</td>
-        <td class="px-6 py-3 whitespace-nowrap text-lg">{{ usuario.dni }}</td>
+        <td class="px-6 py-3 whitespace-nowrap text-lg">{{ usuario.user }}</td>
+        <td class="px-6 py-3 whitespace-nowrap text-lg">{{ usuario.empresa }}</td>
+        <!-- <td class="px-6 py-3 whitespace-nowrap text-lg">{{ usuario.dni }}</td>
         <td class="px-6 py-3 whitespace-nowrap text-lg">{{ usuario.username }}</td>
-        <td class="px-6 py-3 whitespace-nowrap text-lg">{{ usuario.rol }}</td>
+        <td class="px-6 py-3 whitespace-nowrap text-lg">{{ usuario.rol }}</td> -->
         <td class="px-6 py-3 whitespace-nowrap text-lg">
           <div class="flex space-x-4">
             <button class="text-blue-600 hover:text-blue-800 focus:outline-none text-xl" @click="editarUsuario(usuario)">
@@ -57,20 +57,20 @@
       </tr>
     </tbody>
   </table>
-</div>
-
+  </div>
+  
         </div>
     </div>
-</template>
-<script>
-
-import { ref, onMounted } from "vue";
-import usuariosService from "../../composables/api/usuariosService";
-import { useRouter, useRoute } from "vue-router";
-import ModalConfirmar from "../modalConfirmar/ModalConfirmar.vue";
-
-
-export default {
+  </template>
+  <script>
+  
+  import { ref, onMounted } from "vue";
+  import usuariosService from "../../composables/api/usuariosService";
+  import { useRouter, useRoute } from "vue-router";
+  import ModalConfirmar from "../modalConfirmar/ModalConfirmar.vue";
+  
+  
+  export default {
     name: 'usuarios',
     setup() {
         const usuarios = ref([]);
@@ -78,20 +78,20 @@ export default {
         // const modalComponent = ref(null);
         const modal = ref()
         const router = useRouter();   
-
+  
         
-
+  
         const editarUsuario = (usuario) => {
             router.push({
                 path: 'formUsuarios',
                 query: { isAdmin: false, id: usuario.id },
             });
         };
-
-
+  
+  
         const deleteUsuario = async (UsuarioId) => {
             try {
-
+  
                 await usuariosService.removeUsuario(UsuarioId);
                 usuarios.value = await usuariosService.getAllUsuario();
             } catch (error) {
@@ -99,7 +99,7 @@ export default {
             }
             fetchUsuarios()
         };
-
+  
         const fetchUsuarios = async () => {
             try {
                 usuarios.value = await usuariosService.getAllUsuarios();
@@ -107,11 +107,11 @@ export default {
                 console.error(error);
             }
         };
-
+  
         onMounted(() => {
             fetchUsuarios();
         });
-
+  
         const openModal = async (id) => {
             const usuario = usuarios.value.find(s => s.id === id);
             modal.value = modalComponent({
@@ -121,7 +121,7 @@ export default {
                 },
             });
         };
-
+  
         return {
             usuarios,
             showMessage,
@@ -132,6 +132,6 @@ export default {
             deleteUsuario
         };
     },
-};
-</script>
-<style></style>
+  };
+  </script>
+  <style></style>

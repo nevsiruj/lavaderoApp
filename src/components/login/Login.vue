@@ -70,14 +70,17 @@
               />
             </div>
           </div>
+          <div v-if="errorMessage" class="text-red-500 text-center">
+            {{ errorMessage }}
+          </div>
+
 
           <!--Inicio spinner -->
           <div v-if="loading" class="flex justify-center items-center">
-            <div
-              class="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full"
-              role="status"
-            >
-              <span class="visually-hidden">Cargando...</span>
+            <div>
+              <img src="../../Img/spin.svg" alt="Loading..." class="w-10 h-10 animate-spin">
+
+              <span class="invisible">Cargando...</span>
             </div>
           </div>
           <!--Inicio spinner -->
@@ -107,43 +110,92 @@ import authService from "../../composables/api/authService.js";
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import cajaService from "../../composables/api/cajaService.js";
+import { store } from '../../store.js'; // Importa el store
 
 export default {
   setup() {
+
+    console.log("Open");
     const email = ref("");
     const password = ref("");
     const loading = ref(false);
     const router = useRouter();
-    const cajaAbierta = ref({});
+    const cajaAbierta = ref(null);
+    const errorMessage = ref(""); 
 
+    // const login = async () => {
+    //   loading.value = true; // Activa el spinner antes de iniciar el proceso de inicio de sesión
+    //   try {
+    //     const response = await authService.login(email.value, password.value);
+    //     if (response.token) {
+    //       // Redireccionar a la página después del inicio de sesión exitoso
+    //       cajaAbierta.value = await cajaService.getCajaAbierta();
+    //       console.log(cajaAbierta.value);
+    //       if (cajaAbierta.value == undefined) {
+    //         router.push("/abrircaja");
+    //       } else {
+    //         router.push("/caja");
+    //       }
+    //     } else {
+    //       console.error("Inicio de sesión fallido");
+    //     }
+    //   } catch (error) {
+    //     console.error("Error de inicio de sesión", error);
+    //   } finally {
+    //     loading.value = false; // Desactiva el spinner una vez que se complete el proceso de inicio de sesión
+    //   }
+    // };
     const login = async () => {
-      loading.value = true; // Activa el spinner antes de iniciar el proceso de inicio de sesión
+      loading.value = true;
+      errorMessage.value = "";
       try {
         const response = await authService.login(email.value, password.value);
         if (response.token) {
-          // Redireccionar a la página después del inicio de sesión exitoso
+          const currentUser = await authService.getCurrentUser();
+          store.role = currentUser.roles[0].toLowerCase()
+
+          if(store.role == 'owner')
+          {
+            router.push("/owner/usuariosadmin");
+            return;
+          }
+
           cajaAbierta.value = await cajaService.getCajaAbierta();
-          console.log(cajaAbierta.value);
-          if (cajaAbierta.value == undefined) {
+        
+          if (!cajaAbierta.value) {
             router.push("/abrircaja");
           } else {
             router.push("/caja");
           }
-        } else {
-          console.error("Inicio de sesión fallido");
         }
       } catch (error) {
+        if (error.status === 401) {
+          errorMessage.value = "Usuario o contraseña incorrecta";
+        } else {
+          errorMessage.value = "Error de inicio de sesión";
+        }
+
         console.error("Error de inicio de sesión", error);
+        
       } finally {
-        loading.value = false; // Desactiva el spinner una vez que se complete el proceso de inicio de sesión
+        loading.value = false;
       }
     };
 
     const checkUserSession = async () => {
       try {
-        const currentUser = await authService.getCurrentUser();
+        const currentUser = await authService.getCurrentUser();    
+        
         if (currentUser) {
           cajaAbierta.value = await cajaService.getCajaAbierta();
+          store.role = currentUser.roles[0].toLowerCase()
+
+          if(store.role == 'owner')
+          {
+            router.push("/owner/usuariosadmin")
+            return
+          }
+
           if (cajaAbierta.value == undefined) {
             router.push("/abrircaja");
           } else {
@@ -164,8 +216,9 @@ export default {
       password,
       loading,
       login,
+      errorMessage,
     };
-  } //Quitaste la coma de aca
+  }, //Quitaste la coma de aca
 };
 </script>
 

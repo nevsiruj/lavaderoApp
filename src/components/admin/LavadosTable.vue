@@ -1,124 +1,106 @@
 <template>
-  <div class="viewport w-fit mx-auto">
-    <h1 class="text-3xl font-semibold mb-6 " >Dashboard de Ventas</h1>
-    <form>
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+  <div class="grid grid-flow-row gap-4">
+    <div class="flex justify-center min-height-auto">
+      <h1
+        class="text-3xl text-center font-bold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl"
+      >
+        Dashboard de Ventas
+      </h1>
+    </div>
+    <div
+      class="flex flex-row justify-center align-center min-height-auto gap-3 px-2"
+    >
+      <!--Fechas y flitro-->
+      
+      <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
         <div>
-          <label class="block mb-2">Fecha inicio:</label>
-          <input type="date" class="form-control border-emerald-300" v-model="fechaInicio" />
+          <input
+            type="date"
+            v-model="fechaInicio"
+            class="form-control block px-3 py-2 border border-gray-300 rounded-md text-gray-700 bg-white appearance-none cursor-pointer focus:outline-none focus:ring-1 focus:ring-blue-500"
+          />
         </div>
         <div>
-          <label class="block mb-2">Fecha fin:</label>
-          <input type="date" class="form-control border-emerald-300 px-4" v-model="fechaFin" />
+          <input
+            type="date"
+            v-model="fechaFin"
+            class="form-control block px-3 py-2 border border-gray-300 rounded-md text-gray-700 bg-white appearance-none cursor-pointer focus:outline-none focus:ring-1 focus:ring-blue-500"
+          />
         </div>
-        <div class="flex items-end">
+        <div>
           <button
             type="button"
-            class="mt-4 bg-emerald-300 hover:bg-emerald-500 text-white font-bold py-2 px-4 rounded"
             @click="filtrar"
+            class="focus:outline-none text-white bg-[#3edfa9] hover:bg-[#ffe068] focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5"
           >
             Filtrar
           </button>
         </div>
       </div>
-      <ul class="nav nav-tabs mb-2 border-none " id="myTab" role="tablist">
-        <li class="nav-item" role="presentation">
-          <button
-            class="nav-link rounded-md active text-black hover:bg-emerald-400"
-            id="home-tab"
-            data-bs-toggle="tab"
-            data-bs-target="#home"
-            type="button"
-            role="tab"
-            aria-controls="home"
-            aria-selected="true"
-          >
-            Home
-          </button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button
-            class="nav-link rounded-md text-black hover:bg-emerald-400"
-            id="profile-tab"
-            data-bs-toggle="tab"
-            data-bs-target="#profile"
-            type="button"
-            role="tab"
-            aria-controls="profile"
-            aria-selected="false"
-          >
-            E/R
-          </button>
-        </li>
-      </ul>
-    </form>
+      <!--Fechas y flitro-->
+    </div>
 
-    <!-- <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"> -->
-    <div class="tab-content">
-      <div
-        class="tab-pane fade show active"
-        id="home"
-        role="tabpanel"
-        aria-labelledby="home-tab"
-        tabindex="0"
-      >
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div
-            class="bg-white rounded-lg p-4 shadow"
+    <!--TabNueva-->
+    <div class="container">
+      <div class="lbl-menu border-b border-gray-300 ">
+        <label class="hover:border-t hover:py-3" for="radio1">Home</label>
+        <label class="hover:border-t hover:py-3" for="radio2">General</label>
+      </div>
+
+      <div class="mb-4 dark:border-gray-700 content">
+        <input type="radio" name="radio" id="radio1" checked />
+        <div class="tab1 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <spam
+            class="bg-white border border-gray-200 rounded-lg  p-4 shadow-md"
             id="boxSelect"
             @click="mostrarDetalle('totalLavados')"
           >
-            <h2 class="text-xl font-semibold">Cantidad Ventas</h2>
+            <h2 class="text-lg font-semibold">Cantidad Ventas</h2>
             <p class="text-3xl">{{ totalLavados }}</p>
-          </div>
-          <div
-            class="bg-white rounded-lg p-4 shadow"
+          </spam>
+          <spam
+            class="bg-white border border-gray-200 rounded-lg  p-4 shadow-md"
             @click="mostrarTotalFacturado()"
           >
-            <h2 class="text-xl font-semibold">Total Facturado</h2>
+            <h2 class="text-lg font-semibold">Total Facturado</h2>
             <p class="text-3xl">{{ totalFacturado }}</p>
-          </div>
-          <div class="bg-white rounded-lg p-4 shadow">
-            <h2 class="text-xl font-semibold">Ingresos</h2>
+          </spam>
+
+          <spam class="bg-white border border-gray-200 rounded-lg  p-4 shadow-md">
+            <h2 class="text-lg font-semibold">Ingresos</h2>
             <p class="text-3xl">{{ totalIngresos }}</p>
-          </div>
-          <div class="bg-white rounded-lg p-4 shadow">
-            <h2 class="text-xl font-semibold">Egresos</h2>
+          </spam>
+          <spam class="bg-white border border-gray-200 rounded-lg  p-4 shadow-md">
+            <h2 class="text-lg font-semibold">Egresos</h2>
             <p class="text-3xl">{{ totalEgresos }}</p>
-          </div>
+          </spam>
         </div>
-      </div>
-      <div
-        class="tab-pane fade"
-        id="profile"
-        role="tabpanel"
-        aria-labelledby="profile-tab"
-        tabindex="0"
-      >
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div
-            class="bg-white rounded-lg p-4 shadow"
+
+        <input type="radio" name="radio" id="radio2" />
+        <div class="tab2 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <spam
+            class="bg-white border border-gray-200 rounded-lg  p-4 shadow-md"
             @click="mostrarTotalFacturado()"
           >
-            <h2 class="text-xl font-semibold">Total Facturado</h2>
+            <h2 class="text-lg font-semibold">Total Facturado</h2>
             <p class="text-3xl">{{ totalFacturado }}</p>
-          </div>
-          <div
-            class="bg-white rounded-lg p-4 shadow"
+          </spam>
+          <spam
+            class="bg-white border border-gray-200 rounded-lg  p-4 shadow-md"
             @click="mostrarTotalGastos()"
           >
-            <h2 class="text-xl font-semibold">Gastos</h2>
+            <h2 class="text-lg font-semibold">Gastos</h2>
             <p class="text-3xl">{{ totalGastos }}</p>
-          </div>
-          <div class="bg-white rounded-lg p-4 shadow">
-            <h2 class="text-xl font-semibold">Beneficio Neto</h2>
+          </spam>
+          <spam class="bg-white border border-gray-200 rounded-lg  p-4 shadow-md">
+            <h2 class="text-lg font-semibold">Beneficio Neto</h2>
             <p class="text-3xl">{{ beneficioNeto }}</p>
-          </div>
+          </spam>
         </div>
       </div>
     </div>
+    <!--TabNueva-->
   </div>
-  <!-- -->
   <div
     class="fixed z-10 inset-0 overflow-y-auto"
     :class="{ hidden: !mostrarVentanaDetalle }"
@@ -140,16 +122,14 @@
             <p class="text-gray-700">{{ detalleKPI }}</p>
           </div>
 
-          <!-- %%%% -->
           <div class="bg-white shadow-md rounded-md p-6">
             <canvas id="chart"></canvas>
           </div>
-          <!-- %%%% -->
         </div>
         <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
           <button
             type="button"
-            class="mt-3 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+            class="mt-3 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#3edfa9] text-base font-medium text-white hover:bg-[#ffe068] sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
             @click="mostrarVentanaDetalle = false"
           >
             Cerrar
@@ -158,7 +138,7 @@
       </div>
     </div>
   </div>
-  <!-- Ventana emergente para el detalle del KPI -->
+  <!--Ventana emergente para el detalle del KPI //Comentario-->
   <div
     class="fixed z-10 inset-0 overflow-y-auto"
     :class="{ hidden: !mostrarImportesTotales }"
@@ -198,12 +178,14 @@
             </table>
           </div>
           <div class="text-right" @click="mostrarTotalFacturado()">
-            <h2 class="mt-2 mr-2 text-lg font-semibold">Total: {{ totalFacturado }}$</h2>
+            <h2 class="mt-2 mr-2 text-lg font-semibold">
+              Total: {{ totalFacturado }}$
+            </h2>
           </div>
           <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
             <button
               type="button"
-              class="mt-3 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+              class="mt-3 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#3edfa9] text-base font-medium text-white hover:bg-[#ffe068]"
               @click="mostrarImportesTotales = false"
             >
               Cerrar
@@ -248,12 +230,14 @@
             </tbody>
           </table>
           <div class="text-right">
-            <p class="mt-2 mr-2 text-lg font-semibold">Total: {{ totalGastos }}$</p>
+            <p class="mt-2 mr-2 text-lg font-semibold">
+              Total: {{ totalGastos }}$
+            </p>
           </div>
           <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
             <button
               type="button"
-              class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:w-auto sm:text-sm"
+              class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#3edfa9] text-base font-medium text-white hover:bg-[#ffe068]"
               @click="mostrarGastos = false"
             >
               Cerrar
@@ -266,39 +250,88 @@
 </template>
 
 <style>
-.boxs {
-  box-shadow: 0px 0px 5px 5px rgba(64, 132, 244, 0.5) !important;
-  -webkit-box-shadow: 0px 0px 5px 5px rgba(64, 132, 244, 0.5) !important;
-  -moz-box-shadow: 0px 0px 5px 5px rgba(64, 132, 244, 0.5) !important;
+.container {
+  width: 800px;  
+  margin: auto;
+  margin-top: 20px;
 }
-
-.kpi-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  margin-bottom: 20px;
-}
-
-.kpi-box {
-  background-color: #f8f9fa;
-  border: 1px solid #dee2e6;
-  border-radius: 4px;
+.lbl-menu label {
+  display: inline-block;
   padding: 20px;
-  width: 180px;
-  margin: 10px;
-  text-align: center;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  color: #000000;
+  cursor: pointer;
+  /*transition: all 400ms ease;*/
+}
+.lbl-menu label:hover {
+  color: #3edfa9;
+}
+.content {
+  margin-bottom: 200px;
+  position: relative;
+}
+.content div {
+  position: absolute;
+  line-height: 1.8;
+  /*transition: all 600ms ease;*/
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.9);
+  padding: 30px;
+  background: #fff;
+  padding-bottom: 40px;
+}
+#radio1,
+#radio2 {
+  display: none;
+}
+#radio1:checked ~ .tab1,
+#radio2:checked ~ .tab2 {
+  margin-top: 10px;
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+ 
+ 
+}
+.content div:after {
+  position: absolute;
+  content: "";
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid #fff;
+  bottom: 100%;
+  left: 28px;
+}
+.content .tab2:after {
+  left: 122px;
 }
 
-.kpi-box h3 {
-  font-size: 16px;
-  margin-bottom: 10px;
-}
 
-.kpi-box p {
-  font-size: 24px;
-  font-weight: bold;
-}
+@media only screen and (max-width: 1380px) {
+  .container{
+    max-width: 800px;
+    }
+  }
+
+  @media only screen and (max-width: 980px){
+    .container{
+      width: 400px;
+      max-width: 400px;
+  margin: auto;
+  margin-top: 20px;
+    }
+  }
+
+  @media only screen and (max-width: 360px){
+    .container{
+      width: 300px;
+      max-width: 300px;
+  margin: auto;
+  margin-top: 20px;
+    }
+  }
+
 </style>
 
 <script>
@@ -325,6 +358,7 @@ export default {
     let totalFacturado = ref(0);
     let mostrarImportesTotales = ref(false);
     let mostrarGastos = ref(false);
+   
 
     const filtrar = async () => {
       let datos = await adminService.getDatosPorFecha(

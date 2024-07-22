@@ -80,7 +80,6 @@ const cajaService = (() => {
     try {
       const response = await fetchWithToken(`${API_URL}/caja`, { credentials: 'include' });
       const data = await response.json();
-      console.log(data); // Descomentado para ver la data.
     } catch (error) {
       console.error('Error al obtener cajas:', error);
     }
@@ -114,6 +113,7 @@ const cajaService = (() => {
     retirar,
     getCajas,
     getLavadosByCaja,
+    fetchWithToken
   };
 })();
 
