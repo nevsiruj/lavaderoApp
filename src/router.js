@@ -89,8 +89,8 @@ const routes = [
     component: Dashboard,
   },
   {
-    path: '/lavadostable',
-    name: 'LavadosTable',
+    path: '/vistageneral',
+    name: 'vistageneral',
     component: LavadosTable,
   },
   {

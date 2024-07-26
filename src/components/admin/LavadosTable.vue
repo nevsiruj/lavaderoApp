@@ -11,24 +11,25 @@
       class="flex flex-row justify-center align-center min-height-auto gap-3 px-2"
     >
       <!--Fechas y flitro-->
-      
+
       <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
         <div>
           <input
             type="date"
             v-model="fechaInicio"
-            class="form-control block px-3 py-2 border border-gray-300 rounded-md text-gray-700 bg-white appearance-none cursor-pointer focus:outline-none focus:ring-1 focus:ring-blue-500"
+            class="form-control block px-2 py-2 border border-gray-300 rounded-md text-gray-700 bg-white appearance-none cursor-pointer focus:outline-none focus:ring-1 focus:ring-blue-500"
           />
         </div>
         <div>
           <input
             type="date"
             v-model="fechaFin"
-            class="form-control block px-3 py-2 border border-gray-300 rounded-md text-gray-700 bg-white appearance-none cursor-pointer focus:outline-none focus:ring-1 focus:ring-blue-500"
+            class="form-control block px-2 py-2 border border-gray-300 rounded-md text-gray-700 bg-white appearance-none cursor-pointer focus:outline-none focus:ring-1 focus:ring-blue-500"
           />
         </div>
         <div>
           <button
+            :disabled="!fechaInicio || !fechaFin"
             type="button"
             @click="filtrar"
             class="focus:outline-none text-white bg-[#3edfa9] hover:bg-[#ffe068] focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5"
@@ -39,67 +40,257 @@
       </div>
       <!--Fechas y flitro-->
     </div>
+    <!--Spiner-->
 
-    <!--TabNueva-->
-    <div class="container">
-      <div class="lbl-menu border-b border-gray-300 ">
-        <label class="hover:border-t hover:py-3" for="radio1">Home</label>
-        <label class="hover:border-t hover:py-3" for="radio2">General</label>
+    <div v-if="noDataFound">
+      <ul class="max-w-lg space-y-2 list-inside dark:text-gray-400">
+        <li class="flex items-center text-red-500 font-semibold">
+          <svg
+            class="w-5 h-5 mr-2 text-red-800 dark:text-white"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m15 9-6 6m0-6 6 6m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+            />
+          </svg>
+          No se encontraron datos para el rango de fechas seleccionado.
+        </li>
+      </ul>
+    </div>
+
+    <div v-if="!fechaInicio || !fechaFin">
+      <ul class="max-w-md space-y-2 list-inside dark:text-gray-400">
+        <li class="flex items-start text-red-500 font-semibold">
+          <svg
+            class="w-5 h-5 mr-2 text-red-800 dark:text-white"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m15 9-6 6m0-6 6 6m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+            />
+          </svg>
+          Seleccione un fecha de inicio y final para continuar.
+        </li>
+      </ul>
+    </div>
+    <template v-if="isLoading">
+      <ul class="max-w-md text-gray-500 list-inside dark:text-gray-400">
+        <li class="flex items-center">
+          <div role="status">
+            <svg
+              aria-hidden="true"
+              class="w-6 h-6 me-2 text-gray-300 font-md animate-spin dark:text-gray-600 fill-green-600"
+              viewBox="0 0 100 101"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                fill="currentColor"
+              />
+              <path
+                d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                fill="currentFill"
+              />
+            </svg>
+            <span class="sr-only">Cargando...</span>
+          </div>
+          Cargando datos ...
+        </li>
+      </ul>
+    </template>
+    <!--Spiner-->
+
+    <div class="mb-4 border-b border-gray-200">
+      <ul
+        class="flex flex-wrap -mb-px text-md font-medium text-center"
+        id="default-tab"
+        data-tabs-toggle="#default-tab-content"
+        role="tablist"
+        
+      >
+        <li class="me-2" role="presentation">
+          <button
+            class="inline-block p-4 border-b-2 text-green-600 hover:text-green-900 hover:border-green-600"
+            id="profile-tab"
+            data-tabs-target="#profile"
+            type="button"
+            role="tab"
+            aria-controls="profile"
+            aria-selected="false"
+          >
+            Inicio
+          </button>
+        </li>
+        <li class="me-2" role="presentation">
+          <button
+            class="inline-block p-4 border-b-2 border-t-green-600 text-green-600 hover:text-green-900"
+            id="dashboard-tab"
+            data-tabs-target="#dashboard"
+            type="button"
+            role="tab"
+            aria-controls="dashboard"
+            aria-selected="false"
+          >
+            General
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <div id="default-tab-content">
+      <div
+        class="hidden p-4"
+        id="profile"
+        role="tabpanel"
+        aria-labelledby="profile-tab"
+      >
+        <div class="grid grid-cols-1 md:grid-cols-2 lg-grid-cols-4 gap-3">
+          <!--Inicio Card-->
+          <div
+            class="max-w-auto p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 overflow-hidden"
+            data-tooltip-target="tooltip1"
+          >
+            <a href="#" id="boxSelect" @click="mostrarDetalle('totalLavados')">
+              <h2 class="text-lg font-semibold">Cantidad Ventas</h2>
+              <p class="text-3xl">{{ totalLavados }}</p>
+            </a>
+          </div>
+          <div
+            id="tooltip1"
+            role="tooltip"
+            class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
+          >
+            Click para mas detalle
+            <div class="tooltip-arrow" data-popper-arrow></div>
+          </div>
+          <!--Fin Card-->
+
+          <!--Inicio Card-->
+          <div
+            class="max-w-auto p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 overflow-hidden"
+            data-tooltip-target="tooltip2"
+          >
+            <a href="#" @click="mostrarTotalFacturado()">
+              <h2 class="text-lg font-semibold">Total Facturado</h2>
+              <p class="text-3xl">{{ totalFacturado }}</p>
+            </a>
+          </div>
+          <div
+            id="tooltip2"
+            role="tooltip"
+            class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
+          >
+            Click para mas detalle
+            <div class="tooltip-arrow" data-popper-arrow></div>
+          </div>
+          <!--Fin Card-->
+
+          <!--Inicio Card-->
+          <div
+            class="max-w-auto p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 overflow-hidden"
+          >
+            <a>
+              <h2 class="text-lg font-semibold">Ingresos</h2>
+              <p class="text-3xl">{{ totalIngresos }}</p>
+            </a>
+          </div>
+
+          <!--Fin Card-->
+
+          <!--Inicio Card-->
+          <div
+            class="max-w-auto p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 overflow-hidden"
+          >
+            <a>
+              <h2 class="text-lg font-semibold">Egresos</h2>
+              <p class="text-3xl">{{ totalEgresos }}</p>
+            </a>
+          </div>
+          <!--Fin Card-->
+        </div>
       </div>
 
-      <div class="mb-4 dark:border-gray-700 content">
-        <input type="radio" name="radio" id="radio1" checked />
-        <div class="tab1 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <spam
-            class="bg-white border border-gray-200 rounded-lg  p-4 shadow-md"
-            id="boxSelect"
-            @click="mostrarDetalle('totalLavados')"
+      <div
+        class="hidden p-4"
+        id="dashboard"
+        role="tabpanel"
+        aria-labelledby="dashboard-tab"
+      >
+      <div class="grid grid-cols-1 md:grid-cols-2 lg-grid-cols-4 gap-3">
+          <!--Inicio Card-->
+          <div
+            class="max-w-auto p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 overflow-hidden"
+            data-tooltip-target="tooltip3"
           >
-            <h2 class="text-lg font-semibold">Cantidad Ventas</h2>
-            <p class="text-3xl">{{ totalLavados }}</p>
-          </spam>
-          <spam
-            class="bg-white border border-gray-200 rounded-lg  p-4 shadow-md"
-            @click="mostrarTotalFacturado()"
+            <a href="#" id="boxSelect" @click="mostrarTotalFacturado()">
+              <h2 class="text-lg font-semibold">Total facturado</h2>
+              <p class="text-3xl">{{ totalFacturado }}</p>
+            </a>
+          </div>
+          <div
+            id="tooltip3"
+            role="tooltip"
+            class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
           >
-            <h2 class="text-lg font-semibold">Total Facturado</h2>
-            <p class="text-3xl">{{ totalFacturado }}</p>
-          </spam>
+            Click para mas detalle
+            <div class="tooltip-arrow" data-popper-arrow></div>
+          </div>
+          <!--Fin Card-->
 
-          <spam class="bg-white border border-gray-200 rounded-lg  p-4 shadow-md">
-            <h2 class="text-lg font-semibold">Ingresos</h2>
-            <p class="text-3xl">{{ totalIngresos }}</p>
-          </spam>
-          <spam class="bg-white border border-gray-200 rounded-lg  p-4 shadow-md">
-            <h2 class="text-lg font-semibold">Egresos</h2>
-            <p class="text-3xl">{{ totalEgresos }}</p>
-          </spam>
-        </div>
+          <!--Inicio Card-->
+          <div
+            class="max-w-auto p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 overflow-hidden"
+            data-tooltip-target="tooltip4"
+          >
+            <a href="#" @click="mostrarTotalGastos()">
+              <h2 class="text-lg font-semibold">Gastos</h2>
+              <p class="text-3xl">{{ totalGastos }}</p>
+            </a>
+          </div>
+          <div
+            id="tooltip4"
+            role="tooltip"
+            class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
+          >
+            Click para mas detalle
+            <div class="tooltip-arrow" data-popper-arrow></div>
+          </div>
+          <!--Fin Card-->
 
-        <input type="radio" name="radio" id="radio2" />
-        <div class="tab2 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <spam
-            class="bg-white border border-gray-200 rounded-lg  p-4 shadow-md"
-            @click="mostrarTotalFacturado()"
+          <!--Inicio Card-->
+          <div
+            class="max-w-auto p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 overflow-hidden"
+            
           >
-            <h2 class="text-lg font-semibold">Total Facturado</h2>
-            <p class="text-3xl">{{ totalFacturado }}</p>
-          </spam>
-          <spam
-            class="bg-white border border-gray-200 rounded-lg  p-4 shadow-md"
-            @click="mostrarTotalGastos()"
-          >
-            <h2 class="text-lg font-semibold">Gastos</h2>
-            <p class="text-3xl">{{ totalGastos }}</p>
-          </spam>
-          <spam class="bg-white border border-gray-200 rounded-lg  p-4 shadow-md">
-            <h2 class="text-lg font-semibold">Beneficio Neto</h2>
-            <p class="text-3xl">{{ beneficioNeto }}</p>
-          </spam>
-        </div>
+            <a >
+              <h2 class="text-lg font-semibold">Beneficio Neto</h2>
+              <p class="text-3xl">{{ beneficioNeto }}</p>
+            </a>
+          </div>
+          <!--Fin Card-->
+          </div>
+        
       </div>
     </div>
-    <!--TabNueva-->
   </div>
   <div
     class="fixed z-10 inset-0 overflow-y-auto"
@@ -250,8 +441,9 @@
 </template>
 
 <style>
-.container {
-  width: 800px;  
+
+/*.container {
+  width: 800px;
   margin: auto;
   margin-top: 20px;
 }
@@ -260,7 +452,7 @@
   padding: 20px;
   color: #000000;
   cursor: pointer;
-  /*transition: all 400ms ease;*/
+  transition: all 400ms ease;
 }
 .lbl-menu label:hover {
   color: #3edfa9;
@@ -272,7 +464,7 @@
 .content div {
   position: absolute;
   line-height: 1.8;
-  /*transition: all 600ms ease;*/
+  /*transition: all 600ms ease;
   opacity: 0;
   visibility: hidden;
   transform: scale(0.9);
@@ -290,8 +482,6 @@
   opacity: 1;
   visibility: visible;
   transform: scale(1);
- 
- 
 }
 .content div:after {
   position: absolute;
@@ -305,39 +495,17 @@
 }
 .content .tab2:after {
   left: 122px;
-}
+}*/
 
-
-@media only screen and (max-width: 1380px) {
-  .container{
-    max-width: 800px;
-    }
-  }
-
-  @media only screen and (max-width: 980px){
-    .container{
-      width: 400px;
-      max-width: 400px;
-  margin: auto;
-  margin-top: 20px;
-    }
-  }
-
-  @media only screen and (max-width: 360px){
-    .container{
-      width: 300px;
-      max-width: 300px;
-  margin: auto;
-  margin-top: 20px;
-    }
-  }
 
 </style>
 
 <script>
 import Chart from "chart.js/auto";
-import { reactive, onMounted, ref } from "vue";
+import { computed, reactive, onMounted, ref } from "vue";
 import adminService from "../../composables/api/adminService.js";
+import { initFlowbite } from "flowbite";
+
 
 export default {
   setup() {
@@ -358,9 +526,11 @@ export default {
     let totalFacturado = ref(0);
     let mostrarImportesTotales = ref(false);
     let mostrarGastos = ref(false);
-   
+    let isLoading = ref(false);
+    let noDataFound = ref();
 
-    const filtrar = async () => {
+    /*const filtrar = async () => {
+      isLoading.value = true;
       let datos = await adminService.getDatosPorFecha(
         fechaInicio.value,
         fechaFin.value
@@ -384,7 +554,45 @@ export default {
         const boxSelect = document.querySelector("#boxSelect");
         boxSelect.classList.add("boxs");
       }
+      isLoading.value = false;
+    };*/
+
+    const filtrar = async () => {
+      isLoading.value = true;
+      let datos = await adminService.getDatosPorFecha(
+        fechaInicio.value,
+        fechaFin.value
+      );
+
+      if (datos.lavados.length === 0) {
+        //alert("No se encontraron datos para el rango de fechas seleccionado.");
+        noDataFound.value = true;
+      } else {
+        noDataFound.value = false;
+        beneficioNeto.value = datos.beneficioNeto;
+        totalLavados.value = datos.cantidadLavados;
+        totalIngresos.value = datos.totalIngresos;
+        totalEgresos.value = datos.totalEgresos;
+        lavados.value = datos.lavados;
+        ingresos.value = datos.ingresos;
+        egresos.value = datos.egresos;
+        totalGastos.value = datos.totalGastos;
+        gastos.value = datos.gastos;
+        totalFacturado.value = datos.totalFacturado;
+
+        formatearLavados();
+
+        mostrarGrafico();
+
+        if (totalLavados.value > 0) {
+          const boxSelect = document.querySelector("#boxSelect");
+          boxSelect.classList.add("boxs");
+        }
+      }
+
+      isLoading.value = false;
     };
+
     const formatearLavados = () => {
       lavados.value = lavados.value.map((lavado) => {
         return {
@@ -486,7 +694,9 @@ export default {
         },
       });
     };
-    onMounted(() => {});
+    onMounted(() => {
+      initFlowbite();
+    });
 
     return {
       fechaInicio,
@@ -514,6 +724,8 @@ export default {
       formatearLavados,
       mostrarGastos,
       mostrarTotalGastos,
+      isLoading,
+      noDataFound,
     };
   },
   name: "LavadosTable",
