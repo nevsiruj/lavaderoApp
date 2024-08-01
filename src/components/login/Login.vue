@@ -31,7 +31,7 @@
       <div class="sm:mx-auto sm:w-full sm:max-w-sm">
         <img
           class="mx-auto h-36 w-auto"
-          src="https://i.ibb.co/vHwNWx4/gestoflex.png"
+          src="../../Img/gestoflex.png"
           alt="GestoFlex"
         />
         <h2
