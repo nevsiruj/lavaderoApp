@@ -45,7 +45,7 @@ const servicioService = (() => {
 
   const getById = async (id) => {
     try {
-      const response = await instance.get(`/api/Servicio/${id}`);
+      const response = await instance.get(`/Servicio/${id}`);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -59,7 +59,7 @@ const servicioService = (() => {
     // debugger
     // console.log("EditServicio",servicio)
     try {
-      const response = await instance.put(`/api/Servicio/${id}`, Servicio);
+      const response = await instance.put(`/Servicio/${id}`, Servicio);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -69,9 +69,9 @@ const servicioService = (() => {
 
   
 
-  const removeServicio = async (id) => {
+  const deleteServicio = async (id) => {
     try {
-      const response = await instance.delete(`/api/Servicio/${id}`);
+      const response = await instance.delete(`/Servicio/${id}`);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -84,7 +84,7 @@ const servicioService = (() => {
     getAllServicio,
     getById,
     editServicio,
-    removeServicio
+    deleteServicio
   };
 })();
 
