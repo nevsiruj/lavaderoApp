@@ -1,44 +1,29 @@
 <template>
   <div class="grid grid-flow-row gap-4">
-    <div
-      class="max-w-md p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
-    >
-      <h5
-        class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
-      >
+    <div class="max-w-md p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+      <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
         Servicios
       </h5>
 
-      <form class="max-w-sm mx-auto" >
+      <form class="max-w-sm mx-auto">
         <div class="mb-5">
-          <div class="form-group" >
+          <div class="form-group">
             <label for="nombre" class="text-black">Nombre</label>
-            <input
-            
-              type="text"
+            <input type="text"
               class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-300 focus:ring focus:ring-blue-200"
-              id="nombre"
-              v-model="form.nombre"
-            />
+              id="nombre" v-model="form.nombre" />
           </div>
           <div class="form-group">
             <label for="descripcion">Descripción</label>
-            <input
-              type="text"
+            <input type="text"
               class="form-control mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-300 focus:ring focus:ring-blue-200"
-              id="descripcion"
-              v-model="form.descripcion"
-              required
-            />
+              id="descripcion" v-model="form.descripcion" required />
           </div>
           <div class="form-group">
             <label for="Precio" class="text-black">Precio</label>
-            <input
-              type="number"
+            <input type="number"
               class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-300 focus:ring focus:ring-blue-200"
-              id="importe"
-              v-model="form.precio"
-            />
+              id="importe" v-model="form.precio" />
           </div>
           <div v-if="isNegativeImport">
             <p class="text-red-600">No ingresar valores negativos</p>
@@ -47,33 +32,24 @@
             <label for="tipoServicio" class="text-black">Tipo Servicio</label>
             <select
               class="form-select mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-300 focus:ring focus:ring-blue-200"
-              id="tipoServicio"
-              v-model="tipoServicioSeleccionado"
-            >
+              id="tipoServicio" v-model="form.tipoServicioId">
               <option value="" disabled>Selecciona un tipo de servicio</option>
-              <option
-                v-for="tipoServicio in tiposDeServicio"
-                :value="tipoServicio"
-                :key="tipoServicio.id"
-              >
+              <option v-for="tipoServicio in tiposDeServicio" :value="tipoServicio.id" :key="tipoServicio.id">
                 {{ tipoServicio.nombre }}
               </option>
             </select>
           </div>
+          <div v-if="tipoServicioError">
+            <p class="text-red-600">Por favor, selecciona un tipo de servicio.</p>
+          </div>
         </div>
-        <button
-          type="submit"
-          @click.prevent="submitForm"
-          class="text-black bg-green-300 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        >
+        <button type="submit" @click.prevent="submitForm"
+          class="text-black bg-green-300 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
           Guardar
         </button>
 
-        <router-link
-          :to="'/servicios'"
-          class="ml-5 font-medium text-green-500 dark:text-blue-500 hover:underline"
-          >Cancelar</router-link
-        >
+        <router-link :to="'/servicios'"
+          class="ml-5 font-medium text-green-500 dark:text-blue-500 hover:underline">Cancelar</router-link>
       </form>
     </div>
   </div>
@@ -126,7 +102,7 @@
       </form>
     </div>
   </div>-->
-  
+
 </template>
 
 <script>
@@ -142,6 +118,7 @@ export default {
     let tiposDeServicio = ref([]);
     let isNegativeImport = ref(false);
     let tipoServicioSeleccionado = ref({});
+    let tipoServicioError = ref(false);
 
     let form = ref({
       id: 0,
@@ -183,7 +160,7 @@ export default {
 
     const editarServicio = async () => {
       console.log(form.value);
-      form.value.tipoServicioId = tipoServicioSeleccionado.value.id;
+      // form.value.tipoServicioId = tipoServicioSeleccionado.value.id;
       // const tipoServicio = {
       //   id: form.value.id,
       //   descripcion: form.value.descripcion,
@@ -205,7 +182,13 @@ export default {
         return;
       }
 
-      console.log("submitForm", form.value.id);
+      if (!form.value.tipoServicioId) {
+        tipoServicioError.value = true;
+        return;
+      } else {
+        tipoServicioError.value = false;
+      }
+
 
       if (form.value.id == 0 || !form.value.id) {
         await agregarServicio();
@@ -254,6 +237,9 @@ export default {
         console.log(query);
         form.value.id = query.id;
         form.value = await servicioService.getById(query.id);
+        tipoServicioSeleccionado.value = tiposDeServicio.value.find(
+          (tipo) => tipo.id === form.value.tipoServicioId
+        );
       }
     });
 
@@ -267,6 +253,7 @@ export default {
       editarServicio,
       obtenerTiposDeServicio,
       tipoServicioSeleccionado,
+      tipoServicioError
     };
   },
 };
