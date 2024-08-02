@@ -107,7 +107,7 @@
                 </svg>
                 Editar</a
               >
-              <a @click="remove(servicio.id)"
+              <a @click="openModal(item.id)"
                 href="#"
                 class="font-medium text-red-500 dark:text-white hover:underline lg:ml-5"
                 ><svg
@@ -132,16 +132,7 @@
         </tbody>
       </table>
     </div>
-  </div>
-
-
-
-
-
-
-
-
-  
+  </div>  
   <!--<div class="px-3 mt-10">    
     <div class="m-auto rounded-lg py-2 px-2">
       <h1 class="text-3xl font-semibold mb-4">Tipos de Servicios</h1>
@@ -194,24 +185,27 @@
       </div>
     </div>
   </div>-->
+<Modal message="Tipo de servcio" @confirm="remove" ref="modalComponent" />
 </template>
 
 <script>
 import { ref, onMounted } from "vue";
 import tipoServicioService from "../../composables/api/tipoServicioService.js";
 import { useRouter, useRoute } from "vue-router";
+import Modal from '../modalConfirmar/ModalConfirmar.vue';
 
 export default {
+  components: {
+    Modal
+  },
   name: "tipoServicios",
   setup() {
     const tipoServicios = ref([]);
     const showMessage = ref(false);
     const modal = ref();
     const router = useRouter();
-
-
-
-
+    const modalComponent = ref(null);
+    
     const edit = (_item) => {
       router.push({
         path: 'formTipoServicio',
@@ -225,7 +219,9 @@ export default {
       try {
 
         await tipoServicioService.removeTipoServicio(_id);
+       
         tipoServicios.value = await tipoServicioService.getAllTipoServicio();
+        modal.value.hide()
       } catch (error) {
         console.error(error);
       }
@@ -247,14 +243,11 @@ export default {
     });
 
 
-    const openModal = async (id) => {
-      const servicio = tipoServicios.value.find(s => s.id === id);
-      modal.value = modalComponent({
-        servicio,
-        onClose: () => {
-          modal.value = null;
-        },
-      });
+    const openModal = async (_id) => {
+      modal.value = await modalComponent.value.getModal(_id);
+      if (modal.value) {
+        modal.value.show();
+      }
     };
 
     return {
@@ -266,7 +259,8 @@ export default {
       // agregarTipoServicio,
       fetchServicios,
       remove,
-      router
+      router,
+      modalComponent
     };
   },
 };

@@ -1,5 +1,7 @@
 <template>
+ 
   <div class="grid grid-flow-row gap-4">
+    
     <div class="flex justify-center min-height-auto">
       <h1
         class="text-3xl text-center font-bold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white"
@@ -88,6 +90,7 @@
             >
             {{ servicio.nombre }}
             </th>
+            
             <td class="px-6 py-4">{{ servicio.descripcion }}</td>
             <td class="px-6 py-4">{{ servicio.precio }}</td>
             <td class="px-6 py-4">{{ servicio.tipoServicio.nombre }}</td>
@@ -112,7 +115,7 @@
                 </svg>
                 Editar</a
               >
-              <a @click="deleteServicio(servicio.id)"
+              <a @click="openModal(servicio.id)"
                 href="#"
                 class="font-medium text-red-500 dark:text-white hover:underline lg:ml-5"
                 ><svg
@@ -133,29 +136,36 @@
                 Eliminar</a
               >
             </td>
+            
           </tr>
         </tbody>
       </table>
     </div>
-  </div>
+  </div><Modal message="servicio" @confirm="deleteServicio" ref="modalComponent" />
 </template>
 
 <script>
 import { ref, onMounted } from "vue";
 import servicioService from "../../composables/api/servicioService.js";
 import { useRouter, useRoute } from "vue-router";
-import ModalConfirmar from "../modalConfirmar/ModalConfirmar.vue";
+//import ModalConfirmar from "../modalConfirmar/ModalConfirmar.vue";
 import tipoServicioService from "../../composables/api/tipoServicioService";
+import Modal from '../modalConfirmar/ModalConfirmar.vue';
 
 export default {
+
+  components: {
+    Modal
+  },
   name: "servicios",
   setup() {
     const servicios = ref([]);
     const tiposServicio = ref([]);
     const showMessage = ref(false);
-    // const modalComponent = ref(null);
+    const modalComponent = ref(null);
     const modal = ref();
-    const router = useRouter();
+    const router = useRouter();    
+    const route = useRoute();
 
     const editarServicio = (servicio) => {
       router.push({
@@ -166,8 +176,10 @@ export default {
 
     const deleteServicio = async (ServicioId) => {
       try {
-        await servicioService.removeServicio(ServicioId);
+        await servicioService.deleteServicio(ServicioId);
+       
         servicios.value = await servicioService.getAllServicio();
+        modal.value.hide()
       } catch (error) {
         console.error(error);
       }
@@ -194,14 +206,11 @@ export default {
       fetchTipoServicios();
     });
 
-    const openModal = async (id) => {
-      const servicio = servicios.value.find((s) => s.id === id);
-      modal.value = modalComponent({
-        servicio,
-        onClose: () => {
-          modal.value = null;
-        },
-      });
+    const openModal = async (servicioId) => {
+      modal.value = await modalComponent.value.getModal(servicioId);
+      if (modal.value) {
+        modal.value.show();
+      }
     };
 
     return {
@@ -213,6 +222,7 @@ export default {
       editarServicio,
       deleteServicio,
       fetchTipoServicios,
+      modalComponent
     };
   },
 };

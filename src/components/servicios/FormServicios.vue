@@ -1,6 +1,5 @@
 <template>
-
-<div class="grid grid-flow-row gap-4">
+  <div class="grid grid-flow-row gap-4">
     <div
       class="max-w-md p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
     >
@@ -10,14 +9,18 @@
         Servicios
       </h5>
 
-      <form class="max-w-sm mx-auto">
+      <form class="max-w-sm mx-auto" >
         <div class="mb-5">
-          <div class="form-group">
-          <label for="nombre" class="text-black">Nombre</label>
-          <input type="text"
-            class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-300 focus:ring focus:ring-blue-200"
-            id="descripcion" v-model="form.nombre" />
-        </div>
+          <div class="form-group" >
+            <label for="nombre" class="text-black">Nombre</label>
+            <input
+            
+              type="text"
+              class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-300 focus:ring focus:ring-blue-200"
+              id="nombre"
+              v-model="form.nombre"
+            />
+          </div>
           <div class="form-group">
             <label for="descripcion">Descripción</label>
             <input
@@ -29,25 +32,34 @@
             />
           </div>
           <div class="form-group">
-          <label for="Precio" class="text-black">Precio</label>
-          <input type="number"
-            class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-300 focus:ring focus:ring-blue-200"
-            id="importe" v-model="form.precio" />
-        </div>
+            <label for="Precio" class="text-black">Precio</label>
+            <input
+              type="number"
+              class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-300 focus:ring focus:ring-blue-200"
+              id="importe"
+              v-model="form.precio"
+            />
+          </div>
           <div v-if="isNegativeImport">
             <p class="text-red-600">No ingresar valores negativos</p>
           </div>
           <div class="form-group">
-          <label for="tipoServicio" class="text-black">Tipo Servicio</label>
-          <select
-            class="form-select mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-300 focus:ring focus:ring-blue-200"
-            id="tipoServicio" v-model="tipoServicioSeleccionado">
-            <option value="" disabled>Selecciona un tipo de servicio</option>
-            <option v-for="tipoServicio in tiposDeServicio" :value="tipoServicio" :key="tipoServicio.id">
-              {{ tipoServicio.nombre }}
-            </option>
-          </select>
-        </div>
+            <label for="tipoServicio" class="text-black">Tipo Servicio</label>
+            <select
+              class="form-select mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-300 focus:ring focus:ring-blue-200"
+              id="tipoServicio"
+              v-model="tipoServicioSeleccionado"
+            >
+              <option value="" disabled>Selecciona un tipo de servicio</option>
+              <option
+                v-for="tipoServicio in tiposDeServicio"
+                :value="tipoServicio"
+                :key="tipoServicio.id"
+              >
+                {{ tipoServicio.nombre }}
+              </option>
+            </select>
+          </div>
         </div>
         <button
           type="submit"
@@ -66,8 +78,7 @@
     </div>
   </div>
 
-
-<!--  <div class="viewport">
+  <!--  <div class="viewport">
     <div class="card w-max m-auto p-4">
       <div class="mb-3">
         <router-link :to="'/servicios'" class="text-emerald-300 hover:text-emerald-600">&lt; Volver atrás
@@ -115,6 +126,7 @@
       </form>
     </div>
   </div>-->
+  
 </template>
 
 <script>
@@ -129,14 +141,15 @@ export default {
     let isAdmin = ref(false);
     let tiposDeServicio = ref([]);
     let isNegativeImport = ref(false);
-    let tipoServicioSeleccionado = ref({})
+    let tipoServicioSeleccionado = ref({});
 
     let form = ref({
       id: 0,
+      nombre: "",
       tipoServicioId: 0,
       precio: 0,
       descripcion: "",
-      tipoServicio: ""
+      tipoServicio: {},
     });
 
     const obtenerTiposDeServicio = async () => {
@@ -144,36 +157,33 @@ export default {
         const response = await tipoServicioService.getAllTipoServicio();
 
         tiposDeServicio.value = response;
-
       } catch (error) {
-        console.error('Error al obtener los tipos de servicio:', error);
+        console.error("Error al obtener los tipos de servicio:", error);
       }
     };
 
-    
     const agregarServicio = async () => {
-      console.log(form.value)
+      console.log(form.value);
       const Servicio = {
         id: form.value.id,
         nombre: form.value.nombre,
         precio: form.value.precio,
         descripcion: form.value.descripcion,
-        tipoServicioId: tipoServicioSeleccionado.value.id
+        tipoServicioId: tipoServicioSeleccionado.value.id,
       };
 
       try {
-        console.log(Servicio)
+        console.log(Servicio);
         await servicioService.addServicio(Servicio);
-        router.push('/Servicios');
+        router.push("/Servicios");
       } catch (error) {
         console.error(error);
-
       }
     };
 
     const editarServicio = async () => {
-      console.log(form.value)
-      form.value.tipoServicioId = tipoServicioSeleccionado.value.id
+      console.log(form.value);
+      form.value.tipoServicioId = tipoServicioSeleccionado.value.id;
       // const tipoServicio = {
       //   id: form.value.id,
       //   descripcion: form.value.descripcion,
@@ -183,21 +193,19 @@ export default {
 
       try {
         await servicioService.editServicio(form.value.id, form.value);
-        router.push('/Servicios');
+        router.push("/Servicios");
       } catch (error) {
         console.error(error);
-
       }
     };
 
     const submitForm = async () => {
-
-      if (form.value.nombre.trim() === '') {
+      if (form.value.nombre.trim() === "") {
         // Mostrar mensaje de error para nombre vacío
         return;
       }
-     
-      console.log("submitForm",form.value.id)
+
+      console.log("submitForm", form.value.id);
 
       if (form.value.id == 0 || !form.value.id) {
         await agregarServicio();
@@ -206,17 +214,16 @@ export default {
       }
 
       form.value = {};
-      form.defineComponent = '';
-      form.nombre = '';
-      form.descripcion = '';
-      form.precio = '';
-
+      form.defineComponent = "";
+      form.nombre = "";
+      form.descripcion = "";
+      form.precio = "";
 
       if (isAdmin.value) {
         router.push("/Servicios");
         return;
       }
-    }
+    };
 
     // const submitForm = async () => {
     //   if (form.value.precio < 1) {
@@ -233,7 +240,6 @@ export default {
     //   }
     // };
 
-
     onMounted(async () => {
       obtenerTiposDeServicio();
       /* const query = router.currentRoute.value.query;
@@ -241,7 +247,7 @@ export default {
         isAdmin.value = true;
       } */
       const query = router.currentRoute.value.query;
-      if (query.isAdmin === 'true') {
+      if (query.isAdmin === "true") {
         isAdmin.value = true;
       }
       if (query.id != null) {
@@ -260,7 +266,7 @@ export default {
       agregarServicio,
       editarServicio,
       obtenerTiposDeServicio,
-      tipoServicioSeleccionado
+      tipoServicioSeleccionado,
     };
   },
 };

@@ -70,7 +70,7 @@ const tipoServicioService = (() => {
 
   const removeTipoServicio = async (id) => {
     try {
-      const response = await instance.delete(`/api/TipoServicio/${id}`);
+      const response = await instance.delete(`/TipoServicio/${id}`);
       return response.data;
     } catch (error) {
       console.log(error);
