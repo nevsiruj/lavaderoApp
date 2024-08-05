@@ -48,7 +48,7 @@
 
     <div class="relative overflow-x-auto md:flex justify-center">
 
-      <table class="w-full md:w-64 text-sm text-left rtl:text-right text-gray-500 ">
+      <table class="w-full md:w-64 text-sm text-left rtl:text-right text-gray-500">
         <tbody>
           <tr class="bg-[#3edfa920]">
             <td class="border-r border-gray-400 px-2 py-1 font-bold w-56">

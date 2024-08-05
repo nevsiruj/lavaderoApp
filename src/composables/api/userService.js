@@ -63,7 +63,7 @@ const usuarioService = (() => {
 
   const removeUsuario = async (id) => {
     try {
-      const response = await instance.delete(`/api/User/${id}`);
+      const response = await instance.delete(`/User/${id}`);
       return response.data;
     } catch (error) {
       console.log(error);
