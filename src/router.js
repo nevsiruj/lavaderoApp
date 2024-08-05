@@ -89,13 +89,13 @@ const routes = [
     component: Dashboard,
   },
   {
-    path: '/lavadostable',
-    name: 'LavadosTable',
+    path: '/vistageneral',
+    name: 'vistageneral',
     component: LavadosTable,
   },
   {
-    path: '/vistageneral',
-    name: 'Vista General',
+    path: '/lavados',
+    name: 'Lavados',
     component: Lavados,
   },
   // {
