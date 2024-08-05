@@ -126,7 +126,7 @@ export default {
       tipoServicioId: 0,
       precio: 0,
       descripcion: "",
-      tipoServicio: {},
+      tipoServicioId: "",
     });
 
     const obtenerTiposDeServicio = async () => {
@@ -151,7 +151,7 @@ export default {
 
       try {
         console.log(Servicio);
-        await servicioService.addServicio(Servicio);
+        await servicioService.addServicio(form.value);
         router.push("/Servicios");
       } catch (error) {
         console.error(error);
